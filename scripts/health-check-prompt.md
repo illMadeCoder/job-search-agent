@@ -2,6 +2,8 @@
 
 Daily health check for job postings. Runs at 4am before the main job search agent.
 
+**Read first**: `config.yaml` for target roles and timing settings.
+
 ## Purpose
 
 1. Verify job posting URLs are still active
@@ -49,12 +51,9 @@ For each company with an active application (state = applied or interviewing):
    - Try: `https://{company}.com/careers`
    - Search: `{company} careers jobs`
 
-2. **Look for new relevant roles**:
-   - Platform Engineer
-   - Site Reliability Engineer (SRE)
-   - DevOps Engineer
-   - Infrastructure Engineer
-   - Cloud Engineer
+2. **Look for new relevant roles** matching `config.search.target_roles`:
+   - Read target roles from config.yaml
+   - Search for each role type at the company
 
 3. **If new roles found**:
    - Add to health_check event's `new_roles_found`
@@ -120,6 +119,6 @@ Terminal states (skip): `offer`, `rejected`, `expired`, `withdrawn`
 
 Runs at 4am, before 5am job search:
 ```
-0 4 * * * /home/illm/resume/scripts/health-check.sh
-0 5 * * * /home/illm/resume/scripts/daily-job-search.sh
+0 4 * * * /path/to/your/repo/scripts/health-check.sh
+0 5 * * * /path/to/your/repo/scripts/daily-job-search.sh
 ```

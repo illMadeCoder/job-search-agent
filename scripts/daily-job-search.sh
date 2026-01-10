@@ -2,7 +2,9 @@
 # Daily Job Search Agent - runs at 5am via cron
 # See: scripts/daily-agent.md for full instructions
 
-cd /home/illm/resume
+# Change to your repo directory (update this path)
+REPO_DIR="${JOB_SEARCH_REPO:-$HOME/job-search-agent}"
+cd "$REPO_DIR" || exit 1
 
 DATE=$(date +%Y-%m-%d)
 LOGFILE="logs/daily-agent-${DATE}.log"
@@ -20,7 +22,7 @@ if ! source .venv/bin/activate 2>&1; then
 fi
 
 # Add Go bin to PATH for beads (bd)
-export PATH="$PATH:/home/illm/go/bin"
+export PATH="$PATH:$(go env GOPATH 2>/dev/null || echo "$HOME/go")/bin"
 
 if ! claude -p "$(cat scripts/daily-agent.md)" \
   --allowedTools "WebFetch,WebSearch,Read,Write,Edit,Bash,Glob,Grep"; then

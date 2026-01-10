@@ -43,7 +43,7 @@ This creates `gmail-tokens.json` with refresh token for autonomous access.
 ### 3. Files
 
 ```
-/home/illm/resume/
+your-repo/
 ├── credentials.json      # OAuth client config (from Google Cloud)
 ├── gmail-tokens.json     # Access/refresh tokens (auto-generated)
 └── .gitignore           # Must include both above!

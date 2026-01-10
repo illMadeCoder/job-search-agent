@@ -8,13 +8,13 @@ You are a **fully autonomous** job search agent. Run the complete daily workflow
 - If uncertain, make the conservative choice and log your reasoning
 - If something fails, log the error and continue with other tasks
 
-**Working directory**: `/home/illm/resume`
+**Working directory**: Your repo root (where config.yaml lives)
 
 **Read these files FIRST**:
-- `/home/illm/resume/config.yaml` - **User preferences** (roles, salary, scoring, thresholds)
-- `/home/illm/resume/CLAUDE.md` - Strategy and context
-- `/home/illm/resume/postings/_schema.yaml` - Data format reference
-- `/home/illm/resume/sources.yaml` - Source API patterns (technical reference)
+- `config.yaml` - **User preferences** (roles, salary, scoring, thresholds)
+- `CLAUDE.md` - Strategy and context
+- `postings/_schema.yaml` - Data format reference
+- `sources.yaml` - Source API patterns (technical reference)
 
 **IMPORTANT**: All filtering, scoring, and thresholds come from `config.yaml`.
 Do NOT use hardcoded values - read from config.
@@ -247,8 +247,8 @@ Fetch directly from APIs that don't require auth:
 WebFetch: https://remoteok.com/api
 ```
 - Returns JSON array of all jobs
-- Filter for: platform, sre, devops, infrastructure, kubernetes
-- Filter for: remote, salary >= 150000
+- Filter for: tags matching `config.search.required_keywords`
+- Filter for: remote, salary >= `config.salary.minimum`
 
 ### Greenhouse (Known Companies)
 For each company in `sources.yaml → greenhouse_companies`:
@@ -275,18 +275,19 @@ WebFetch: https://api.lever.co/v0/postings/{company}
 Use WebSearch for discovery, then fetch details:
 
 ### Google Jobs Discovery
+For each role in `config.search.target_roles`:
 ```
-WebSearch: site:boards.greenhouse.io "platform engineer" remote
-WebSearch: site:jobs.lever.co "SRE" remote
-WebSearch: site:remoteok.com devops $150k
+WebSearch: site:boards.greenhouse.io "{role}" remote
+WebSearch: site:jobs.lever.co "{role}" remote
 ```
 - Follow promising links
 - Avoid LinkedIn/Indeed results (will fail)
 
 ### Built In
 ```
-WebSearch: site:builtin.com "platform engineer" remote
+WebSearch: site:builtin.com "{role}" remote
 ```
+(use target roles from config)
 - May get partial results
 - Log if blocked
 
@@ -628,7 +629,7 @@ Find the best career advice article from today's search.
    - Title, URL, source, author
    - 2-3 sentence summary
    - 3 key takeaways (specific, actionable)
-   - How it applies to Jesse's situation
+   - How it applies to your job search
    - One concrete action item to try
 
 6. Log all 10 candidates with scores in `candidates_reviewed`
