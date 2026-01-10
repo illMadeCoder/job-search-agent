@@ -351,6 +351,6 @@ greenhouse_companies:
   - zapier
 
 lever_companies:
-  - netflix
-  - twitch
   - palantir
+  # - netflix    # Empty as of 2026-01
+  # - twitch     # 404 as of 2026-01, moved off Lever

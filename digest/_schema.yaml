@@ -464,3 +464,39 @@ agent_run:
     - phase: string
       source: string
       error: string
+
+# ============================================================
+# SECTION 12: SELF-IMPROVEMENT
+# How the agent improved itself this run
+# ============================================================
+self_improvement:
+  observations:                    # Issues detected during run
+    - category: enum               # source | classification | data_quality | process
+      issue: string                # What was observed
+      action_taken: enum           # none | auto_fixed | task_created | deferred
+      note: string                 # Additional context
+      first_seen: date             # When first observed (for tracking patterns)
+      occurrences: number          # How many times seen (triggers action thresholds)
+
+  auto_fixes:                      # Changes made automatically
+    - file: string                 # Which file was modified
+      change: string               # What was changed
+      reason: string               # Why
+      committed: boolean           # Was it committed?
+
+  tasks_created:                   # Beads tasks for human review
+    - id: string                   # Beads task ID
+      title: string
+      category: enum               # improvement | idea | bug
+      priority: number
+
+  patterns_detected:               # Multi-day patterns worth noting
+    - pattern: string              # "RemoteOK 0 results 3 days in a row"
+      recommendation: string       # "Consider removing or investigating"
+      urgency: enum                # low | medium | high
+
+  stats:
+    issues_detected: number
+    auto_fixed: number
+    tasks_created: number
+    patterns_flagged: number

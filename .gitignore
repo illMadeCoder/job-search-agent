@@ -10,10 +10,9 @@ connections.csv
 credentials.json
 gmail-tokens*.json
 
-# Your resume (template ok, personal content not)
-resume.pdf
-resume.txt
-*.resume.*
+# Your actual resume (template ok, personal content not)
+jb_resume_*.tex
+jb_resume_*.pdf
 
 # ============================================
 # Job Search Data (contains applications/PII)
@@ -36,11 +35,11 @@ digest/*.yaml
 
 # Python virtual environment
 .venv/
-__pycache__/
-*.pyc
 
-# Logs
+# Logs (keep observations for pattern detection)
 logs/
+!logs/.gitkeep
+!logs/observations.jsonl
 
 # ============================================
 # Editor/OS files
@@ -49,5 +48,3 @@ logs/
 *~
 .DS_Store
 *.Zone.Identifier
-.idea/
-.vscode/

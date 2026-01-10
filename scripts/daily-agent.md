@@ -61,9 +61,9 @@ Scan inbox for job-related emails from the last 24 hours.
 
 ## 0.1 Fetch Recent Emails
 
-Run this command to get emails from both configured accounts:
+Run this filtered query to get job-related emails (skips promotions/social noise):
 ```bash
-source .venv/bin/activate && python scripts/gmail-fetch.py list --query "newer_than:1d" --max 50
+source .venv/bin/activate && python scripts/gmail-fetch.py list --query "newer_than:1d (from:ziprecruiter OR from:greenhouse OR from:lever OR from:linkedin OR from:ashby OR from:workday OR from:icims OR from:jobvite OR from:smartrecruiters OR subject:interview OR subject:application OR subject:offer OR subject:recruiter)" --max 50
 ```
 
 This returns JSON with: account, id, from, subject, snippet, labels.
@@ -73,19 +73,42 @@ To read full email content when needed:
 source .venv/bin/activate && python scripts/gmail-fetch.py read MESSAGE_ID
 ```
 
+**Skip these immediately** (not job-related):
+- `billing-noreply@linkedin.com` - billing/receipts
+- `updates-noreply@linkedin.com` - social feed updates
+- Subject contains "data archive" - LinkedIn export notifications
+
 ## 0.2 Classify Each Email
 
+### ATS Platforms (application confirmations, status updates)
+| From Domain | Platform | Action |
+|-------------|----------|--------|
+| `@greenhouse.io` | Greenhouse | Match to posting, update status |
+| `@lever.co` | Lever | Match to posting, update status |
+| `@ashbyhq.com` | Ashby | Match to posting, update status |
+| `@ziprecruiter.com` | ZipRecruiter | Log confirmation, create posting if new |
+| `@myworkday*.com` | Workday | Match to posting, update status |
+| `@icims.com` | iCIMS | Match to posting, update status |
+| `@jobvite.com` | Jobvite | Match to posting, update status |
+| `@smartrecruiters.com` | SmartRecruiters | Match to posting, update status |
+
+### LinkedIn Emails
+| From Address | Subject Pattern | Type | Action |
+|--------------|-----------------|------|--------|
+| `messages-noreply@linkedin.com` | "InMail" or recruiter name | `recruiter_outreach` | Create posting |
+| `messages-noreply@linkedin.com` | Role title + "roles near you" | `job_alert` | Note for manual review |
+| `messages-noreply@linkedin.com` | "add [Name]" | `connection_suggestion` | Skip |
+| `jobs-noreply@linkedin.com` | Any | `job_alert` | Note for manual review |
+| `billing-noreply@linkedin.com` | Any | Skip | Not job-related |
+| `updates-noreply@linkedin.com` | Any | Skip | Social feed updates |
+
+### Content-Based Classification
 | Pattern | Type | Action |
 |---------|------|--------|
-| from:*@linkedin.com "InMail" | `recruiter_outreach` | Create posting |
-| from:*@linkedin.com "job alert" | `job_alert` | Note for manual review |
-| from:*@greenhouse.io | `ats_response` | Match to posting |
-| from:*@lever.co | `ats_response` | Match to posting |
-| from:*@ashbyhq.com | `ats_response` | Match to posting |
-| subject:"interview" | `interview_invite` | Parse & add event |
-| subject:"offer" OR "compensation" | `offer` | URGENT flag |
-| subject:"unfortunately" OR "other candidates" | `rejection` | Update posting |
-| subject:"application received" | `confirmation` | Verify posting |
+| subject:"interview" OR "schedule" + company | `interview_invite` | Parse & add event |
+| subject:"offer" OR "compensation" OR "excited to offer" | `offer` | URGENT flag |
+| subject:"unfortunately" OR "other candidates" OR "not moving forward" | `rejection` | Update posting |
+| subject:"application received" OR "application complete" | `confirmation` | Verify posting exists |
 | from matches company in postings/ | `company_response` | Update posting |
 
 ## 0.3 Process by Type
@@ -642,6 +665,165 @@ Print brief summary to stdout (captured in logs/):
    → {one-line key takeaway}
 
 ════════════════════════════════════════════════════
+```
+
+---
+
+# Phase 4: Self-Improvement
+
+The agent should continuously improve its own process. During each run, collect observations and act on them.
+
+## 4.1 Collect Observations
+
+**Read previous observations** to detect patterns:
+```bash
+cat logs/observations.jsonl 2>/dev/null | tail -100
+```
+
+This JSONL file persists observations across runs. Each line is:
+```json
+{"date": "2026-01-10", "category": "source", "issue": "remoteok_zero_results", "count": 1}
+```
+
+Throughout the run, track issues in these categories:
+
+**Source Issues:**
+- API returned 404 → source is stale
+- API returned 0 jobs → source may be empty or broken
+- New job board domain seen in emails → potential new source
+- API rate limited or blocked → note for retry strategy
+
+**Classification Issues:**
+- Email couldn't be classified → log the from/subject pattern
+- New ATS domain seen (e.g., `@bamboohr.com`) → add to classification table
+- False positive (non-job email matched) → refine pattern
+
+**Data Quality:**
+- Field never populated across postings → schema bloat?
+- Field frequently missing → maybe make optional or fix collection
+- Duplicate postings created → improve deduplication
+
+**Process Issues:**
+- Phase took >5 minutes → performance concern
+- Same error repeated 3+ times → systemic issue
+- beads task stuck for 14+ days → abandoned?
+
+## 4.2 Auto-Fix (Safe Changes)
+
+These changes are safe to make and commit automatically:
+
+| Issue | Auto-Fix |
+|-------|----------|
+| API 404 for known company | Comment out in `sources.yaml` with date |
+| New ATS domain in email | Add to classification table in `daily-agent.md` |
+| Stale beads task (14+ days) | Close with reason "Stale - auto-closed" |
+| Typo in template | Fix directly |
+
+**Do NOT auto-fix:**
+- Classification logic changes (could break things)
+- Schema changes (affects existing data)
+- New features (needs design)
+- Anything affecting job matching/scoring
+
+## 4.3 Create Improvement Tasks
+
+For issues that need human review, create beads tasks:
+
+```bash
+# Source improvements
+bd create "Investigate: {source} returning 0 jobs for 3 days" -p 3 -l improvement
+
+# Classification improvements
+bd create "Add ATS: saw emails from @{domain}, needs classification rules" -p 3 -l improvement
+
+# Process improvements
+bd create "Performance: Phase 2 took {X} minutes, consider parallelizing" -p 4 -l improvement
+
+# Feature ideas
+bd create "Idea: {observation} - consider adding {feature}" -p 4 -l idea
+```
+
+Use labels: `improvement` for fixes, `idea` for enhancements.
+
+## 4.4 Commit Changes
+
+If any auto-fixes were made, commit them:
+
+```bash
+git add -A
+git status
+
+# Only commit if there are changes
+git diff --cached --quiet || git commit -m "$(cat <<'EOF'
+Auto-fix: {summary of changes}
+
+Changes made by daily agent run on {date}:
+- {change 1}
+- {change 2}
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+EOF
+)"
+```
+
+**Rules for auto-commits:**
+- Only commit to working branch (never main/master directly in shared repos)
+- Commit message must explain what changed and why
+- Keep changes minimal and focused
+- If unsure, create beads task instead of committing
+
+## 4.5 Persist Observations
+
+**Append to observations log** for cross-day pattern detection:
+```bash
+# For each observation, append a line:
+echo '{"date":"2026-01-10","category":"source","issue":"lever_netflix_empty","count":1}' >> logs/observations.jsonl
+```
+
+**Pattern detection thresholds:**
+| Pattern | Threshold | Action |
+|---------|-----------|--------|
+| Same source 404 | 3 days | Auto-fix: comment out |
+| Same source 0 results | 5 days | Create improvement task |
+| Same classification miss | 3 occurrences | Create improvement task |
+| Phase timeout | 2 days | Create improvement task |
+
+**Check for patterns:**
+```bash
+# Count occurrences of an issue in last 7 days
+grep "lever_netflix_empty" logs/observations.jsonl | tail -7 | wc -l
+```
+
+## 4.6 Log to Digest
+
+Also log observations to `digest/{date}.yaml` for human review:
+
+```yaml
+self_improvement:
+  observations:
+    - category: source
+      issue: "RemoteOK returned 0 platform jobs"
+      action_taken: none
+      note: "First occurrence, monitoring"
+    - category: classification
+      issue: "Saw email from @bamboohr.com"
+      action_taken: added_to_daily_agent
+      commit: true
+
+  auto_fixes:
+    - file: sources.yaml
+      change: "Commented out twitch from lever_companies"
+      reason: "404 for 3 consecutive days"
+
+  tasks_created:
+    - id: resume-abc
+      title: "Investigate RemoteOK zero results"
+
+  stats:
+    issues_detected: 3
+    auto_fixed: 1
+    tasks_created: 1
+    deferred: 1
 ```
 
 ---
