@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     git \
     ca-certificates \
+    nodejs \
+    npm \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Go (for beads)
@@ -15,9 +17,8 @@ RUN curl -fsSL https://go.dev/dl/go1.22.0.linux-amd64.tar.gz | tar -C /usr/local
 ENV PATH="/usr/local/go/bin:/home/agent/go/bin:${PATH}"
 ENV GOPATH="/home/agent/go"
 
-# Install Claude CLI
-RUN curl -fsSL https://cli.anthropic.com/install.sh | sh
-ENV PATH="/root/.claude/bin:${PATH}"
+# Install Claude CLI globally via npm
+RUN npm install -g @anthropic-ai/claude-code
 
 # Create non-root user
 RUN useradd -m -s /bin/bash agent

@@ -23,6 +23,9 @@ services:
     volumes:
       - ${JOB_SEARCH_DATA:-./data}:/home/agent/job-search
 
+      # Mount Claude config for API access (needs write for session state)
+      - ${HOME}/.claude:/home/agent/.claude
+
       # Mount scripts from repo (read-only)
       - ./scripts:/home/agent/job-search/scripts:ro
       - ./postings/_schema.yaml:/home/agent/job-search/postings/_schema.yaml:ro
