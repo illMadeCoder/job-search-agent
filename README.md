@@ -2,6 +2,59 @@
 
 A fully autonomous job search system powered by Claude that runs daily to scan emails, collect postings, track applications, and generate prioritized action items.
 
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              YOUR INPUTS                                     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  CLAUDE.md          sources.yaml        linkedin_archive/    Gmail OAuth    │
+│  ┌──────────┐       ┌──────────┐        ┌──────────┐        ┌──────────┐   │
+│  │• Roles   │       │• Company │        │• Connec- │        │• Token   │   │
+│  │• Salary  │       │  APIs    │        │  tions   │        │  refresh │   │
+│  │• Location│       │• Keywords│        │• Messages│        │          │   │
+│  └────┬─────┘       └────┬─────┘        └────┬─────┘        └────┬─────┘   │
+└───────┼──────────────────┼───────────────────┼───────────────────┼─────────┘
+        │                  │                   │                   │
+        └──────────────────┴─────────┬─────────┴───────────────────┘
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           DAILY AUTOMATION                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  4am ┌─────────────┐     5am ┌─────────────────────────────────────────┐    │
+│      │ Health      │         │ Daily Agent                             │    │
+│      │ Check       │────────▶│                                         │    │
+│      │             │         │  ┌─────────┐  ┌─────────┐  ┌─────────┐ │    │
+│      │ • URL check │         │  │ Scan    │  │ Collect │  │ Analyze │ │    │
+│      │ • New roles │         │  │ Gmail   │─▶│ Jobs    │─▶│ Trends  │ │    │
+│      │ • Flag .rev │         │  └─────────┘  └─────────┘  └─────────┘ │    │
+│      └─────────────┘         └──────────────────┬──────────────────────┘    │
+│                                                 │                            │
+└─────────────────────────────────────────────────┼────────────────────────────┘
+                                                  ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              YOUR OUTPUTS                                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  digest/2024-01-15.yaml              postings/{company}.{state}/             │
+│  ┌────────────────────────┐          ┌────────────────────────┐             │
+│  │ 1. URGENT - Offers     │          │ posting.yaml           │             │
+│  │ 2. HOT - Best matches  │          │ • Company, role, URL   │             │
+│  │ 3. PIPELINE - Stale    │          │ • Match score          │             │
+│  │ 4. OUTREACH - Referrals│          │ • Events audit log     │             │
+│  │ 5. PREP - Interviews   │          │ • Referral candidates  │             │
+│  │ 6. TRENDS - Skills     │          └────────────────────────┘             │
+│  └────────────────────────┘                                                  │
+│              │                                                               │
+│              ▼                                                               │
+│     ┌─────────────────┐                                                      │
+│     │ You wake up,    │                                                      │
+│     │ read digest,    │                                                      │
+│     │ take action     │                                                      │
+│     └─────────────────┘                                                      │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
 ## Why?
 
 Job searching is tedious. This system automates the grind:
@@ -18,19 +71,6 @@ Job searching is tedious. This system automates the grind:
 - **State Management** - Track applications through full lifecycle with events
 - **Trend Analysis** - Know which skills are rising/falling in demand
 - **Daily Learning** - Surfaces one career advice article per day
-
-## Architecture
-
-```
-4am  ─── Health Check ───► Verify posting URLs, find new roles
-              │
-5am  ─── Daily Agent ────► Scan Gmail
-              │            Collect postings
-              │            Analyze trends
-              │            Generate digest
-              ▼
-You  ─── Read Digest ────► Prioritized actions for the day
-```
 
 ## Tech Stack
 
