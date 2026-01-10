@@ -94,13 +94,16 @@ search:
     type: search
     reliability: medium
     strategy: |
-      WebSearch: "platform engineer remote $150k site:boards.greenhouse.io"
-      WebSearch: "SRE remote site:jobs.lever.co"
+      Build queries dynamically from config.yaml:
+      - For each target_role in config.search.target_roles
+      - WebSearch: "{role} remote site:boards.greenhouse.io"
+      - WebSearch: "{role} remote site:jobs.lever.co"
       Follow links to actual postings.
     notes: |
       Google aggregates from many sources.
       Use site: filters to target scrape-friendly boards.
       Results may be cached/stale.
+      Query templates use values from config.yaml at runtime.
     limitations:
       - Snippets only, must fetch full posting
       - May miss recent posts (indexing delay)
@@ -123,7 +126,8 @@ search:
     reliability: low
     url: "https://wellfound.com/jobs"
     strategy: |
-      WebSearch: "site:wellfound.com platform engineer remote"
+      WebSearch: "site:wellfound.com {role} remote"
+      (use target_roles from config.yaml)
     limitations:
       - Heavy JS rendering
       - Login prompts
@@ -146,7 +150,8 @@ search:
     type: search
     reliability: varies
     strategy: |
-      WebSearch: "{company} careers platform engineer"
+      WebSearch: "{company} careers {role}"
+      (use target_roles from config.yaml)
       If on Greenhouse/Lever, use API instead.
       Otherwise WebFetch career page.
     notes: |

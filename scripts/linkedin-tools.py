@@ -19,9 +19,27 @@ import sys
 import csv
 import json
 import argparse
+import yaml
 from pathlib import Path
 
 ARCHIVE_DIR = Path(__file__).parent.parent / "linkedin_archive"
+CONFIG_PATH = Path(__file__).parent.parent / "config.yaml"
+
+def load_config():
+    """Load config.yaml for dynamic settings."""
+    if CONFIG_PATH.exists():
+        with open(CONFIG_PATH) as f:
+            return yaml.safe_load(f)
+    return {}
+
+def get_linkedin_username():
+    """Get LinkedIn username from config or environment."""
+    config = load_config()
+    # Check config first, then environment, then return None
+    username = config.get('linkedin', {}).get('username')
+    if not username:
+        username = os.environ.get('LINKEDIN_USERNAME')
+    return username
 
 def load_csv(filename):
     """Load a CSV file from the archive, handling notes header."""
@@ -164,18 +182,25 @@ def get_network_companies():
 def get_recruiter_messages(days=None):
     """Get inbound recruiter messages (job opportunities)."""
     messages = load_csv("messages.csv")
+    config = load_config()
+    linkedin_username = get_linkedin_username()
 
-    # Keywords indicating recruiter outreach
-    job_keywords = ['hiring', 'role', 'opportunity', 'position', 'engineer',
-                    'developer', 'devops', 'platform', 'sre', 'salary',
-                    'remote', 'looking for', 'your background', 'your profile']
+    # Keywords indicating recruiter outreach - merge defaults with config
+    default_keywords = ['hiring', 'role', 'opportunity', 'position', 'engineer',
+                       'developer', 'salary', 'remote', 'looking for',
+                       'your background', 'your profile']
+    # Add target roles from config as keywords
+    target_roles = config.get('search', {}).get('target_roles', [])
+    role_keywords = [r.lower().split()[-1] for r in target_roles]  # e.g., "Platform Engineer" -> "engineer"
+    job_keywords = list(set(default_keywords + role_keywords))
 
     recruiter_msgs = []
     seen_convos = set()
 
     for msg in messages:
         # Skip outgoing messages (from you)
-        if 'jessebergerstock' in msg.get('SENDER PROFILE URL', '').lower():
+        sender_url = msg.get('SENDER PROFILE URL', '').lower()
+        if linkedin_username and linkedin_username.lower() in sender_url:
             continue
 
         # Skip sponsored/ads
@@ -221,6 +246,7 @@ def get_recruiter_messages(days=None):
 def get_message_stats():
     """Get statistics on LinkedIn messages for ROI tracking."""
     messages = load_csv("messages.csv")
+    linkedin_username = get_linkedin_username()
 
     from collections import Counter
     from datetime import datetime
@@ -229,7 +255,8 @@ def get_message_stats():
     outbound = []
 
     for msg in messages:
-        if 'jessebergerstock' in msg.get('SENDER PROFILE URL', '').lower():
+        sender_url = msg.get('SENDER PROFILE URL', '').lower()
+        if linkedin_username and linkedin_username.lower() in sender_url:
             outbound.append(msg)
         elif msg.get('FROM', '') != 'LinkedIn Member':
             inbound.append(msg)

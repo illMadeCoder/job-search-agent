@@ -13,6 +13,21 @@
 schema_version: 1
 
 # ============================================================
+# FILES
+# Paths to your personal files
+# ============================================================
+files:
+  resume: resume.tex              # For keyword matching against job descriptions
+  # resume_pdf: resume.pdf       # Optional PDF version
+
+# ============================================================
+# LINKEDIN
+# Your LinkedIn profile info for message parsing
+# ============================================================
+linkedin:
+  username: your-linkedin-username  # Your profile username (from linkedin.com/in/{username})
+
+# ============================================================
 # SEARCH CRITERIA
 # What jobs are you looking for?
 # ============================================================
@@ -141,6 +156,11 @@ timing:
     thank_you_deadline_hours: 24
     response_overdue_days: 5
 
+  urgent:
+    offer_expiring_days: 3         # Alert if offer deadline within N days
+    application_expiring_days: 25  # Alert when approaching expiry
+    post_interview_overdue_days: 5 # Alert if no response N days after interview
+
   health_check:
     posting_recheck_days: 7
 
@@ -149,6 +169,17 @@ timing:
     source_empty_threshold: 5
     classification_miss_threshold: 3
     stale_task_days: 14
+
+# ============================================================
+# ANALYSIS
+# Trend analysis settings
+# ============================================================
+analysis:
+  trend_periods:
+    recent_days: 7
+    comparison_days: 30
+
+  significant_change_pct: 10
 
 # ============================================================
 # SOURCES
