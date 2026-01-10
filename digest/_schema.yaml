@@ -1,0 +1,466 @@
+# Daily Digest Schema
+#
+# Your morning briefing, prioritized by what needs attention NOW.
+# Written by agent to: digest/{YYYY-MM-DD}.yaml
+#
+# Design principle: Most important stuff at the top.
+# You should be able to read just the first section and know
+# if anything is on fire.
+
+schema_version: 1
+date: date
+generated_at: datetime
+
+# ============================================================
+# SECTION 0: EMAIL SCAN
+# What the agent found in Gmail
+# ============================================================
+email_scan:
+  last_scan: datetime
+  emails_processed: number
+
+  new_outreach:               # Recruiters who reached out to YOU
+    - from: string
+      company: string
+      role: string
+      snippet: string         # First line of message
+      posting_created: string # Folder name if created
+
+  responses_received:         # Companies replying to your apps
+    - company: string
+      posting: string
+      sentiment: enum         # positive | neutral | negative
+      summary: string
+      action_needed: string
+
+  interviews_detected:        # Interview scheduling found
+    - company: string
+      posting: string
+      date: datetime
+      format: string
+      added_to_calendar: boolean
+
+  offers_detected:            # URGENT - offer emails
+    - company: string
+      posting: string
+      deadline: date
+
+  rejections_detected:
+    - company: string
+      posting: string
+      stage: string
+
+  confirmations:              # Application confirmations
+    - company: string
+      posting: string
+
+  unclassified:               # Couldn't auto-process
+    - subject: string
+      from: string
+      date: datetime
+      reason: string          # Why it couldn't be classified
+
+# ============================================================
+# SECTION 1: FIRE DRILL
+# Things that need action TODAY or you lose something
+# ============================================================
+urgent:
+  # Sorted by deadline (soonest first)
+  - priority: number          # 1 = most urgent
+    type: enum                # offer_expiring | interview_today |
+                              # application_expiring | response_overdue |
+                              # follow_up_due
+    deadline: datetime        # When this becomes a problem
+    posting: string           # Folder name
+    company: string
+    summary: string           # "Offer expires tomorrow at 5pm"
+    action: string            # "Accept, decline, or request extension"
+
+# Examples:
+# - priority: 1
+#   type: offer_expiring
+#   deadline: 2026-01-11T17:00:00Z
+#   posting: acme-corp.sre.offer.2026-01-08T1000Z
+#   company: Acme Corp
+#   summary: "Offer ($185k base) expires tomorrow"
+#   action: "Decide: accept / decline / negotiate"
+#
+# - priority: 2
+#   type: interview_today
+#   deadline: 2026-01-10T14:00:00Z
+#   posting: datadog.platform.interviewing.2026-01-05T0500Z
+#   company: DataDog
+#   summary: "System design interview in 6 hours"
+#   action: "Final prep, test video setup"
+
+# ============================================================
+# SECTION 2: HOT OPPORTUNITIES
+# High-value postings that deserve immediate attention
+# ============================================================
+hot:
+  # Sorted by score (computed from match + referral + salary + recency)
+  - score: number             # 0-100 composite score
+    posting: string
+    company: string
+    role: string
+    why_hot:                  # Reasons this ranks high
+      - string                # "92% keyword match"
+      - string                # "Referral: John Doe (Senior SRE)"
+      - string                # "$180-220k range"
+    match_rate: number
+    salary_max: number
+    has_referral: boolean
+    referral_contact: string  # Name if has_referral
+    posted_days_ago: number
+    action: string            # "Reach out to John, then apply"
+
+# Scoring formula (suggested):
+# - Base: match_rate (0-100)
+# - +20 if has_referral
+# - +10 if salary_max >= 180k
+# - +10 if posted today
+# - +5 if posted yesterday
+# - -5 per day older than 2 days
+
+# ============================================================
+# SECTION 3: PIPELINE ALERTS
+# Active applications that need attention
+# ============================================================
+pipeline_alerts:
+  # Things going wrong or needing action in your active pipeline
+
+  deep_in_process:            # Interviewing stage - high stakes
+    - posting: string
+      company: string
+      stage: string           # "post-technical" | "final round scheduled"
+      last_contact: date
+      days_since_contact: number
+      next_step: string       # What you're waiting for
+      concern: string         # "No response in 5 days after final"
+      action: string
+
+  going_stale:                # Applied but no response, getting old
+    - posting: string
+      company: string
+      applied_date: date
+      days_waiting: number
+      expires_in_days: number
+      action: string          # "Send follow-up" | "Expect expiration"
+
+  posting_issues:             # Job posting itself has problems
+    - posting: string
+      company: string
+      issue: enum             # missing | changed | closed
+      details: string         # "404 on job URL"
+      implication: string     # "Likely filled, consider this dead"
+      action: string
+
+  new_roles_found:            # Companies you're engaged with posted new jobs
+    - posting: string         # Your existing posting
+      company: string
+      your_status: string     # "interviewing" | "applied"
+      new_role:
+        title: string
+        url: string
+        match_rate: number
+      action: string          # "Consider applying to this too"
+
+# ============================================================
+# SECTION 4: OUTREACH QUEUE
+# People to contact today
+# ============================================================
+outreach:
+  referrals:                  # Connections to message for referral
+    - posting: string
+      company: string
+      contact:
+        name: string
+        position: string
+        linkedin: string
+      message_draft: string   # Suggested outreach
+      priority: enum          # high | medium | low
+
+  follow_ups:                 # People to follow up with
+    - posting: string
+      company: string
+      contact:
+        name: string
+        role: string          # recruiter | hiring_manager
+        email: string
+      last_contact: date
+      context: string         # "Post-recruiter screen, no response"
+      message_draft: string
+
+  thank_yous:                 # Post-interview thank yous to send
+    - posting: string
+      company: string
+      interview_date: date
+      interviewers:
+        - name: string
+          email: string
+      sent: boolean
+
+# ============================================================
+# SECTION 5: MANUAL HUNT
+# What to browse yourself (agent can't access)
+# ============================================================
+manual_hunt:
+  estimated_time_min: number  # Total suggested browse time
+
+  linkedin:
+    searches:
+      - query: string
+        why: string           # "New SRE roles, your top keyword"
+    companies_to_check:       # Check careers page of these
+      - company: string
+        reason: string        # "You're interviewing there"
+        careers_url: string
+
+  indeed:
+    searches:
+      - query: string
+
+  check_email_for:            # Specific things to look for in inbox
+    - from_pattern: string    # "recruiter" | "@acme.com"
+      expecting: string       # "Interview scheduling"
+      for_posting: string
+
+# ============================================================
+# SECTION 6: PREP ZONE
+# Upcoming interviews - what to prepare
+# ============================================================
+prep:
+  # Sorted by date (soonest first)
+  - posting: string
+    company: string
+    role: string
+
+    interview:
+      date: datetime
+      days_until: number
+      round: enum
+      format: enum            # video | phone | onsite
+      duration_min: number
+      interviewers:
+        - name: string
+          role: string
+          linkedin: string
+
+    prep_checklist:
+      - item: string          # "Review system design fundamentals"
+        done: boolean
+      - item: string          # "Prepare questions about team structure"
+        done: boolean
+
+    research:
+      tech_stack: string      # Known tech they use
+      recent_news: string     # Anything relevant
+      glassdoor_interview_tips: string
+      their_blog_posts:
+        - title: string
+          url: string
+
+# ============================================================
+# SECTION 7: TRENDS
+# What's changing in the market - guides your study priorities
+# ============================================================
+trends:
+  # Comparison periods
+  period:
+    recent: string            # "last 7 days"
+    recent_posting_count: number
+    older: string             # "8-30 days ago"
+    older_posting_count: number
+
+  keywords:
+    rising:                   # Demand increasing - study these
+      - keyword: string
+        recent_pct: number    # % of recent postings requesting this
+        older_pct: number     # % of older postings
+        change: number        # Percentage point change (+25 means +25%)
+        you_have: boolean     # Is this in your resume?
+        priority: enum        # critical | high | medium
+
+    falling:                  # Demand decreasing - less urgent
+      - keyword: string
+        recent_pct: number
+        older_pct: number
+        change: number
+
+    new:                      # Just started appearing - emerging tech
+      - keyword: string
+        recent_pct: number
+        first_seen: date
+        watch: boolean        # Worth monitoring?
+
+    stable:                   # Core skills, always needed
+      - keyword: string
+        pct: number           # Consistent percentage
+        you_have: boolean
+
+  salary:
+    recent_avg: number        # Average salary.max in recent postings
+    older_avg: number
+    change_pct: number        # % change
+    trend: enum               # up | down | stable
+    note: string              # "Salaries up 8% in last week"
+
+  sources:
+    improving:                # Sources producing more results
+      - source: string
+        recent_count: number
+        older_count: number
+    declining:                # Sources producing fewer results
+      - source: string
+        recent_count: number
+        older_count: number
+
+  study_priority:             # What to learn, prioritized
+    - keyword: string
+      rank: number            # 1 = highest priority
+      reason: string          # "Rising +25%, in 45% of postings, you lack it"
+      in_your_resume: boolean
+      resources:              # Where to learn it
+        - name: string
+          url: string
+          type: enum          # course | book | docs | video
+
+  summary: string             # One-line trend summary for the day
+                              # "Terraform demand up 25%, consider prioritizing"
+
+# ============================================================
+# SECTION 8: INSIGHTS (moved from 7)
+# Patterns and learnings (nice to know, not urgent)
+# ============================================================
+insights:
+  skills_gap:
+    top_missing:
+      - keyword: string
+        times_requested: number
+    suggestion: string        # "Terraform appearing in 60% of postings"
+
+  market:
+    observations:
+      - string                # "3 new DevOps roles at Series B companies"
+
+  your_stats:
+    total_active: number
+    response_rate: number     # % of applied that got any response
+    interview_rate: number    # % of applied that got interview
+
+  source_report:
+    working:
+      - source: string
+        jobs_found: number
+    not_working:
+      - source: string
+        error: string
+
+  linkedin_roi:                 # From weekly archive refresh
+    total_inbound_messages: number
+    unique_recruiters: number
+    inbound_this_week: number   # New recruiter outreach since last refresh
+    response_rate: number       # Your reply rate to inbound
+    top_opportunities:          # Best recent recruiter messages
+      - from: string
+        company: string
+        role: string
+        salary: string          # If mentioned
+        date: string
+    action: string              # "3 new recruiter messages - review and respond"
+
+# ============================================================
+# SECTION 9: DAILY LEARNING
+# Fresh advice from the job search community
+# ============================================================
+learning:
+  article:
+    title: string
+    url: string
+    source: string            # "medium.com" | "dev.to" | etc
+    author: string
+
+    summary: string           # 2-3 sentence summary
+
+    key_takeaways:            # Actionable points
+      - string
+      - string
+      - string
+
+    applies_to_you: string    # How this relates to your situation
+
+    action_item: string       # One thing to try based on this
+
+  search_used: string         # What query found this article
+
+  candidates_reviewed:        # All 10 articles considered
+    - title: string
+      url: string
+      source: string
+      score: number           # 0-12 composite score
+      disqualified: boolean
+      disqualify_reason: string  # "paywalled" | "too short" | etc
+      scores:
+        specificity: number   # 0-3
+        relevance: number     # 0-3
+        recency: number       # 0-2
+        credibility: number   # 0-2
+        quality: number       # 0-2
+
+  topics_rotated:             # Agent cycles through these
+    - "platform engineer job search tips"
+    - "SRE career advice"
+    - "how to get recruiters to contact you"
+    - "DevOps interview preparation"
+    - "remote job search strategies"
+    - "salary negotiation tech"
+    - "LinkedIn profile optimization engineer"
+    - "standing out in tech job applications"
+    - "networking for introverts tech"
+    - "career growth platform engineering"
+
+# ============================================================
+# SECTION 10: NEW TODAY
+# Everything agent found (for completeness)
+# ============================================================
+new_today:
+  count: number
+  by_source:
+    - source: string
+      count: number
+
+  # Full list, but HOT ones already highlighted above
+  all_postings:
+    - posting: string
+      company: string
+      role: string
+      match_rate: number
+      salary_max: number
+      in_hot_list: boolean    # Already shown above?
+
+# ============================================================
+# SECTION 11: AGENT LOG
+# What happened during the autonomous run
+# ============================================================
+agent_run:
+  started_at: datetime
+  finished_at: datetime
+  duration_min: number
+
+  health_check:
+    total_checked: number
+    active: number
+    missing: number
+    errors: number
+
+  collection:
+    sources_attempted: number
+    sources_succeeded: number
+    jobs_found: number
+    jobs_added: number
+    jobs_skipped: number      # Filtered out or duplicate
+
+  errors:
+    - phase: string
+      source: string
+      error: string

@@ -1,0 +1,285 @@
+# Posting Schema v1
+#
+# Philosophy: Materialized View
+# - Top-level fields = current state (easy to query)
+# - Events = audit log (how we got here)
+# - Update top-level when events change state
+# - Derived fields are NOT stored (compute on read)
+#
+# Each posting folder contains: posting.yaml
+
+schema_version: 1
+
+# === IMMUTABLE (set once at creation) ===
+
+company: string              # Display name: "Acme Corp"
+role: string                 # Display name: "Senior Platform Engineer"
+url: string                  # Job posting URL
+job_id: string               # Company's requisition ID (if visible)
+posted: date                 # When job was posted (YYYY-MM-DD)
+
+job_description: string      # Full posting text (for keyword re-analysis)
+                             # Use YAML literal block: job_description: |
+
+# === JOB REQUIREMENTS ===
+
+location:
+  type: enum                 # remote | hybrid | onsite
+  geo: string                # "US" | "US-only" | "NYC" | "Anywhere"
+
+salary:
+  min: number                # 150000
+  max: number                # 200000
+
+level: string                # "Senior" | "Staff" | "Principal" | "IC4"
+experience_required: string  # "5+ years" | "8-12 years" (as stated in posting)
+visa_sponsorship: boolean    # Does company sponsor? (false = US candidates only)
+
+# === COMPANY INFO ===
+
+company_info:
+  stage: enum                # startup | growth | enterprise
+  size: string               # "50-200" | "1000+"
+  funding: string            # "Series B" | "Public" | null
+  industry: string           # "Developer Tools" | "E-commerce"
+
+# === RESUME MATCH (computed, but cached for convenience) ===
+
+match:
+  matched: number            # Count of matched keywords
+  total: number              # Total keywords extracted
+  # rate is DERIVED: (matched / total) * 100 - do not store
+  keywords_matched:          # Terms found in resume
+    - string
+  keywords_missing:          # Skills gap - terms NOT on resume
+    - string                 # NORMALIZE: lowercase, canonical names
+                             # "kubernetes" not "K8s" or "Kubernetes"
+
+# === APPLICATION STATE (materialized from events) ===
+
+status: enum                 # active | missing | closed
+                             # Updated by health_check events
+
+application:
+  state: enum                # pending_review | applied | interviewing |
+                             # offer | rejected | expired | withdrawn
+                             # This is THE canonical state
+  recommendation: enum       # cold_apply | referral | skip
+  applied_date: date         # When submitted (null if pending_review)
+                             # expiry_date is DERIVED: applied_date + 30 days
+
+referral_candidates:         # LinkedIn connections at this company
+  - name: string             # "Jane Smith"
+    position: string         # "Senior SRE"
+    linkedin: string         # URL (optional)
+
+contacts:                    # People you've interacted with
+  - name: string
+    role: enum               # recruiter | hiring_manager | team_member | other
+    linkedin: string
+    email: string
+    notes: string
+
+# === OUTCOME (materialized from terminal event) ===
+
+outcome:                     # Populated when state becomes terminal
+  date: date
+  result: enum               # offer | rejected | expired | withdrawn
+  stage: string              # "after_apply" | "after_screen" | "after_technical"
+  reason: string             # "Went with internal candidate"
+  notes: string
+
+# === EVENTS (audit log) ===
+
+events:
+  - timestamp: datetime      # ISO8601 UTC: "2026-01-10T05:00:00Z"
+    type: enum               # See event types below
+    data: object             # Type-specific fields
+
+---
+# Event Type Schemas
+#
+# Events are append-only. Never modify past events.
+# When an event changes state, update the top-level materialized fields.
+
+# ─────────────────────────────────────────────────────────────
+# type: created
+# When: Posting folder first created
+# Updates: (initial population of all fields)
+# ─────────────────────────────────────────────────────────────
+data:
+  source: string             # "linkedin.com" | "indeed.com" | URL domain
+  posting_status: enum       # active | missing
+  inbound: boolean           # true if recruiter reached out to you
+
+# ─────────────────────────────────────────────────────────────
+# type: recruiter_inbound
+# When: Recruiter reached out to you (you didn't apply)
+# Updates: creates posting with recommendation=respond
+# ─────────────────────────────────────────────────────────────
+data:
+  recruiter_name: string
+  recruiter_email: string
+  channel: enum              # linkedin | email | github | other
+  message_snippet: string    # First 200 chars of their message
+  email_id: string           # Gmail message ID for reference
+
+# ─────────────────────────────────────────────────────────────
+# type: application_confirmed
+# When: Received confirmation email from ATS
+# Updates: (verification only)
+# ─────────────────────────────────────────────────────────────
+data:
+  email_id: string
+  confirmed_at: datetime
+  ats: string                # "greenhouse" | "lever" | "workday" | etc
+
+# ─────────────────────────────────────────────────────────────
+# type: health_check
+# When: Daily automated check
+# Updates: status field
+# ─────────────────────────────────────────────────────────────
+data:
+  posting_status: enum       # active | missing
+  new_roles_found:           # Other relevant roles at this company
+    - title: string
+      url: string
+
+# ─────────────────────────────────────────────────────────────
+# type: applied
+# When: Application submitted
+# Updates: application.state → applied, application.applied_date
+# ─────────────────────────────────────────────────────────────
+data:
+  method: enum               # direct | easy_apply | referral
+  referrer: string           # Name if referral method
+  resume_version: string     # "jb_resume_2025.pdf"
+  cover_letter: boolean
+  portal: string             # "Greenhouse" | "Lever" | "Workday" | null
+
+# ─────────────────────────────────────────────────────────────
+# type: response_received
+# When: Any communication from company
+# Updates: contacts (if new person), application.state → interviewing (if positive)
+# ─────────────────────────────────────────────────────────────
+data:
+  from: string               # "Jane Smith, Recruiter"
+  channel: enum              # email | linkedin | phone | portal
+  sentiment: enum            # positive | neutral | negative
+  summary: string            # Brief summary of what they said
+  next_step: string          # "Scheduling technical screen"
+
+# ─────────────────────────────────────────────────────────────
+# type: interview_scheduled
+# When: Interview is booked
+# Updates: contacts (add interviewers)
+# ─────────────────────────────────────────────────────────────
+data:
+  id: string                 # Unique ID to link with interview_completed
+                             # Format: "interview-1", "interview-2", etc.
+  round: enum                # recruiter_screen | technical | system_design |
+                             # hiring_manager | team | culture | final
+  date: datetime
+  duration_min: number
+  format: enum               # phone | video | onsite
+  interviewers:
+    - name: string
+      role: string
+      linkedin: string
+
+# ─────────────────────────────────────────────────────────────
+# type: interview_completed
+# When: After interview happens
+# Updates: (analytics only)
+# ─────────────────────────────────────────────────────────────
+data:
+  id: string                 # Links to interview_scheduled.id
+  round: enum                # Same as scheduled
+  actual_duration_min: number
+
+  # Interview content (for building question bank)
+  questions:                 # Actual questions asked
+    - string
+  topics:                    # Technical areas covered
+    - string
+  coding_problem: string     # Description if live coding
+  system_design_prompt: string  # Description if system design
+
+  # Self-assessment
+  went_well:
+    - string
+  could_improve:
+    - string
+  learnings:
+    - string
+
+  # Gut feel
+  vibe: enum                 # great | good | neutral | bad
+  would_want_to_work_there: boolean
+
+# ─────────────────────────────────────────────────────────────
+# type: offer_received
+# When: Offer extended
+# Updates: application.state → offer, outcome
+# ─────────────────────────────────────────────────────────────
+data:
+  base: number
+  bonus: number              # Target annual bonus
+  bonus_type: enum           # percentage | fixed | none
+  equity:
+    type: enum               # rsu | options | none
+    amount: string           # "10000 RSUs" | "0.1%"
+    vesting: string          # "4 years, 1 year cliff"
+  sign_on: number
+
+  benefits:
+    pto: string              # "Unlimited" | "20 days"
+    healthcare: string       # "100% covered" | "Standard"
+    retirement: string       # "4% 401k match"
+    other:
+      - string
+
+  remote: enum               # full | hybrid | onsite
+  start_date: date
+  deadline: date             # When offer expires
+  negotiable: boolean
+  notes: string
+
+# ─────────────────────────────────────────────────────────────
+# type: rejection
+# When: Explicit rejection received
+# Updates: application.state → rejected, outcome
+# ─────────────────────────────────────────────────────────────
+data:
+  stage: enum                # after_apply | after_screen | after_technical |
+                             # after_final | after_offer
+  reason: string             # If provided
+  feedback: string           # Any constructive feedback given
+  reapply_eligible: boolean  # "Feel free to apply again in 6 months"
+  reapply_timeframe: string  # "6 months" | "1 year" | null
+
+# ─────────────────────────────────────────────────────────────
+# type: expired
+# When: 30 days since applied with no response
+# Updates: application.state → expired, outcome
+# ─────────────────────────────────────────────────────────────
+data:
+  days_waited: number        # Usually 30
+
+# ─────────────────────────────────────────────────────────────
+# type: withdrawn
+# When: You pull out of process
+# Updates: application.state → withdrawn, outcome
+# ─────────────────────────────────────────────────────────────
+data:
+  stage: string              # Where in process
+  reason: string             # Why you withdrew
+  would_reapply: boolean     # Would consider this company again?
+
+# ─────────────────────────────────────────────────────────────
+# type: note
+# When: Any time - free-form annotation
+# Updates: (none)
+# ─────────────────────────────────────────────────────────────
+data:
+  content: string

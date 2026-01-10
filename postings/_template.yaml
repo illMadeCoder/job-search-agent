@@ -1,0 +1,61 @@
+schema_version: 1
+
+# === IMMUTABLE ===
+company: ""
+role: ""
+url: ""
+job_id: null
+posted: null
+
+job_description: |
+
+
+# === JOB REQUIREMENTS ===
+location:
+  type: null        # remote | hybrid | onsite
+  geo: null         # "US" | "US-only" | "Anywhere"
+
+salary:
+  min: null
+  max: null
+
+level: null                  # "Senior" | "Staff" | "Principal"
+experience_required: null    # "5+ years"
+visa_sponsorship: null       # true = sponsors, false = US only
+
+# === COMPANY INFO ===
+company_info:
+  stage: null       # startup | growth | enterprise
+  size: null        # "50-200"
+  funding: null     # "Series B" | "Public"
+  industry: null
+
+# === RESUME MATCH ===
+match:
+  matched: null
+  total: null
+  keywords_matched: []
+  keywords_missing: []
+
+# === APPLICATION STATE ===
+status: active      # active | missing | closed
+
+application:
+  state: pending_review
+  recommendation: cold_apply  # cold_apply | referral | skip
+  applied_date: null
+
+referral_candidates: []
+
+contacts: []
+
+# === OUTCOME ===
+outcome:
+  date: null
+  result: null      # offer | rejected | expired | withdrawn
+  stage: null
+  reason: null
+  notes: null
+
+# === EVENTS ===
+events: []

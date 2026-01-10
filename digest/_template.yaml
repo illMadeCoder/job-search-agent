@@ -1,0 +1,115 @@
+schema_version: 1
+date: null
+generated_at: null
+
+# === FIRE DRILL ===
+urgent: []
+
+# === HOT OPPORTUNITIES ===
+hot: []
+
+# === PIPELINE ALERTS ===
+pipeline_alerts:
+  deep_in_process: []
+  going_stale: []
+  posting_issues: []
+  new_roles_found: []
+
+# === OUTREACH QUEUE ===
+outreach:
+  referrals: []
+  follow_ups: []
+  thank_yous: []
+
+# === MANUAL HUNT ===
+manual_hunt:
+  estimated_time_min: 15
+  linkedin:
+    searches:
+      - query: "platform engineer remote"
+      - query: "SRE kubernetes remote $150k"
+    companies_to_check: []
+  indeed:
+    searches:
+      - query: "platform engineer remote"
+  check_email_for: []
+
+# === PREP ZONE ===
+prep: []
+
+# === TRENDS ===
+trends:
+  period:
+    recent: "last 7 days"
+    recent_posting_count: 0
+    older: "8-30 days ago"
+    older_posting_count: 0
+  keywords:
+    rising: []
+    falling: []
+    new: []
+    stable: []
+  salary:
+    recent_avg: null
+    older_avg: null
+    change_pct: null
+    trend: null
+    note: null
+  sources:
+    improving: []
+    declining: []
+  study_priority: []
+  summary: null
+
+# === INSIGHTS ===
+insights:
+  skills_gap:
+    top_missing: []
+    suggestion: null
+  market:
+    observations: []
+  your_stats:
+    total_active: 0
+    response_rate: null
+    interview_rate: null
+  source_report:
+    working: []
+    not_working: []
+
+# === DAILY LEARNING ===
+learning:
+  article:
+    title: null
+    url: null
+    source: null
+    author: null
+    summary: null
+    key_takeaways: []
+    applies_to_you: null
+    action_item: null
+  search_used: null
+  candidates_reviewed: []  # 10 articles scored, best one selected
+
+# === NEW TODAY ===
+new_today:
+  count: 0
+  by_source: []
+  all_postings: []
+
+# === AGENT LOG ===
+agent_run:
+  started_at: null
+  finished_at: null
+  duration_min: null
+  health_check:
+    total_checked: 0
+    active: 0
+    missing: 0
+    errors: 0
+  collection:
+    sources_attempted: 0
+    sources_succeeded: 0
+    jobs_found: 0
+    jobs_added: 0
+    jobs_skipped: 0
+  errors: []

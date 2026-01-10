@@ -1,0 +1,356 @@
+# Job Sources Configuration
+#
+# Categorizes sources by how Claude can access them:
+# - api: Direct API calls, reliable, structured data
+# - search: WebSearch discovery, follow links, partial success
+# - manual: User must browse, export, or forward to Claude
+#
+# For manual sources, Claude can still analyze/process data
+# once the user provides it.
+
+schema_version: 1
+
+# ============================================================
+# API SOURCES - Claude can fetch directly, structured responses
+# ============================================================
+api:
+
+  greenhouse:
+    name: Greenhouse Job Boards
+    type: api
+    reliability: high
+    pattern: "https://boards-api.greenhouse.io/v1/boards/{company}/jobs"
+    response: json
+    notes: |
+      Many companies use Greenhouse. Need to know company's board name.
+      Returns structured job data including description, location, salary.
+    example_companies:
+      - discord
+      - cloudflare
+      - figma
+      - notion
+      - stripe
+    rate_limit: ~100 req/min
+    auth: none
+
+  lever:
+    name: Lever Job Boards
+    type: api
+    reliability: high
+    pattern: "https://api.lever.co/v0/postings/{company}"
+    response: json
+    notes: |
+      Similar to Greenhouse. Returns job listings with descriptions.
+    example_companies:
+      - netflix
+      - twitch
+    rate_limit: unknown
+    auth: none
+
+  remoteok:
+    name: RemoteOK
+    type: api
+    reliability: high
+    url: "https://remoteok.com/api"
+    response: json
+    notes: |
+      Full job board as JSON. Filter client-side for relevant roles.
+      First element is metadata, jobs start at index 1.
+    rate_limit: unknown
+    auth: none
+
+  ycombinator:
+    name: Work at a Startup (YC)
+    type: api
+    reliability: medium
+    url: "https://www.workatastartup.com/api/jobs"
+    response: json
+    notes: |
+      May require parsing. YC-backed companies only.
+      Good for startup opportunities.
+    auth: none
+
+  hn_whoishiring:
+    name: HackerNews Who's Hiring
+    type: api
+    reliability: high
+    pattern: "https://hacker-news.firebaseio.com/v0/item/{thread_id}.json"
+    response: json
+    notes: |
+      Monthly thread, first of each month.
+      Get thread ID from HN, then fetch all comments.
+      Plain text, need to parse job details from comment body.
+    discovery: |
+      Search "site:news.ycombinator.com who is hiring {month} {year}"
+      to find current thread ID.
+
+# ============================================================
+# SEARCH SOURCES - WebSearch discovery, mixed reliability
+# ============================================================
+search:
+
+  google_jobs:
+    name: Google Jobs Search
+    type: search
+    reliability: medium
+    strategy: |
+      WebSearch: "platform engineer remote $150k site:boards.greenhouse.io"
+      WebSearch: "SRE remote site:jobs.lever.co"
+      Follow links to actual postings.
+    notes: |
+      Google aggregates from many sources.
+      Use site: filters to target scrape-friendly boards.
+      Results may be cached/stale.
+    limitations:
+      - Snippets only, must fetch full posting
+      - May miss recent posts (indexing delay)
+
+  builtin:
+    name: Built In
+    type: search
+    reliability: medium
+    url: "https://builtin.com/jobs/remote"
+    strategy: |
+      WebFetch the search results page.
+      May get partial listings.
+    limitations:
+      - Some JS rendering
+      - Pagination tricky
+
+  wellfound:
+    name: Wellfound (AngelList)
+    type: search
+    reliability: low
+    url: "https://wellfound.com/jobs"
+    strategy: |
+      WebSearch: "site:wellfound.com platform engineer remote"
+    limitations:
+      - Heavy JS rendering
+      - Login prompts
+      - Better to use manual
+
+  levels_fyi:
+    name: Levels.fyi Jobs
+    type: search
+    reliability: low
+    url: "https://www.levels.fyi/jobs"
+    strategy: |
+      WebSearch for specific roles.
+      Job pages may be accessible.
+    limitations:
+      - JS heavy
+      - Salary data useful but job listings spotty
+
+  company_careers:
+    name: Direct Company Career Pages
+    type: search
+    reliability: varies
+    strategy: |
+      WebSearch: "{company} careers platform engineer"
+      If on Greenhouse/Lever, use API instead.
+      Otherwise WebFetch career page.
+    notes: |
+      Many companies use ATS that requires JS.
+      Check if they use Greenhouse/Lever first (API is better).
+    common_ats:
+      greenhouse: use api
+      lever: use api
+      workday: manual (heavy JS)
+      icims: manual (heavy JS)
+      taleo: manual (legacy, clunky)
+      successfactors: manual
+
+# ============================================================
+# MANUAL SOURCES - User must browse, Claude processes results
+# ============================================================
+manual:
+
+  linkedin:
+    name: LinkedIn Jobs
+    type: manual
+    reliability: high (when manual)
+    user_actions:
+      - Browse linkedin.com/jobs with your filters
+      - Save interesting jobs to a list
+      - Copy job URL + description to Claude
+      - Or export saved jobs if LinkedIn allows
+    why_manual: |
+      - Login required
+      - Heavy bot detection (999 errors)
+      - Best job data but inaccessible to automation
+      - Easy Apply requires your session
+    integration: |
+      When you find a job, tell Claude:
+      "Add this LinkedIn job: {paste URL and description}"
+      Claude creates the posting.yaml from your input.
+
+  indeed:
+    name: Indeed
+    type: manual
+    reliability: high (when manual)
+    user_actions:
+      - Search indeed.com with filters
+      - Copy job details to Claude
+    why_manual: |
+      - Aggressive bot detection
+      - Captchas
+      - Dynamic content
+    integration: |
+      Paste job posting text to Claude for processing.
+
+  glassdoor:
+    name: Glassdoor
+    type: manual
+    reliability: medium
+    user_actions:
+      - Browse for jobs
+      - Note company ratings/reviews
+      - Copy job details
+    why_manual: |
+      - Login walls
+      - Limited views without account
+    useful_for: |
+      Company research, salary data, interview questions.
+      Not primary job discovery.
+
+  otta:
+    name: Otta
+    type: manual
+    reliability: medium
+    user_actions:
+      - Browse otta.com (requires account)
+      - Swipe on jobs
+      - Copy interesting ones to Claude
+    why_manual: |
+      - Account required
+      - Personalized feed based on profile
+
+  referrals:
+    name: Referral Requests
+    type: manual
+    user_actions:
+      - Check referral_candidates in pending postings
+      - Message connections on LinkedIn
+      - Track referral status in posting events
+    why_manual: |
+      - Requires your personal outreach
+      - LinkedIn messaging
+    integration: |
+      After reaching out, add event:
+      type: note
+      data:
+        content: "Messaged {name} for referral, awaiting response"
+
+  email_alerts:
+    name: Job Alert Emails
+    type: manual
+    reliability: high
+    setup:
+      linkedin: |
+        1. Set up job alerts on LinkedIn
+        2. Forward alert emails to yourself
+        3. Paste relevant jobs to Claude
+      indeed: |
+        1. Create Indeed job alerts
+        2. Review daily digest
+        3. Paste relevant jobs to Claude
+    integration: |
+      Most reliable way to get LinkedIn/Indeed jobs
+      without bot detection. Forward emails or paste content.
+
+  connections_export:
+    name: LinkedIn Connections Export
+    type: manual
+    frequency: monthly
+    user_actions:
+      - LinkedIn Settings → Data Privacy → Get a copy of your data
+      - Select "Connections"
+      - Download and save as connections.csv
+    integration: |
+      Place in repo root. Agent uses for referral matching.
+      Re-export monthly to capture new connections.
+
+# ============================================================
+# AGENT WORKFLOW
+# ============================================================
+workflow:
+
+  daily_autonomous:
+    description: What Claude does at 5am without user
+    sources:
+      - api.greenhouse (check known companies)
+      - api.lever (check known companies)
+      - api.remoteok (full scan)
+      - api.hn_whoishiring (if new thread)
+      - search.google_jobs (discovery)
+    actions:
+      - Health check existing postings (URLs may fail, log don't assume)
+      - Fetch from API sources
+      - Search for new postings
+      - Create posting.yaml for qualifying jobs
+      - Update tracker
+
+  user_session:
+    description: When user is actively working with Claude
+    sources:
+      - manual.linkedin (user browses, pastes to Claude)
+      - manual.indeed (user browses, pastes to Claude)
+      - manual.referrals (user messages connections)
+    actions:
+      - Process job descriptions user provides
+      - Create posting.yaml from pasted content
+      - Analyze match rate
+      - Suggest referral candidates
+      - Help draft outreach messages
+
+  weekly_maintenance:
+    description: User tasks to do weekly
+    tasks:
+      - Review .review flagged folders
+      - Browse LinkedIn/Indeed for 15 min, paste good finds
+      - Check email alerts
+      - Update any stale postings
+      - Re-export connections.csv if needed
+
+# ============================================================
+# KNOWN COMPANIES (for API sources)
+# ============================================================
+# Companies known to use Greenhouse/Lever APIs
+# Agent should check these directly
+
+greenhouse_companies:
+  - airbnb
+  - asana
+  - cloudflare
+  - coinbase
+  - datadog
+  - discord
+  - dropbox
+  - figma
+  - gitlab
+  - hashicorp
+  - hubspot
+  - instacart
+  - lattice
+  - mongodb
+  - notion
+  - okta
+  - pagerduty
+  - plaid
+  - reddit
+  - segment
+  - sentry
+  - slack
+  - snyk
+  - splunk
+  - square
+  - stripe
+  - twilio
+  - vercel
+  - webflow
+  - zapier
+
+lever_companies:
+  - netflix
+  - twitch
+  - palantir
