@@ -1,6 +1,6 @@
 # Autonomous Job Search Agent
 
-A fully autonomous job search system powered by Claude that runs daily to scan emails, collect postings, track applications, and generate prioritized action items.
+An autonomous agent system that handles the tedious parts of job searching: monitoring email, aggregating postings from multiple APIs, tracking application state, and surfacing what needs attention each morning.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -55,30 +55,43 @@ A fully autonomous job search system powered by Claude that runs daily to scan e
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-## Why?
+## How It Works
 
-Job searching is tedious. This system automates the grind:
-- **5am daily**: Agent wakes up, scans your Gmail, checks job boards, updates your pipeline
-- **You wake up**: Read a prioritized digest of what needs attention
-- **Focus on what matters**: Interviews, networking, skill-building - not refreshing job boards
+The system runs two scheduled jobs:
+- **4am Health Check** — Validates posting URLs, detects closed positions, finds new roles at companies you've applied to
+- **5am Daily Agent** — Scans Gmail for signals (recruiter outreach, interview scheduling, rejections), collects from job APIs, generates a prioritized digest
+
+You wake up to a structured summary: urgent items first, then ranked opportunities, pipeline alerts, and market trends.
 
 ## Features
 
-- **Gmail Integration** - Detects recruiter outreach, interview invites, offers, rejections
-- **Multi-Source Collection** - Greenhouse, Lever, RemoteOK APIs + Google search
-- **LinkedIn Data** - Connections for referrals, message history for ROI tracking
-- **Smart Matching** - ATS keyword analysis, salary filtering, duplicate detection
-- **State Management** - Track applications through full lifecycle with events
-- **Trend Analysis** - Know which skills are rising/falling in demand
-- **Daily Learning** - Surfaces one career advice article per day
+- **Gmail Classification** — Parses recruiter outreach, interview invites, offers, rejections into structured events
+- **Multi-Source Aggregation** — Greenhouse, Lever, RemoteOK APIs with fallback to Google site: search
+- **Referral Matching** — Cross-references postings against your LinkedIn connections
+- **Application State Machine** — Tracks lifecycle with event log (pending → applied → interviewing → offer/rejected/expired)
+- **Keyword Trend Analysis** — Tracks which skills are appearing more/less frequently in postings
+- **Duplicate Detection** — Dedupes across sources using company + role normalization
 
 ## Tech Stack
 
-- **Claude** - Autonomous agent (via claude-code CLI)
-- **Beads** - Persistent task state across context windows
-- **Gmail API** - OAuth2 for autonomous email access
-- **Python** - LinkedIn/Gmail tooling
-- **YAML** - Schema-driven data format
+| Component | Purpose |
+|-----------|---------|
+| Claude Code | Autonomous agent orchestration |
+| Gmail API | OAuth2 with refresh tokens for unattended access |
+| Python | API clients, data processing pipelines |
+| Beads | Persistent task queue across context windows |
+| YAML | Schema-versioned data format with event sourcing |
+| Cron | Scheduled execution (health check → daily run) |
+
+## Design Decisions
+
+**Why event sourcing?** Application state changes over time (applied → interviewing → offer). Storing events rather than just current state gives you an audit log, debugging history, and the ability to answer "what happened with that company?"
+
+**Why separate agent memory from human data?** The agent uses [Beads](https://github.com/steveyegge/beads) for its internal task queue (follow-ups, retries). Human-reviewable data lives in YAML files with stable schemas. This separation means agent restarts don't lose state, and you can always inspect/edit the YAML directly.
+
+**Why health checks before the main run?** Job postings disappear. Running a lightweight URL check at 4am flags dead links before the 5am agent wastes time on them. It also catches when companies post new roles—useful when you're already interviewing there.
+
+**Why schema versioning?** Data formats evolve. Version fields in schemas allow graceful migration without breaking existing postings.
 
 ## Configuration (The Interface)
 
@@ -86,34 +99,20 @@ Before running, you need to customize these files for your job search:
 
 ### 1. `CLAUDE.md` - Your Search Profile
 
-Edit this file to define:
+Edit this file to define your search criteria:
 ```yaml
-# Target roles (agent searches for these)
 target_roles:
   - Platform Engineer
   - Site Reliability Engineer
   - DevOps Engineer
 
-# Salary requirements (filters out lower)
-salary:
-  minimum: 150000
-  target: 180000
-
-# Location preferences
 location:
   remote: true
-  hybrid_cities:
-    - Seattle
-    - San Francisco
+  hybrid_cities: [Seattle, San Francisco]
 
-# Two-tier strategy
-tiers:
-  practice:     # Apply now for interview practice
-    - General tech companies
-    - Startups
-  reserved:     # Save for later, don't burn bridges
-    - Your dream companies
-    - Target industry (healthcare, fintech, etc.)
+keywords:
+  required: [Kubernetes, Terraform]
+  preferred: [Go, Python, AWS]
 ```
 
 ### 2. `sources.yaml` - Companies to Track
@@ -266,27 +265,17 @@ Your morning briefing, prioritized:
 6. **TRENDS** - Rising/falling skills
 7. **INSIGHTS** - Your stats, skills gap
 
-## Application Lifecycle
+## Application State Machine
 
 ```
-pending_review → applied → interviewing → offer
-                    │            │           │
-                    └── expired  └── rejected └── withdrawn
+                              ┌─── offer
+                              │
+pending_review ─► applied ─► interviewing ─┬─── rejected
+                    │                       │
+                    └─── expired            └─── withdrawn
 ```
 
-Each state change is an event in the audit log.
-
-## Beads Integration
-
-[Beads](https://github.com/steveyegge/beads) provides persistent memory across context windows:
-
-```bash
-bd ready                    # What needs attention
-bd create "Follow up" -p 2  # Create task
-bd close {id}               # Complete task
-```
-
-Tasks like "follow up in 7 days" survive agent restarts.
+State transitions are recorded as events with timestamps and metadata. The folder name encodes current state: `stripe.applied.2024-01-15/` → `stripe.interviewing.2024-01-15/`
 
 ## Privacy
 
@@ -322,19 +311,13 @@ The digest ranks opportunities by score. Tweak weights in `scripts/daily-agent.m
 - Salary bonus (+10 if above target)
 - Recency (newer postings score higher)
 
-### Adding Keywords
+### Extending the Pipeline
 
-Add to `CLAUDE.md` under target skills:
-```yaml
-must_have:
-  - Kubernetes
-  - Terraform
-  - Python
-
-nice_to_have:
-  - Go
-  - AWS
-```
+The agent prompt in `scripts/daily-agent.md` is the main orchestration logic. You can add:
+- New API sources (follow the pattern in `sources.yaml`)
+- Custom scoring weights for opportunity ranking
+- Additional email classification rules
+- Integration with other data exports
 
 ---
 
@@ -384,7 +367,3 @@ tail -100 logs/daily-job-search-$(date +%Y-%m-%d).log
 ## License
 
 MIT
-
----
-
-Built with Claude Code and too much coffee.
