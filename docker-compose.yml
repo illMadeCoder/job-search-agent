@@ -1,0 +1,48 @@
+# Job Search Agent - Docker Compose
+#
+# Usage:
+#   docker compose run --rm agent daily    # Run daily job search
+#   docker compose run --rm agent health   # Run health check
+#   docker compose run --rm agent shell    # Interactive shell
+#
+# Your data directory should contain:
+#   - config.yaml
+#   - gmail-tokens*.json
+#   - credentials.json
+#   - linkedin_archive/
+#   - postings/
+#   - digest/
+#   - logs/
+
+services:
+  agent:
+    build: .
+    user: "1000:1000"  # Run as non-root (adjust to your UID)
+
+    # Mount your data directory
+    volumes:
+      - ${JOB_SEARCH_DATA:-./data}:/home/agent/job-search
+
+      # Mount scripts from repo (read-only)
+      - ./scripts:/home/agent/job-search/scripts:ro
+      - ./postings/_schema.yaml:/home/agent/job-search/postings/_schema.yaml:ro
+      - ./postings/_template.yaml:/home/agent/job-search/postings/_template.yaml:ro
+      - ./digest/_schema.yaml:/home/agent/job-search/digest/_schema.yaml:ro
+      - ./digest/_template.yaml:/home/agent/job-search/digest/_template.yaml:ro
+      - ./sources.yaml:/home/agent/job-search/sources.yaml:ro
+      - ./CLAUDE.md:/home/agent/job-search/CLAUDE.md:ro
+
+    # Pass through Anthropic API key
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+
+    # No special privileges
+    security_opt:
+      - no-new-privileges:true
+
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G

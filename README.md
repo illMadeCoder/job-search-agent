@@ -254,6 +254,42 @@ crontab -e
 - Logs go to `logs/` directory
 - Test manually first before relying on cron
 
+### Alternative: Docker Setup
+
+Run the agent in an isolated container (recommended for security):
+
+```bash
+# 1. Build the container
+docker compose build
+
+# 2. Create data directory with your config
+mkdir -p data/logs data/postings data/digest
+cp config.template.yaml data/config.yaml
+# Edit data/config.yaml with your preferences
+# Copy credentials.json, gmail-tokens*.json, linkedin_archive/ to data/
+
+# 3. Set your API key
+export ANTHROPIC_API_KEY="your-key"
+export JOB_SEARCH_DATA="./data"
+
+# 4. Run manually
+docker compose run --rm agent daily   # Daily job search
+docker compose run --rm agent health  # Health check
+docker compose run --rm agent shell   # Debug shell
+
+# 5. Schedule via cron
+crontab -e
+# Add:
+0 4 * * * cd /path/to/job-search-agent && ./scripts/docker-run.sh health
+0 5 * * * cd /path/to/job-search-agent && ./scripts/docker-run.sh daily
+```
+
+**Docker benefits:**
+- Runs as non-root user
+- Isolated from host system
+- Resource limits (2 CPU, 2GB RAM)
+- Easy cleanup: `docker compose down --rmi all`
+
 ## Directory Structure
 
 ```
