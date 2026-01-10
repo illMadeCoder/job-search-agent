@@ -80,6 +80,28 @@ def get_service():
     return build('gmail', 'v1', credentials=creds)
 
 
+def html_to_plain(html: str) -> str:
+    """Convert HTML to plain text for email fallback."""
+    import re
+    # Remove style tags and content
+    text = re.sub(r'<style[^>]*>.*?</style>', '', html, flags=re.DOTALL)
+    # Remove script tags
+    text = re.sub(r'<script[^>]*>.*?</script>', '', text, flags=re.DOTALL)
+    # Replace common block elements with newlines
+    text = re.sub(r'</div>', '\n', text)
+    text = re.sub(r'</h[1-6]>', '\n\n', text)
+    text = re.sub(r'<br\s*/?>', '\n', text)
+    # Remove remaining HTML tags
+    text = re.sub(r'<[^>]+>', '', text)
+    # Decode HTML entities
+    text = text.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>')
+    text = text.replace('&nbsp;', ' ').replace('&quot;', '"')
+    # Clean up whitespace
+    text = re.sub(r'\n\s*\n', '\n\n', text)
+    text = re.sub(r' +', ' ', text)
+    return text.strip()
+
+
 def send_email(to: str, subject: str, body: str, html: bool = False):
     """Send an email via Gmail API."""
     service = get_service()
@@ -91,7 +113,9 @@ def send_email(to: str, subject: str, body: str, html: bool = False):
     # Create message
     if html:
         msg = MIMEMultipart('alternative')
-        msg.attach(MIMEText(body, 'plain'))
+        # Create plain text fallback from HTML
+        plain_text = html_to_plain(body)
+        msg.attach(MIMEText(plain_text, 'plain'))
         msg.attach(MIMEText(body, 'html'))
     else:
         msg = MIMEText(body)

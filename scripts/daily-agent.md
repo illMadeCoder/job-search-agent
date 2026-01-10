@@ -305,31 +305,43 @@ Log in summary: "Manual sources skipped - user should browse LinkedIn/Indeed dur
 
 Read all filter criteria from `config.yaml`. Do NOT hardcode values.
 
+**CRITICAL: Jobs that fail ANY filter below must be DISCARDED COMPLETELY. Do NOT create posting folders for disqualified jobs. Do NOT set `recommendation: skip` for disqualified jobs. Simply do not process them further.**
+
 ```yaml
 # From config.yaml:
 search.required_keywords      # At least one must match
-search.exclude_keywords       # Skip if any match
-location.remote_only          # Remote filter
-location.countries            # Geographic filter
-salary.minimum                # Hard floor
-experience.min_required_years # Skip too junior
-experience.max_required_years # Skip too senior
-experience.exclude_levels     # Skip these levels
-companies.tiers.reserved      # Skip reserved tier in autonomous mode
-companies.blacklist           # Always skip these
+search.exclude_keywords       # Disqualify if any match
+location.remote_only          # Disqualify if not remote and this is true
+location.countries            # Disqualify if not in list
+salary.minimum                # Disqualify if below (unless undisclosed and `include_undisclosed`)
+experience.min_required_years # Disqualify if too junior
+experience.max_required_years # Disqualify if too senior
+experience.exclude_levels     # Disqualify these levels
+companies.tiers.reserved      # Disqualify reserved tier in autonomous mode
+companies.blacklist           # Always disqualify
 ```
 
-| Filter | Config Path | Logic |
-|--------|-------------|-------|
-| Remote | `location.remote_only` | Skip if not remote and this is true |
-| Location | `location.countries` | Must be in list |
-| Salary | `salary.minimum` | Skip if below (unless undisclosed and `include_undisclosed`) |
-| Keywords | `search.required_keywords` | At least one must appear |
-| Exclusions | `search.exclude_keywords` | Skip if any appear |
-| Experience | `experience.*` | Check min/max years, exclude levels |
-| Tier | `companies.tiers.reserved` | Skip reserved companies in auto mode |
-| Blacklist | `companies.blacklist` | Always skip |
-| Dedupe | Check `postings/` | Skip if folder exists for company |
+| Filter | Config Path | Action if Fails |
+|--------|-------------|-----------------|
+| Remote | `location.remote_only` | **DISCARD** - do not create folder |
+| Location | `location.countries` | **DISCARD** - do not create folder |
+| Salary | `salary.minimum` | **DISCARD** - do not create folder |
+| Keywords | `search.required_keywords` | **DISCARD** - do not create folder |
+| Exclusions | `search.exclude_keywords` | **DISCARD** - do not create folder |
+| Experience | `experience.*` | **DISCARD** - do not create folder |
+| Tier | `companies.tiers.reserved` | **DISCARD** - do not create folder |
+| Blacklist | `companies.blacklist` | **DISCARD** - do not create folder |
+| Dedupe | Check `postings/` | **DISCARD** - folder already exists |
+
+**Log discarded jobs** in the digest under `agent_log.phase_2_collection` with reason:
+```yaml
+- source: Greenhouse Wealthsimple
+  jobs_found: 3
+  jobs_qualified: 0
+  discarded:
+    - role: "Senior SRE"
+      reason: "Location: Canada (config requires US)"
+```
 
 ## 2.5 Check LinkedIn Data
 
@@ -517,11 +529,13 @@ For each NEW posting with `recommendation: cold_apply` or `referral`:
 
 Read your resume from `config.files.resume` and compare against job requirements.
 
+**YOU MUST generate this section for every posting with `recommendation: cold_apply` or `referral`.**
+
 Generate `resume_tailoring` section:
 
 ```yaml
 resume_tailoring:
-  generated: "2026-01-10T05:30:00Z"
+  generated: "2026-01-10T17:48:00Z"  # Use ACTUAL current UTC time, not a placeholder
 
   # Keywords already on resume - suggest emphasizing more
   emphasize:
@@ -549,11 +563,13 @@ resume_tailoring:
 
 ### Cover Letter Generation
 
+**YOU MUST generate this section for every posting with `recommendation: cold_apply` or `referral`.**
+
 Using company intel gathered in 2.8, generate a personalized cover letter:
 
 ```yaml
 cover_letter:
-  generated: "2026-01-10T05:30:00Z"
+  generated: "2026-01-10T17:48:00Z"  # Use ACTUAL current UTC time, not a placeholder
   version: 1
 
   content: |
@@ -604,8 +620,8 @@ Generate comprehensive interview prep:
 
 ```yaml
 interview_prep:
-  generated: "2026-01-10T05:30:00Z"
-  last_updated: "2026-01-10T05:30:00Z"
+  generated: "2026-01-10T17:48:00Z"  # Use ACTUAL current UTC time
+  last_updated: "2026-01-10T17:48:00Z"  # Use ACTUAL current UTC time
 
   company_overview:
     what_they_do: "Stripe builds payment infrastructure for the internet..."
@@ -913,6 +929,12 @@ This ensures you get the best content, not just the first result.
 
 Write complete digest to `digest/{YYYY-MM-DD}.yaml` per schema.
 
+**IMPORTANT - Use actual timestamps:**
+- `generated_at`: Current UTC time when digest is written (e.g., `"2026-01-10T17:56:00Z"`)
+- `agent_log.run_start`: Actual UTC time when this run started
+- `agent_log.run_end`: Actual UTC time when this run ends
+- Do NOT use placeholder times like `05:00:00Z` or `05:30:00Z` - use the real current time
+
 ## Print Summary
 
 Print brief summary to stdout (captured in logs/):
@@ -977,43 +999,131 @@ should_send = send_digest or (urgent_only and has_urgent)
 ### Format Email
 
 **Subject line**:
-- If urgent items: `🔥 [URGENT] Job Search: {count} items need attention`
-- Normal digest: `📋 Daily Job Search Digest - {date}`
+- If urgent items: `[URGENT] Job Search: {count} items need attention`
+- Normal digest: `Job Search Digest - {date} - {hot_count} opportunities`
 
-**Email body** (markdown-friendly):
+**Email body** - Use mobile-friendly HTML (no tables, card-based layout):
 
+Write to `/tmp/digest-email.html`:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 16px; background: #f5f5f5; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; }
+    .card { background: white; border-radius: 8px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .urgent { border-left: 4px solid #dc3545; }
+    .hot { border-left: 4px solid #fd7e14; }
+    .info { border-left: 4px solid #0d6efd; }
+    h1 { font-size: 20px; margin: 0 0 16px 0; }
+    h2 { font-size: 16px; margin: 0 0 12px 0; color: #666; }
+    .job { padding: 12px 0; border-bottom: 1px solid #eee; }
+    .job:last-child { border-bottom: none; padding-bottom: 0; }
+    .company { font-weight: 600; font-size: 15px; }
+    .role { color: #666; font-size: 14px; }
+    .meta { display: flex; gap: 12px; margin-top: 6px; font-size: 13px; color: #888; }
+    .badge { background: #e9ecef; padding: 2px 8px; border-radius: 4px; }
+    .score { background: #d4edda; color: #155724; }
+    .salary { background: #cce5ff; color: #004085; }
+    .stats { display: flex; flex-wrap: wrap; gap: 8px; }
+    .stat { background: #f8f9fa; padding: 8px 12px; border-radius: 6px; text-align: center; flex: 1; min-width: 70px; }
+    .stat-value { font-size: 20px; font-weight: 600; }
+    .stat-label { font-size: 11px; color: #666; text-transform: uppercase; }
+    .footer { text-align: center; font-size: 12px; color: #999; margin-top: 16px; }
+    a { color: #0d6efd; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Job Search Digest</h1>
+
+    <!-- URGENT (only if items exist) -->
+    <div class="card urgent">
+      <h2>Urgent</h2>
+      <div>Offer from {company} expires in 2 days</div>
+    </div>
+
+    <!-- HOT OPPORTUNITIES -->
+    <div class="card hot">
+      <h2>Hot Opportunities ({count})</h2>
+
+      <div class="job">
+        <div class="company">Vercel</div>
+        <div class="role">Staff Cloud Security Engineer</div>
+        <div class="meta">
+          <span class="badge score">85 pts</span>
+          <span class="badge">71% match</span>
+          <span class="badge salary">$336k</span>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="company">Stripe</div>
+        <div class="role">Platform Engineer</div>
+        <div class="meta">
+          <span class="badge score">82 pts</span>
+          <span class="badge">75% match</span>
+          <span class="badge salary">$280k</span>
+        </div>
+      </div>
+      <!-- repeat for each hot job -->
+    </div>
+
+    <!-- PIPELINE STATS -->
+    <div class="card info">
+      <h2>Pipeline</h2>
+      <div class="stats">
+        <div class="stat"><div class="stat-value">{n}</div><div class="stat-label">Pending</div></div>
+        <div class="stat"><div class="stat-value">{n}</div><div class="stat-label">Applied</div></div>
+        <div class="stat"><div class="stat-value">{n}</div><div class="stat-label">Interview</div></div>
+        <div class="stat"><div class="stat-value">{n}</div><div class="stat-label">Offers</div></div>
+      </div>
+    </div>
+
+    <!-- ALERTS (only if items exist) -->
+    <div class="card">
+      <h2>Alerts</h2>
+      <div>• 2 applications going stale (25+ days)</div>
+      <div>• 1 posting no longer active</div>
+    </div>
+
+    <!-- TODO -->
+    <div class="card">
+      <h2>Your Todo</h2>
+      <div>• Browse LinkedIn ~15 min</div>
+      <div>• Process 4 hot opportunities</div>
+      <div>• Follow up with {company}</div>
+    </div>
+
+    <!-- SKILLS GAP -->
+    <div class="card">
+      <h2>Skills Gap</h2>
+      <div class="meta">
+        <span class="badge">terraform (4)</span>
+        <span class="badge">gcp (3)</span>
+        <span class="badge">go (2)</span>
+      </div>
+    </div>
+
+    <div class="footer">
+      Generated {timestamp} • Full digest in repo
+    </div>
+  </div>
+</body>
+</html>
 ```
-# Daily Job Search Digest - {date}
 
-## 🔥 URGENT ({count})
-{list each urgent item with action needed}
-
-## ⭐ Hot Opportunities ({count})
-| Company | Role | Score | Match | Action |
-|---------|------|-------|-------|--------|
-| Stripe | Platform Eng | 85 | 78% | Review posting |
-| ... | ... | ... | ... | ... |
-
-## ⚠️ Pipeline Alerts
-- {X} applications going stale (25+ days)
-- {X} posting issues found
-- {X} new roles at applied companies
-
-## 📤 Outreach Needed
-- Contact {name} at {company} for referral
-- Follow up with {company} (applied {N} days ago)
-
-## 📅 Interview Prep
-- {Company} {round} on {date} - prep doc ready
-
-## 📊 Quick Stats
-- Pipeline: {pending} → {applied} → {interviewing} → {offers}
-- New opportunities found: {count}
-- Match rate: {avg}%
-
----
-Full digest: digest/{date}.yaml
-```
+**Guidelines for email HTML**:
+- NO markdown tables - use card-based layout
+- NO # headers - use styled `<h2>` tags
+- Keep sections short - mobile screens are small
+- Only include sections that have content
+- Use inline-friendly CSS (some clients strip `<style>`)
+- Test: content should be readable without CSS
 
 ### Send via Gmail API
 
@@ -1021,7 +1131,8 @@ Full digest: digest/{date}.yaml
 python3 scripts/gmail-send.py send \
   --to "{config.notifications.email.recipient}" \
   --subject "{subject}" \
-  --body-file "/tmp/digest-email.md"
+  --body-file "/tmp/digest-email.html" \
+  --html
 ```
 
 **Important**: Only send if:
