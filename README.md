@@ -287,7 +287,7 @@ crontab -e
 **Docker benefits:**
 - Runs as non-root user
 - Isolated from host system
-- Resource limits (2 CPU, 2GB RAM)
+- Generous resources (8 CPU, 16GB RAM) - runs when you're asleep
 - Easy cleanup: `docker compose down --rmi all`
 
 ## Directory Structure

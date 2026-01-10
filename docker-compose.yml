@@ -40,9 +40,9 @@ services:
     security_opt:
       - no-new-privileges:true
 
-    # Resource limits
+    # Resource limits (runs at 4-5am when machine is idle)
     deploy:
       resources:
         limits:
-          cpus: '2'
-          memory: 2G
+          cpus: '8'
+          memory: 16G
