@@ -43,6 +43,53 @@ company_info:
   funding: string            # "Series B" | "Public" | null
   industry: string           # "Developer Tools" | "E-commerce"
 
+# === COMPANY INTEL (for cover letters) ===
+# Scraped from engineering blogs, GitHub, press releases
+# Use these details to personalize cover letters and interviews
+
+company_intel:
+  last_updated: date         # When intel was last refreshed
+
+  engineering_blog:
+    url: string              # "https://engineering.company.com"
+    posts:                   # Recent relevant posts (max 5)
+      - title: string        # "How We Scaled Our Kubernetes Platform"
+        url: string
+        date: date
+        summary: string      # 1-2 sentence summary
+        technologies:        # Tech mentioned in post
+          - string           # "kubernetes", "terraform", etc.
+        talking_points:      # Bullet points for cover letter
+          - string           # "Impressed by your zero-downtime migration..."
+
+  github:
+    org_url: string          # "https://github.com/company"
+    notable_repos:           # Open source projects (max 3)
+      - name: string         # "company/cool-tool"
+        description: string
+        stars: number
+        language: string
+        talking_points:
+          - string
+
+  tech_stack:                # Confirmed technologies (from blog/job/github)
+    - string                 # More reliable than guessing from job posting
+
+  recent_news:               # Press releases, funding, launches
+    - title: string
+      date: date
+      summary: string
+      talking_point: string  # How to reference in cover letter
+
+  culture_signals:           # Values, work style from blog/about pages
+    - string                 # "Strong async communication culture"
+
+  interview_prep:            # Specific things to mention/ask about
+    mention:                 # "I read your post about X..."
+      - string
+    ask_about:               # Questions to ask interviewers
+      - string
+
 # === RESUME MATCH (computed, but cached for convenience) ===
 
 match:

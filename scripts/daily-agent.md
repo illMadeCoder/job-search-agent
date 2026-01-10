@@ -397,6 +397,118 @@ Key fields to populate:
 - `referral_candidates`
 - `events` with `created` event (source = URL domain)
 
+## 2.8 Gather Company Intel (for Cover Letters)
+
+For each NEW posting created this run, research the company to gather personalized talking points.
+
+### Discovery Strategy
+
+1. **Find Engineering Blog**
+   ```
+   WebSearch: {company} engineering blog
+   WebSearch: {company} tech blog
+   ```
+   Common patterns:
+   - `engineering.{company}.com`
+   - `{company}.com/blog/engineering`
+   - `{company}.engineering`
+   - Medium: `medium.com/{company}`
+
+2. **Find GitHub Organization**
+   ```
+   WebSearch: {company} github
+   ```
+   - Look for open source projects
+   - Check repo stars, recent activity
+   - Note languages used
+
+3. **Find Recent News**
+   ```
+   WebSearch: {company} funding announcement
+   WebSearch: {company} product launch 2025
+   ```
+
+### What to Scrape
+
+**Engineering Blog Posts** (last 6 months, max 5 posts):
+- Posts mentioning technologies from the job description
+- Infrastructure/platform/DevOps related posts
+- Posts about scaling, reliability, migrations
+
+For each relevant post:
+```yaml
+- title: "How We Migrated to Kubernetes"
+  url: https://...
+  date: 2025-11-15
+  summary: "Describes their journey from EC2 to EKS..."
+  technologies: [kubernetes, aws, terraform]
+  talking_points:
+    - "Your zero-downtime migration approach resonated with my experience at..."
+    - "The canary deployment strategy you described aligns with..."
+```
+
+**GitHub Repos** (max 3 notable repos):
+```yaml
+- name: company/infrastructure-tools
+  description: "Internal tooling they open-sourced"
+  stars: 1200
+  language: Go
+  talking_points:
+    - "I've used your X tool and appreciated the Y design decision"
+```
+
+**Tech Stack** (confirmed from multiple sources):
+```yaml
+tech_stack:
+  - kubernetes  # mentioned in blog + job posting
+  - terraform   # seen in GitHub repos
+  - datadog     # mentioned in blog post
+```
+
+**Interview Prep**:
+```yaml
+interview_prep:
+  mention:
+    - "I read your post about the Kafka migration..."
+    - "Your open-source contribution to X caught my attention..."
+  ask_about:
+    - "How has the platform team evolved since the K8s migration?"
+    - "What's the roadmap for the internal developer platform?"
+```
+
+### Efficiency Rules
+
+- **Skip if intel already exists** and `last_updated` is within 30 days
+- **Batch by company**: If multiple roles at same company, research once
+- **Time-box**: Spend max 2 minutes per company (don't go down rabbit holes)
+- **Prioritize**: Only research companies with `recommendation: cold_apply` or `referral`
+  (skip companies you'll likely not apply to)
+
+### Update posting.yaml
+
+Add the `company_intel` section to each posting:
+
+```yaml
+company_intel:
+  last_updated: 2026-01-10
+  engineering_blog:
+    url: https://engineering.stripe.com
+    posts:
+      - title: "Scaling Stripe's Payment Infrastructure"
+        # ... etc
+  github:
+    org_url: https://github.com/stripe
+    notable_repos:
+      - name: stripe/stripe-cli
+        # ... etc
+  tech_stack: [ruby, go, aws, kubernetes]
+  interview_prep:
+    mention:
+      - "Your approach to API versioning in the Stripe CLI..."
+    ask_about:
+      - "How does the platform team handle multi-region deployments?"
+```
+
 ---
 
 # Phase 3: Generate Daily Digest

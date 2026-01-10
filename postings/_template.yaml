@@ -30,6 +30,22 @@ company_info:
   funding: null     # "Series B" | "Public"
   industry: null
 
+# === COMPANY INTEL (for cover letters) ===
+company_intel:
+  last_updated: null
+  engineering_blog:
+    url: null
+    posts: []
+  github:
+    org_url: null
+    notable_repos: []
+  tech_stack: []
+  recent_news: []
+  culture_signals: []
+  interview_prep:
+    mention: []
+    ask_about: []
+
 # === RESUME MATCH ===
 match:
   matched: null
