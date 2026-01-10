@@ -1,0 +1,235 @@
+# Job Search Agent Configuration Template
+#
+# Copy this to config.yaml and customize for your job search.
+# The agent reads config.yaml at runtime; changes take effect next run.
+#
+# Usage:
+#   cp config.template.yaml config.yaml
+#   # Edit config.yaml with your preferences
+#
+# This file is tracked in git (template).
+# config.yaml is gitignored (your personal settings).
+
+schema_version: 1
+
+# ============================================================
+# SEARCH CRITERIA
+# What jobs are you looking for?
+# ============================================================
+search:
+  target_roles:
+    - Platform Engineer
+    - Site Reliability Engineer
+    - DevOps Engineer
+    # Add your target roles
+
+  # Keywords that MUST appear (any one of these)
+  required_keywords:
+    - kubernetes
+    - terraform
+    - aws
+    # Add your required skills
+
+  # Keywords that boost score but aren't required
+  preferred_keywords:
+    - python
+    - go
+    - docker
+    # Add nice-to-haves
+
+  # Keywords that disqualify a posting
+  exclude_keywords:
+    - junior
+    - entry level
+    - intern
+    # Add dealbreakers
+
+# ============================================================
+# LOCATION & WORK STYLE
+# ============================================================
+location:
+  remote_only: true              # Set false if open to on-site
+
+  # If remote_only is false, these cities are acceptable
+  acceptable_cities:
+    - Seattle
+    - San Francisco
+    # Add your acceptable locations
+
+  countries:
+    - United States
+
+  timezones:
+    - US/Eastern
+    - US/Central
+    - US/Pacific
+
+# ============================================================
+# COMPENSATION
+# ============================================================
+salary:
+  minimum: 100000                # Your hard floor
+  target: 150000                 # For scoring bonus
+  currency: USD
+  include_undisclosed: true      # Include jobs without salary?
+
+# ============================================================
+# EXPERIENCE & LEVEL
+# ============================================================
+experience:
+  years: 5                       # Your experience level
+  max_required_years: 10         # Skip if they want more
+  min_required_years: 3          # Skip if too junior
+
+  levels:
+    - Senior
+    - Staff
+    # Your target levels
+
+  exclude_levels:
+    - Junior
+    - Entry
+    - Intern
+
+# ============================================================
+# COMPANY PREFERENCES
+# ============================================================
+companies:
+  tiers:
+    practice:
+      description: "Companies for interview practice"
+      industries:
+        - Technology
+        - Software
+
+    reserved:
+      description: "Dream companies - wait until ready"
+      industries: []
+      specific_companies:
+        # Add companies you want to save for later
+
+  blacklist:
+    # Companies to never show
+
+  visa:
+    require_sponsorship: false
+    skip_if_no_sponsorship: false
+
+# ============================================================
+# SCORING WEIGHTS
+# ============================================================
+scoring:
+  weights:
+    referral_bonus: 20
+    salary_above_target: 10
+    posted_today: 10
+    posted_yesterday: 5
+    recency_penalty_per_day: 5
+
+  hot_threshold: 60
+
+# ============================================================
+# TIMING & THRESHOLDS
+# ============================================================
+timing:
+  application:
+    expiry_days: 30
+    stale_warning_days: 25
+    follow_up_days: 7
+
+  interview:
+    thank_you_deadline_hours: 24
+    response_overdue_days: 5
+
+  health_check:
+    posting_recheck_days: 7
+
+  improvement:
+    source_404_threshold: 3
+    source_empty_threshold: 5
+    classification_miss_threshold: 3
+    stale_task_days: 14
+
+# ============================================================
+# SOURCES
+# ============================================================
+sources:
+  api:
+    remoteok:
+      enabled: true
+      filters:
+        tags:
+          - platform
+          - sre
+          - devops
+
+    greenhouse:
+      enabled: true
+      companies:
+        - cloudflare
+        - stripe
+        # Add companies using Greenhouse
+
+    lever:
+      enabled: true
+      companies:
+        - palantir
+        # Add companies using Lever
+
+    hn_whoishiring:
+      enabled: true
+
+  search:
+    google_jobs:
+      enabled: true
+      queries:
+        - 'site:boards.greenhouse.io "platform engineer" remote'
+
+    builtin:
+      enabled: false
+
+  manual:
+    linkedin:
+      enabled: false
+    indeed:
+      enabled: false
+
+# ============================================================
+# EMAIL CLASSIFICATION
+# ============================================================
+email:
+  query_filter: "newer_than:1d (from:ziprecruiter OR from:greenhouse OR from:lever OR from:linkedin OR from:ashby OR subject:interview OR subject:application)"
+  max_emails: 50
+
+  skip_senders:
+    - billing-noreply@linkedin.com
+    - updates-noreply@linkedin.com
+
+  skip_subjects:
+    - "data archive"
+
+# ============================================================
+# OUTPUT PREFERENCES
+# ============================================================
+output:
+  digest:
+    hot_limit: 10
+    pipeline_alert_limit: 20
+
+    sections:
+      urgent: true
+      hot: true
+      pipeline_alerts: true
+      outreach: true
+      manual_hunt: true
+      prep: true
+      trends: true
+      insights: true
+      learning: true
+
+  learning:
+    enabled: true
+    topics:
+      - "software engineer job search tips"
+      - "tech interview preparation"
+      - "salary negotiation"

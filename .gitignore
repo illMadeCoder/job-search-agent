@@ -10,6 +10,9 @@ connections.csv
 credentials.json
 gmail-tokens*.json
 
+# Your personal config (template is tracked)
+config.yaml
+
 # Your actual resume (template ok, personal content not)
 jb_resume_*.tex
 jb_resume_*.pdf

@@ -9,11 +9,15 @@ You are a **fully autonomous** job search agent. Run the complete daily workflow
 - If something fails, log the error and continue with other tasks
 
 **Working directory**: `/home/illm/resume`
-**Read these files for context**:
-- `/home/illm/resume/CLAUDE.md` - Strategy and profile
+
+**Read these files FIRST**:
+- `/home/illm/resume/config.yaml` - **User preferences** (roles, salary, scoring, thresholds)
+- `/home/illm/resume/CLAUDE.md` - Strategy and context
 - `/home/illm/resume/postings/_schema.yaml` - Data format reference
-- `/home/illm/resume/sources.yaml` - Source configuration and API patterns
-- `/home/illm/resume/gmail-integration.md` - Email scanning setup
+- `/home/illm/resume/sources.yaml` - Source API patterns (technical reference)
+
+**IMPORTANT**: All filtering, scoring, and thresholds come from `config.yaml`.
+Do NOT use hardcoded values - read from config.
 
 ---
 
@@ -61,9 +65,14 @@ Scan inbox for job-related emails from the last 24 hours.
 
 ## 0.1 Fetch Recent Emails
 
-Run this filtered query to get job-related emails (skips promotions/social noise):
+Read email settings from `config.yaml → email`:
+- `query_filter`: Gmail search query
+- `max_emails`: How many to fetch
+- `skip_senders`: Addresses to ignore
+- `skip_subjects`: Subject patterns to ignore
+
 ```bash
-source .venv/bin/activate && python scripts/gmail-fetch.py list --query "newer_than:1d (from:ziprecruiter OR from:greenhouse OR from:lever OR from:linkedin OR from:ashby OR from:workday OR from:icims OR from:jobvite OR from:smartrecruiters OR subject:interview OR subject:application OR subject:offer OR subject:recruiter)" --max 50
+source .venv/bin/activate && python scripts/gmail-fetch.py list --query "{config.email.query_filter}" --max {config.email.max_emails}
 ```
 
 This returns JSON with: account, id, from, subject, snippet, labels.
@@ -73,10 +82,7 @@ To read full email content when needed:
 source .venv/bin/activate && python scripts/gmail-fetch.py read MESSAGE_ID
 ```
 
-**Skip these immediately** (not job-related):
-- `billing-noreply@linkedin.com` - billing/receipts
-- `updates-noreply@linkedin.com` - social feed updates
-- Subject contains "data archive" - LinkedIn export notifications
+**Skip senders/subjects** defined in `config.yaml → email.skip_senders` and `email.skip_subjects`.
 
 ## 0.2 Classify Each Email
 
@@ -294,20 +300,35 @@ The following require user action - DO NOT attempt to scrape:
 
 Log in summary: "Manual sources skipped - user should browse LinkedIn/Indeed during active session"
 
-## 2.4 Strict Filters
+## 2.4 Apply Filters from Config
 
-All discovered jobs must match:
+Read all filter criteria from `config.yaml`. Do NOT hardcode values.
 
-| Filter | Requirement |
-|--------|-------------|
-| Remote | `location.type: remote` |
-| Location | US or US-remote |
-| Visa | No sponsorship required |
-| Salary | >= $150,000 (if disclosed) |
-| Tech | Kubernetes, Cloud, Platform, SRE, Infrastructure |
-| Experience | ~8 years (skip junior/entry, skip 15+ years) |
-| Tier | Practice only (skip healthcare tech, fintech) |
-| Dedupe | Skip companies already in postings/ |
+```yaml
+# From config.yaml:
+search.required_keywords      # At least one must match
+search.exclude_keywords       # Skip if any match
+location.remote_only          # Remote filter
+location.countries            # Geographic filter
+salary.minimum                # Hard floor
+experience.min_required_years # Skip too junior
+experience.max_required_years # Skip too senior
+experience.exclude_levels     # Skip these levels
+companies.tiers.reserved      # Skip reserved tier in autonomous mode
+companies.blacklist           # Always skip these
+```
+
+| Filter | Config Path | Logic |
+|--------|-------------|-------|
+| Remote | `location.remote_only` | Skip if not remote and this is true |
+| Location | `location.countries` | Must be in list |
+| Salary | `salary.minimum` | Skip if below (unless undisclosed and `include_undisclosed`) |
+| Keywords | `search.required_keywords` | At least one must appear |
+| Exclusions | `search.exclude_keywords` | Skip if any appear |
+| Experience | `experience.*` | Check min/max years, exclude levels |
+| Tier | `companies.tiers.reserved` | Skip reserved companies in auto mode |
+| Blacklist | `companies.blacklist` | Always skip |
+| Dedupe | Check `postings/` | Skip if folder exists for company |
 
 ## 2.5 Check LinkedIn Data
 
@@ -399,17 +420,29 @@ Sort by deadline (soonest first). Include specific action to take.
 
 ## 3.2 HOT (High-Value Opportunities)
 
-Score and rank new + pending postings:
+Score and rank new + pending postings using weights from `config.yaml → scoring`:
 
-**Scoring formula:**
-- Base: `match.matched / match.total * 100`
-- +20 if `referral_candidates` not empty
-- +10 if `salary.max >= 180000`
-- +10 if posted today
-- +5 if posted yesterday
-- -5 per day older than 2
+**Scoring formula** (read from config):
+```yaml
+# config.yaml → scoring.weights
+referral_bonus: 20           # Has connection at company
+salary_above_target: 10      # salary.max >= config.salary.target
+posted_today: 10             # Brand new
+posted_yesterday: 5          # Recent
+recency_penalty_per_day: 5   # -5 per day older than 2
+```
 
-Top 5-10 go in `hot` list with:
+**Score calculation:**
+```
+base = (match.matched / match.total) * 100
+if referral_candidates: base += config.scoring.weights.referral_bonus
+if salary.max >= config.salary.target: base += config.scoring.weights.salary_above_target
+if posted_today: base += config.scoring.weights.posted_today
+elif posted_yesterday: base += config.scoring.weights.posted_yesterday
+else: base -= (days_old - 2) * config.scoring.weights.recency_penalty_per_day
+```
+
+Top postings above `config.scoring.hot_threshold` go in `hot` list with:
 - Why it's hot (match rate, referral, salary)
 - Specific action (e.g., "Message John Doe for referral, then apply")
 
@@ -780,13 +813,13 @@ EOF
 echo '{"date":"2026-01-10","category":"source","issue":"lever_netflix_empty","count":1}' >> logs/observations.jsonl
 ```
 
-**Pattern detection thresholds:**
-| Pattern | Threshold | Action |
-|---------|-----------|--------|
-| Same source 404 | 3 days | Auto-fix: comment out |
-| Same source 0 results | 5 days | Create improvement task |
-| Same classification miss | 3 occurrences | Create improvement task |
-| Phase timeout | 2 days | Create improvement task |
+**Pattern detection thresholds** (from `config.yaml → timing.improvement`):
+| Pattern | Config Key | Default | Action |
+|---------|------------|---------|--------|
+| Same source 404 | `source_404_threshold` | 3 days | Auto-fix: comment out |
+| Same source 0 results | `source_empty_threshold` | 5 days | Create improvement task |
+| Same classification miss | `classification_miss_threshold` | 3 occurrences | Create improvement task |
+| Stale beads task | `stale_task_days` | 14 days | Auto-close |
 
 **Check for patterns:**
 ```bash

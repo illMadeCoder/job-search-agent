@@ -95,41 +95,65 @@ You wake up to a structured summary: urgent items first, then ranked opportuniti
 
 ## Configuration (The Interface)
 
-Before running, you need to customize these files for your job search:
+All your preferences live in one file: `config.yaml`
 
-### 1. `CLAUDE.md` - Your Search Profile
+### Setup
 
-Edit this file to define your search criteria:
+```bash
+# Copy template to create your config
+cp config.template.yaml config.yaml
+
+# Edit with your preferences
+nano config.yaml  # or your editor
+```
+
+### What You Configure
+
+**Search criteria** — what you're looking for:
 ```yaml
-target_roles:
-  - Platform Engineer
-  - Site Reliability Engineer
-  - DevOps Engineer
+search:
+  target_roles: [Platform Engineer, SRE, DevOps Engineer]
+  required_keywords: [kubernetes, terraform, aws]
+  exclude_keywords: [junior, entry level]
+
+salary:
+  minimum: 150000
+  target: 180000
 
 location:
-  remote: true
-  hybrid_cities: [Seattle, San Francisco]
-
-keywords:
-  required: [Kubernetes, Terraform]
-  preferred: [Go, Python, AWS]
+  remote_only: true
 ```
 
-### 2. `sources.yaml` - Companies to Track
-
-Add companies to the API tracking lists:
+**Scoring weights** — how opportunities are ranked:
 ```yaml
-greenhouse_companies:
-  - stripe
-  - cloudflare
-  - your-target-company  # Add your targets
-
-lever_companies:
-  - netflix
-  - another-company
+scoring:
+  weights:
+    referral_bonus: 20        # +20 if you know someone there
+    salary_above_target: 10   # +10 if above your target
+    posted_today: 10          # +10 for brand new postings
 ```
 
-### 3. Your Resume (Optional)
+**Sources** — which job boards to check:
+```yaml
+sources:
+  api:
+    greenhouse:
+      companies: [cloudflare, stripe, datadog]
+    remoteok:
+      enabled: true
+```
+
+**Timing** — when things happen:
+```yaml
+timing:
+  application:
+    expiry_days: 30           # Auto-expire after 30 days silence
+    follow_up_days: 7         # Suggest follow-up after 7 days
+```
+
+See `config.template.yaml` for all options with documentation.
+
+### Your Resume (Optional)
 
 Place your resume as `resume.pdf` or `resume.txt` for:
 - Keyword matching against job descriptions
