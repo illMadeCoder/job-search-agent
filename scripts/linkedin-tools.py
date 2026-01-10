@@ -22,8 +22,42 @@ import argparse
 import yaml
 from pathlib import Path
 
-ARCHIVE_DIR = Path(__file__).parent.parent / "linkedin_archive"
-CONFIG_PATH = Path(__file__).parent.parent / "config.yaml"
+def find_archive_dir():
+    """Find LinkedIn archive directory in multiple locations."""
+    script_repo = Path(__file__).parent.parent
+    cwd = Path.cwd()
+    data_dir = Path(os.environ.get('JOB_SEARCH_DATA', ''))
+
+    search_paths = [
+        data_dir / "linkedin_archive" if data_dir.is_dir() else None,
+        cwd / "linkedin_archive",
+        script_repo / "linkedin_archive",
+    ]
+
+    for path in search_paths:
+        if path and path.is_dir():
+            return path
+    return script_repo / "linkedin_archive"  # Default fallback
+
+def find_config_path():
+    """Find config.yaml in multiple locations."""
+    script_repo = Path(__file__).parent.parent
+    cwd = Path.cwd()
+    data_dir = Path(os.environ.get('JOB_SEARCH_DATA', ''))
+
+    search_paths = [
+        data_dir / "config.yaml" if data_dir.is_dir() else None,
+        cwd / "config.yaml",
+        script_repo / "config.yaml",
+    ]
+
+    for path in search_paths:
+        if path and path.exists():
+            return path
+    return script_repo / "config.yaml"  # Default fallback
+
+ARCHIVE_DIR = find_archive_dir()
+CONFIG_PATH = find_config_path()
 
 def load_config():
     """Load config.yaml for dynamic settings."""

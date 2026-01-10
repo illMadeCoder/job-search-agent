@@ -26,12 +26,32 @@ from googleapiclient.discovery import build
 import base64
 import re
 
+def find_token_files():
+    """Find Gmail token files in multiple locations."""
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    repo_dir = os.path.dirname(script_dir)
+    cwd = os.getcwd()
+    data_dir = os.environ.get('JOB_SEARCH_DATA', '')
+
+    # Search order: env var > cwd > script's repo > data subdir
+    search_paths = [
+        os.path.join(data_dir, 'gmail-tokens-*.json') if data_dir else None,
+        os.path.join(cwd, 'gmail-tokens-*.json'),
+        os.path.join(repo_dir, 'gmail-tokens-*.json'),
+        os.path.join(repo_dir, 'data', 'gmail-tokens-*.json'),
+    ]
+
+    token_files = []
+    for pattern in [p for p in search_paths if p]:
+        token_files.extend(sorted(glob(pattern)))
+
+    return list(dict.fromkeys(token_files))  # Dedupe preserving order
+
+
 def get_services():
     """Get Gmail service for each configured account."""
-    os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
     services = []
-    for token_file in sorted(glob('gmail-tokens-*.json')):
+    for token_file in find_token_files():
         with open(token_file) as f:
             token_data = json.load(f)
 

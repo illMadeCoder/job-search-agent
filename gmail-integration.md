@@ -17,7 +17,7 @@ Agent scans Gmail daily to:
 ```bash
 # Go to: https://console.cloud.google.com/
 
-1. Create new project: "job-search-agent"
+1. Create new project: "agentic-job-hunter"
 2. Enable Gmail API:
    APIs & Services → Enable APIs → Gmail API → Enable
 3. Configure OAuth consent screen:

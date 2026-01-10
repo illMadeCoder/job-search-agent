@@ -29,12 +29,17 @@ def get_service():
     """Get Gmail service using first available token."""
     script_dir = os.path.dirname(os.path.abspath(__file__))
     repo_dir = os.path.dirname(script_dir)
+    cwd = os.getcwd()
+    data_dir = os.environ.get('JOB_SEARCH_DATA', '')
 
-    # Try repo root first, then data directory
+    # Search order: env var > cwd > script's repo > data subdir
     search_paths = [
+        os.path.join(data_dir, 'gmail-tokens-*.json') if data_dir else None,
+        os.path.join(cwd, 'gmail-tokens-*.json'),
         os.path.join(repo_dir, 'gmail-tokens-*.json'),
         os.path.join(repo_dir, 'data', 'gmail-tokens-*.json'),
     ]
+    search_paths = [p for p in search_paths if p]  # Remove None
 
     token_file = None
     for pattern in search_paths:

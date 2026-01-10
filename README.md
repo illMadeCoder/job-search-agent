@@ -172,8 +172,8 @@ Place your resume as `resume.pdf` or `resume.txt` for:
 ### Step 1: Clone and Install Dependencies
 
 ```bash
-git clone https://github.com/yourusername/job-search-agent
-cd job-search-agent
+git clone https://github.com/yourusername/agentic-job-hunter
+cd agentic-job-hunter
 
 # Python dependencies
 python3 -m venv .venv
@@ -244,8 +244,8 @@ python scripts/linkedin-tools.py recruiters
 crontab -e
 
 # Add these lines (use absolute paths!)
-0 4 * * * /home/you/job-search-agent/scripts/health-check.sh
-0 5 * * * /home/you/job-search-agent/scripts/daily-job-search.sh
+0 4 * * * /home/you/agentic-job-hunter/scripts/health-check.sh
+0 5 * * * /home/you/agentic-job-hunter/scripts/daily-job-search.sh
 ```
 
 **Important cron notes:**
@@ -282,8 +282,8 @@ docker compose run --rm agent shell   # Debug shell
 # 5. Schedule via cron
 crontab -e
 # Add:
-0 4 * * * cd /path/to/job-search-agent && ./scripts/docker-run.sh health
-0 5 * * * cd /path/to/job-search-agent && ./scripts/docker-run.sh daily
+0 4 * * * cd /path/to/agentic-job-hunter && ./scripts/docker-run.sh health
+0 5 * * * cd /path/to/agentic-job-hunter && ./scripts/docker-run.sh daily
 ```
 
 **Docker benefits:**
