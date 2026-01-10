@@ -53,6 +53,49 @@ match:
   keywords_matched: []
   keywords_missing: []
 
+# === RESUME TAILORING ===
+resume_tailoring:
+  generated: null
+  emphasize: []
+  add: []
+  bullet_suggestions: []
+  summary_suggestion: null
+
+# === COVER LETTER ===
+cover_letter:
+  generated: null
+  version: null
+  content: null
+  opening_hook: null
+  company_knowledge: []
+  experience_alignment: []
+  closing: null
+  tone: null
+  word_count: null
+
+# === INTERVIEW PREP ===
+interview_prep:
+  generated: null
+  last_updated: null
+  company_overview:
+    what_they_do: null
+    recent_news: null
+    culture_notes: null
+    tech_stack: []
+  role_focus:
+    key_requirements: []
+    your_strengths: []
+    potential_gaps: []
+  expected_questions: []
+  questions_to_ask: []
+  rounds: []
+  talking_points: []
+  logistics:
+    timezone: null
+    video_platform: null
+    dress_code: null
+    backup_contact: null
+
 # === APPLICATION STATE ===
 status: active      # active | missing | closed
 

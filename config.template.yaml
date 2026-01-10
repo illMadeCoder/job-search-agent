@@ -264,3 +264,34 @@ output:
       - "software engineer job search tips"
       - "tech interview preparation"
       - "salary negotiation"
+
+# ============================================================
+# NOTIFICATIONS
+# Email notifications for digest and urgent items
+# ============================================================
+notifications:
+  email:
+    enabled: true
+    recipient: your-email@example.com  # Where to send notifications
+
+    # What to send
+    daily_digest: true                 # Send full digest every morning
+    urgent_only: false                 # If true, only send when urgent items exist
+
+    # Gmail sending (uses same OAuth as reading)
+    use_gmail_api: true                # Send via Gmail API (recommended)
+    # Alternative: SMTP (if Gmail API not available)
+    # smtp:
+    #   host: smtp.gmail.com
+    #   port: 587
+    #   username: your-email@gmail.com
+    #   password_env: SMTP_PASSWORD    # Environment variable name
+
+  # Future: other notification channels
+  slack:
+    enabled: false
+    webhook_url: ""
+
+  discord:
+    enabled: false
+    webhook_url: ""

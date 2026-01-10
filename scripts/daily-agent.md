@@ -509,6 +509,152 @@ company_intel:
       - "How does the platform team handle multi-region deployments?"
 ```
 
+## 2.9 Generate Application Materials
+
+For each NEW posting with `recommendation: cold_apply` or `referral`:
+
+### Resume Tailoring
+
+Read your resume from `config.files.resume` and compare against job requirements.
+
+Generate `resume_tailoring` section:
+
+```yaml
+resume_tailoring:
+  generated: "2026-01-10T05:30:00Z"
+
+  # Keywords already on resume - suggest emphasizing more
+  emphasize:
+    - keyword: kubernetes
+      current_mentions: 2
+      suggestion: "Add cluster size (50+ nodes) to R1 bullet"
+
+  # Missing keywords - suggest how to add
+  add:
+    - keyword: terraform
+      priority: critical      # In job requirements
+      suggestion: "Add IaC experience from infrastructure automation"
+      evidence: "You used Terraform for AWS provisioning"
+
+  # Specific bullet improvements
+  bullet_suggestions:
+    - current: "Managed Kubernetes clusters"
+      suggested: "Managed 50+ node Kubernetes clusters serving 10M daily requests with 99.9% uptime"
+      reason: "Adds scale and impact metrics they're looking for"
+
+  summary_suggestion: |
+    Platform Engineer with 8 years building scalable infrastructure...
+    (tailored opening for this specific role)
+```
+
+### Cover Letter Generation
+
+Using company intel gathered in 2.8, generate a personalized cover letter:
+
+```yaml
+cover_letter:
+  generated: "2026-01-10T05:30:00Z"
+  version: 1
+
+  content: |
+    Dear Hiring Team,
+
+    Your recent blog post on migrating to Kubernetes resonated with me—I led
+    a similar zero-downtime migration at R1 RCM, transitioning 200+ services
+    to EKS while maintaining five-nines availability.
+
+    [2-3 paragraphs mapping your experience to their needs]
+
+    I'd welcome the opportunity to discuss how my platform engineering
+    experience could contribute to your infrastructure team.
+
+    Best regards,
+    [Name]
+
+  opening_hook: "Your blog post on K8s migration..."
+  company_knowledge:
+    - source: engineering_blog
+      reference: "Zero-downtime Kubernetes migration"
+    - source: github
+      reference: "stripe-cli open source project"
+
+  experience_alignment:
+    - requirement: "Scale distributed systems"
+      your_experience: "Managed 50+ node clusters at R1"
+    - requirement: "Infrastructure as code"
+      your_experience: "Terraform + Ansible automation"
+
+  closing: "Discuss contributing to infrastructure team"
+  tone: professional
+  word_count: 287
+```
+
+**Cover Letter Guidelines**:
+- Keep under 350 words
+- Reference specific company content (blog, GitHub, news)
+- Map 2-3 requirements directly to your experience
+- Show you researched them, don't be generic
+- End with clear call to action
+
+## 2.10 Generate Interview Prep (for Interviewing Postings)
+
+For each `.interviewing` posting where `interview_prep.generated` is null:
+
+Generate comprehensive interview prep:
+
+```yaml
+interview_prep:
+  generated: "2026-01-10T05:30:00Z"
+  last_updated: "2026-01-10T05:30:00Z"
+
+  company_overview:
+    what_they_do: "Stripe builds payment infrastructure for the internet..."
+    recent_news: "Series I funding at $50B valuation, expanding to crypto"
+    culture_notes: "Strong writing culture, async-first, high autonomy"
+    tech_stack: [ruby, go, aws, kubernetes, terraform]
+
+  role_focus:
+    key_requirements:
+      - Scale payment infrastructure globally
+      - Improve developer platform experience
+      - Drive reliability and observability
+    your_strengths:
+      - Platform engineering at scale (R1 RCM)
+      - Kubernetes expertise (50+ node clusters)
+      - Strong observability background (Datadog, Prometheus)
+    potential_gaps:
+      - Payment systems domain (address: quick to learn domains)
+      - Ruby (address: strong in Python/Go, similar paradigms)
+
+  expected_questions:
+    - question: "Tell me about a time you improved system reliability"
+      category: behavioral
+      your_answer_outline: "R1 RCM oncall reduction story - 70% fewer pages"
+      example_to_use: "Implemented SLOs, automated remediation, better alerting"
+
+    - question: "Design a distributed rate limiter"
+      category: system_design
+      your_answer_outline: "Token bucket, Redis backend, discuss tradeoffs"
+      example_to_use: "Reference Stripe's blog on rate limiting if known"
+
+  questions_to_ask:
+    - question: "How has the platform team evolved since the K8s migration?"
+      why: "Shows you read their blog, genuinely curious"
+      follow_ups: ["What's the biggest challenge now?", "Team size?"]
+
+    - question: "What does success look like in 6 months?"
+      why: "Shows you're thinking about impact"
+      follow_ups: ["How is performance measured?"]
+
+  talking_points:
+    - point: "Your blog post on zero-downtime deployments..."
+      when_to_use: "When discussing deployment experience"
+    - point: "I've used stripe-cli for local testing..."
+      when_to_use: "When discussing developer experience"
+```
+
+**Update before each round**: When new `interview_scheduled` events are added, update `interview_prep.rounds` with round-specific prep.
+
 ---
 
 # Phase 3: Generate Daily Digest
@@ -812,6 +958,78 @@ Print brief summary to stdout (captured in logs/):
 
 ════════════════════════════════════════════════════
 ```
+
+## Send Email Notifications
+
+If `config.notifications.email.enabled` is true, send email notifications.
+
+### Check if Notification Needed
+
+```python
+# Read config
+send_digest = config.notifications.email.daily_digest
+urgent_only = config.notifications.email.urgent_only
+has_urgent = len(digest.urgent) > 0
+
+should_send = send_digest or (urgent_only and has_urgent)
+```
+
+### Format Email
+
+**Subject line**:
+- If urgent items: `🔥 [URGENT] Job Search: {count} items need attention`
+- Normal digest: `📋 Daily Job Search Digest - {date}`
+
+**Email body** (markdown-friendly):
+
+```
+# Daily Job Search Digest - {date}
+
+## 🔥 URGENT ({count})
+{list each urgent item with action needed}
+
+## ⭐ Hot Opportunities ({count})
+| Company | Role | Score | Match | Action |
+|---------|------|-------|-------|--------|
+| Stripe | Platform Eng | 85 | 78% | Review posting |
+| ... | ... | ... | ... | ... |
+
+## ⚠️ Pipeline Alerts
+- {X} applications going stale (25+ days)
+- {X} posting issues found
+- {X} new roles at applied companies
+
+## 📤 Outreach Needed
+- Contact {name} at {company} for referral
+- Follow up with {company} (applied {N} days ago)
+
+## 📅 Interview Prep
+- {Company} {round} on {date} - prep doc ready
+
+## 📊 Quick Stats
+- Pipeline: {pending} → {applied} → {interviewing} → {offers}
+- New opportunities found: {count}
+- Match rate: {avg}%
+
+---
+Full digest: digest/{date}.yaml
+```
+
+### Send via Gmail API
+
+```bash
+python3 scripts/gmail-send.py send \
+  --to "{config.notifications.email.recipient}" \
+  --subject "{subject}" \
+  --body-file "/tmp/digest-email.md"
+```
+
+**Important**: Only send if:
+- Email is enabled in config
+- Gmail tokens exist and are valid
+- Either daily_digest=true OR (urgent_only=true AND urgent items exist)
+
+Log success/failure but don't fail the entire run if email fails.
 
 ---
 

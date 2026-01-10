@@ -102,6 +102,114 @@ match:
     - string                 # NORMALIZE: lowercase, canonical names
                              # "kubernetes" not "K8s" or "Kubernetes"
 
+# === RESUME TAILORING ===
+# Suggestions for customizing resume for this specific role
+
+resume_tailoring:
+  generated: datetime          # When suggestions were generated
+
+  # Keywords to emphasize (already on resume, highlight more)
+  emphasize:
+    - keyword: string          # "kubernetes"
+      current_mentions: number # How many times it appears now
+      suggestion: string       # "Add K8s cluster size/scale to R1 bullet"
+
+  # Skills to add or expand (missing from resume)
+  add:
+    - keyword: string          # "terraform"
+      priority: enum           # critical | important | nice_to_have
+      suggestion: string       # "Add Terraform experience from infrastructure work"
+      evidence: string         # Where you actually have this experience
+
+  # Bullets to modify
+  bullet_suggestions:
+    - current: string          # Current resume bullet
+      suggested: string        # Modified version for this role
+      reason: string           # Why this change helps
+
+  # Role-specific summary tweak
+  summary_suggestion: string   # Modified professional summary
+
+# === COVER LETTER ===
+# Generated cover letter using company intel
+
+cover_letter:
+  generated: datetime
+  version: number              # Increment on regeneration
+
+  # The actual letter
+  content: string              # Full cover letter text (use YAML literal |)
+
+  # Building blocks used
+  opening_hook: string         # Personalized opening referencing company
+  company_knowledge:           # Specific references used
+    - source: string           # "engineering blog" | "github" | "news"
+      reference: string        # What was referenced
+  experience_alignment:        # How your experience maps to their needs
+    - requirement: string      # What they want
+      your_experience: string  # How you match
+  closing: string              # Call to action
+
+  # Metadata
+  tone: enum                   # professional | conversational | enthusiastic
+  word_count: number
+
+# === INTERVIEW PREP ===
+# Generated when state becomes 'interviewing'
+
+interview_prep:
+  generated: datetime
+  last_updated: datetime       # Update before each round
+
+  # Company research summary
+  company_overview:
+    what_they_do: string       # 2-3 sentence summary
+    recent_news: string        # Latest developments
+    culture_notes: string      # Work style, values
+    tech_stack: [string]       # Confirmed technologies
+
+  # Role-specific prep
+  role_focus:
+    key_requirements: [string] # Top 5 things they want
+    your_strengths: [string]   # Where you shine for this role
+    potential_gaps: [string]   # Areas to address proactively
+
+  # Questions they'll likely ask
+  expected_questions:
+    - question: string
+      category: enum           # behavioral | technical | system_design | culture
+      your_answer_outline: string  # Key points to hit
+      example_to_use: string   # STAR story or technical example
+
+  # Questions to ask them
+  questions_to_ask:
+    - question: string
+      why: string              # Why this is a good question
+      follow_ups: [string]     # If they give a short answer
+
+  # Per-round prep (added as interviews are scheduled)
+  rounds:
+    - round_id: string         # Links to interview_scheduled event
+      round_type: enum         # recruiter | technical | system_design | hiring_manager
+      focus_areas: [string]    # What to emphasize
+      interviewers:
+        - name: string
+          role: string
+          linkedin_notes: string  # What you learned from their profile
+      prep_notes: string       # Specific prep for this round
+
+  # Things to mention (from company_intel)
+  talking_points:
+    - point: string            # "Your blog post on K8s migration..."
+      when_to_use: string      # "When discussing infrastructure experience"
+
+  # Logistics
+  logistics:
+    timezone: string
+    video_platform: string     # Zoom, Google Meet, etc.
+    dress_code: string
+    backup_contact: string     # Recruiter email/phone
+
 # === APPLICATION STATE (materialized from events) ===
 
 status: enum                 # active | missing | closed
