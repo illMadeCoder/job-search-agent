@@ -1,0 +1,53 @@
+# ============================================
+# Personal Data (NEVER commit)
+# ============================================
+
+# LinkedIn data export
+linkedin_archive/
+connections.csv
+
+# Gmail OAuth credentials
+credentials.json
+gmail-tokens*.json
+
+# Your resume (template ok, personal content not)
+resume.pdf
+resume.txt
+*.resume.*
+
+# ============================================
+# Job Search Data (contains applications/PII)
+# ============================================
+
+# Actual postings (keep schemas/templates)
+postings/*/
+
+# Actual digests (keep schemas/templates)
+digest/*.yaml
+!digest/_schema.yaml
+!digest/_template.yaml
+
+# ============================================
+# Local State
+# ============================================
+
+# Beads database (agent memory)
+.beads/
+
+# Python virtual environment
+.venv/
+__pycache__/
+*.pyc
+
+# Logs
+logs/
+
+# ============================================
+# Editor/OS files
+# ============================================
+*.swp
+*~
+.DS_Store
+*.Zone.Identifier
+.idea/
+.vscode/
