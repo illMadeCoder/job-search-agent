@@ -3,8 +3,10 @@
 # Usage: docker-run.sh [daily|health]
 #
 # Environment variables:
-#   ANTHROPIC_API_KEY - Required
-#   JOB_SEARCH_DATA   - Path to your data directory (default: ../data)
+#   ANTHROPIC_API_KEY  - Required
+#   JOB_SEARCH_DATA    - Path to your data directory (default: ./data)
+#   AGENT_CPU_LIMIT    - CPU cores for container (default: 4)
+#   AGENT_MEMORY_LIMIT - Memory limit for container (default: 8G)
 
 set -e
 

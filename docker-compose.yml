@@ -40,9 +40,9 @@ services:
     security_opt:
       - no-new-privileges:true
 
-    # Resource limits (runs at 4-5am when machine is idle)
+    # Resource limits - configure via environment variables
     deploy:
       resources:
         limits:
-          cpus: '8'
-          memory: 16G
+          cpus: '${AGENT_CPU_LIMIT:-4}'
+          memory: ${AGENT_MEMORY_LIMIT:-8G}

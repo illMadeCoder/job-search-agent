@@ -268,9 +268,11 @@ cp config.template.yaml data/config.yaml
 # Edit data/config.yaml with your preferences
 # Copy credentials.json, gmail-tokens*.json, linkedin_archive/ to data/
 
-# 3. Set your API key
+# 3. Set environment variables
 export ANTHROPIC_API_KEY="your-key"
 export JOB_SEARCH_DATA="./data"
+export AGENT_CPU_LIMIT=4        # Optional, default: 4
+export AGENT_MEMORY_LIMIT=8G    # Optional, default: 8G
 
 # 4. Run manually
 docker compose run --rm agent daily   # Daily job search
@@ -287,7 +289,7 @@ crontab -e
 **Docker benefits:**
 - Runs as non-root user
 - Isolated from host system
-- Generous resources (8 CPU, 16GB RAM) - runs when you're asleep
+- Configurable resources via `AGENT_CPU_LIMIT` and `AGENT_MEMORY_LIMIT`
 - Easy cleanup: `docker compose down --rmi all`
 
 ## Directory Structure
