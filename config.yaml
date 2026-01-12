@@ -1,0 +1,466 @@
+# Job Search Agent Configuration
+#
+# This file contains YOUR preferences - customize freely.
+# The agent reads this at runtime; changes take effect next run.
+#
+# Separate from agent logic (daily-agent.md) so you can:
+# - Share the agent without sharing your preferences
+# - Update preferences without touching agent code
+# - Track preference changes over time
+
+schema_version: 1
+
+# ============================================================
+# FILES
+# Paths to your personal files
+# ============================================================
+files:
+  resume: jb_resume_2025.tex     # For keyword matching
+  # resume_pdf: resume.pdf       # Optional PDF version
+
+# ============================================================
+# LINKEDIN
+# Your LinkedIn profile info for message parsing
+# ============================================================
+linkedin:
+  username: jessebergerstock     # Your LinkedIn profile username (from URL)
+
+# ============================================================
+# SEARCH CRITERIA
+# What jobs are you looking for?
+# ============================================================
+search:
+  target_roles:
+    - Platform Engineer
+    - Site Reliability Engineer
+    - DevOps Engineer
+    - Infrastructure Engineer
+    - Cloud Engineer
+
+  # Keywords that MUST appear (any one of these)
+  required_keywords:
+    - kubernetes
+    - terraform
+    - aws
+    - gcp
+    - azure
+    - infrastructure
+    - platform
+    - sre
+    - devops
+
+  # Keywords that boost score but aren't required
+  preferred_keywords:
+    - python
+    - go
+    - docker
+    - ci/cd
+    - observability
+    - datadog
+    - prometheus
+    - grafana
+
+  # Keywords that disqualify a posting
+  exclude_keywords:
+    - junior
+    - entry level
+    - intern
+    - ".net"
+    - salesforce
+
+  # Role titles that disqualify (outside core competency)
+  exclude_roles:
+    - security engineer        # Need CKS cert first
+    - security architect
+    - appsec
+    - devsecops               # Pure security focus
+    - penetration tester
+
+  # Only keep one role per company (best match)
+  one_per_company: true
+
+# ============================================================
+# LOCATION & WORK STYLE
+# ============================================================
+location:
+  remote_only: true              # Only show remote jobs
+
+  # If remote_only is false, these cities are acceptable
+  acceptable_cities:
+    - Seattle
+    - San Francisco
+    - New York
+    - Austin
+    - Denver
+
+  # Country requirements
+  countries:
+    - United States
+    - US
+    - USA
+
+  # Timezone requirements (for remote)
+  timezones:
+    - US/Eastern
+    - US/Central
+    - US/Mountain
+    - US/Pacific
+
+# ============================================================
+# COMPENSATION
+# ============================================================
+salary:
+  minimum: 130000                # Floor - allows roles where you're competitive
+  target: 155000                 # Your target (slight raise from $145k)
+  maximum: 200000                # Skip roles expecting $200k+ expertise
+  currency: USD
+
+  # Include jobs that don't disclose salary?
+  include_undisclosed: true
+
+# ============================================================
+# EXPERIENCE & LEVEL
+# ============================================================
+experience:
+  years: 8                       # Your experience level
+
+  # Skip postings requiring more than this
+  max_required_years: 12
+
+  # Skip postings requiring less than this (too junior)
+  min_required_years: 4
+
+  # Target levels (Staff/Principal are stretch - focus on Senior)
+  levels:
+    - Senior
+    - Lead
+
+  # Skip these levels
+  exclude_levels:
+    - Junior
+    - Entry
+    - Intern
+    - Associate
+    - Staff          # Too senior - expects $200k+ expertise
+    - Principal      # Too senior
+    - Distinguished  # Too senior
+    - Fellow         # Too senior
+
+# ============================================================
+# COMPANY PREFERENCES
+# ============================================================
+companies:
+  # Two-tier strategy
+  tiers:
+    practice:                    # Apply now for interview practice
+      description: "General tech companies for practice"
+      industries:
+        - Technology
+        - Software
+        - SaaS
+        - E-commerce
+
+    reserved:                    # Save for later, don't burn bridges
+      description: "Dream companies - wait until ready"
+      industries:
+        - Healthcare Tech        # Your target industry
+        - Fintech
+      specific_companies:
+        - Google
+        - Apple
+        - Netflix
+        # Add companies you specifically want to save
+
+  # Companies to always skip
+  blacklist:
+    - # Add companies you never want to see
+
+  # Visa sponsorship
+  visa:
+    require_sponsorship: false   # Set true if you need visa sponsorship
+    skip_if_no_sponsorship: false
+
+# ============================================================
+# SCORING WEIGHTS
+# How opportunities are ranked in the digest
+# ============================================================
+scoring:
+  # Base score is match_rate (0-100)
+
+  weights:
+    referral_bonus: 20           # Has a connection at company
+    salary_above_target: 10      # salary.max >= target
+    posted_today: 10             # Brand new posting
+    posted_yesterday: 5          # Recent posting
+    recency_penalty_per_day: 5   # -5 per day older than 2
+    ny_state_bonus: 15           # Based in New York State
+
+  # Minimum score to appear in "hot" list
+  hot_threshold: 60
+
+# ============================================================
+# TIMING & THRESHOLDS
+# When things happen
+# ============================================================
+timing:
+  # Application lifecycle
+  application:
+    expiry_days: 30              # Mark as expired after N days no response
+    stale_warning_days: 25       # Alert when approaching expiry
+    follow_up_days: 7            # Suggest follow-up after N days
+
+  # Interview follow-up
+  interview:
+    thank_you_deadline_hours: 24 # Send thank you within N hours
+    response_overdue_days: 5     # Alert if no response after N days
+
+  # Urgent thresholds (for digest fire drill section)
+  urgent:
+    offer_expiring_days: 3       # Alert if offer deadline within N days
+    application_expiring_days: 25 # Alert when approaching expiry
+    post_interview_overdue_days: 5 # Alert if no response N days after interview
+
+  # Health checks
+  health_check:
+    posting_recheck_days: 7      # Re-verify posting URLs every N days
+
+  # Self-improvement
+  improvement:
+    source_404_threshold: 3      # Auto-fix after N consecutive 404s
+    source_empty_threshold: 5    # Create task after N days empty
+    classification_miss_threshold: 3  # Task after N misses
+    stale_task_days: 14          # Auto-close beads tasks after N days
+
+# ============================================================
+# ANALYSIS
+# Trend analysis settings
+# ============================================================
+analysis:
+  trend_periods:
+    recent_days: 7               # "Recent" = last N days
+    comparison_days: 30          # Compare against last N days
+
+  significant_change_pct: 10     # Flag trends with >N% change
+
+# ============================================================
+# SOURCES
+# Which job sources to use
+# ============================================================
+sources:
+  # ===========================================
+  # API SOURCES - Disabled to prevent context overflow
+  # Use search-based discovery instead (see below)
+  # ===========================================
+  api:
+    remoteok:
+      enabled: false  # API returns 100k+ tokens - use search instead
+      # url: https://remoteok.com/api
+
+    hn_whoishiring:
+      enabled: true
+      # Search for thread, then fetch single page
+
+  # ===========================================
+  # SEARCH SOURCES - Discovery via web search
+  # Grouped by category for diversity tracking
+  # ===========================================
+  search:
+    # --- ATS PLATFORMS (discover any company using these) ---
+    ats_greenhouse:
+      enabled: true
+      queries:
+        - 'site:boards.greenhouse.io "platform engineer" remote'
+        - 'site:boards.greenhouse.io "site reliability" remote'
+        - 'site:boards.greenhouse.io "infrastructure engineer" remote'
+        - 'site:boards.greenhouse.io "devops" remote'
+
+    ats_lever:
+      enabled: true
+      queries:
+        - 'site:jobs.lever.co "platform engineer" remote'
+        - 'site:jobs.lever.co "SRE" OR "site reliability" remote'
+        - 'site:jobs.lever.co "infrastructure" remote'
+
+    ats_ashby:
+      enabled: true
+      queries:
+        - 'site:jobs.ashbyhq.com platform OR SRE OR infrastructure remote'
+
+    ats_workday:
+      enabled: true
+      queries:
+        - 'site:myworkdayjobs.com "platform engineer" remote'
+        - 'site:myworkdayjobs.com "SRE" remote'
+
+    # --- STARTUP JOB BOARDS (random early-stage companies) ---
+    wellfound:
+      enabled: true
+      queries:
+        - 'site:wellfound.com "platform engineer" remote'
+        - 'site:wellfound.com "infrastructure engineer" remote'
+        - 'site:wellfound.com "SRE" remote'
+
+    yc_workatastartup:
+      enabled: true
+      queries:
+        - 'site:workatastartup.com platform OR infrastructure OR SRE'
+
+    # --- REMOTE-FIRST JOB BOARDS ---
+    remoteok:
+      enabled: true
+      queries:
+        - 'site:remoteok.com "platform engineer" OR "SRE" OR "infrastructure"'
+        - 'site:remoteok.com "devops" OR "cloud engineer" remote'
+
+    weworkremotely:
+      enabled: true
+      queries:
+        - 'site:weworkremotely.com devops OR SRE OR platform OR infrastructure'
+
+    remotive:
+      enabled: true
+      queries:
+        - 'site:remotive.com "platform engineer" OR "SRE" OR "devops"'
+
+    himalayas:
+      enabled: true
+      queries:
+        - 'site:himalayas.app platform OR SRE OR devops remote'
+
+    flexjobs:
+      enabled: true
+      queries:
+        - 'site:flexjobs.com "platform engineer" OR "SRE" remote'
+
+    arc_dev:
+      enabled: true
+      queries:
+        - 'site:arc.dev "platform" OR "infrastructure" OR "SRE" remote'
+
+    dynamite_jobs:
+      enabled: true
+      queries:
+        - 'site:dynamitejobs.com devops OR platform OR infrastructure'
+
+    # --- TECH-SPECIFIC BOARDS ---
+    dice:
+      enabled: true
+      queries:
+        - 'site:dice.com "platform engineer" remote'
+        - 'site:dice.com "site reliability" remote'
+
+    # --- DIRECT CAREER PAGES (catches companies not on job boards) ---
+    direct_careers:
+      enabled: true
+      queries:
+        - '"platform engineer" remote "careers" OR "jobs" -linkedin -indeed -glassdoor'
+        - '"site reliability engineer" remote hiring -linkedin -indeed'
+        - '"infrastructure engineer" remote startup "join us" OR "we are hiring"'
+
+  # ===========================================
+  # MANUAL SOURCES - Require user interaction
+  # ===========================================
+  manual:
+    linkedin:
+      enabled: false             # Requires login
+    indeed:
+      enabled: false             # Aggressive bot detection
+    glassdoor:
+      enabled: false             # Requires login
+
+  # ===========================================
+  # DIVERSITY REQUIREMENTS
+  # Agent should aim for results from multiple categories
+  # ===========================================
+  diversity:
+    min_categories: 3            # Must have results from at least 3 categories
+    categories:
+      - name: ats_platforms
+        sources: [ats_greenhouse, ats_lever, ats_ashby, ats_workday]
+      - name: startup_boards
+        sources: [wellfound, yc_workatastartup, hn_whoishiring]
+      - name: remote_boards
+        sources: [remoteok, weworkremotely, remotive, himalayas, flexjobs, arc_dev, dynamite_jobs]
+        # remoteok now uses search, not API
+      - name: tech_boards
+        sources: [dice]
+      - name: direct_discovery
+        sources: [direct_careers]
+
+# ============================================================
+# EMAIL CLASSIFICATION
+# How to identify job-related emails
+# ============================================================
+email:
+  # Gmail query to filter job-related emails
+  query_filter: "newer_than:1d (from:ziprecruiter OR from:greenhouse OR from:lever OR from:linkedin OR from:ashby OR from:workday OR from:icims OR from:jobvite OR from:smartrecruiters OR subject:interview OR subject:application OR subject:offer OR subject:recruiter)"
+
+  # Maximum emails to process per run
+  max_emails: 50
+
+  # Skip these senders (not job-related)
+  skip_senders:
+    - billing-noreply@linkedin.com
+    - updates-noreply@linkedin.com
+
+  # Skip subjects containing these
+  skip_subjects:
+    - "data archive"
+    - "your connections"
+
+# ============================================================
+# OUTPUT PREFERENCES
+# How the digest is formatted
+# ============================================================
+output:
+  digest:
+    # Maximum items per section
+    hot_limit: 10
+    pipeline_alert_limit: 20
+
+    # Include sections
+    sections:
+      urgent: true
+      hot: true
+      pipeline_alerts: true
+      outreach: true
+      manual_hunt: true
+      prep: true
+      trends: true
+      insights: true
+      learning: true
+
+  # Daily learning article preferences
+  learning:
+    enabled: true
+    topics:
+      - "platform engineer job search tips"
+      - "SRE career advice"
+      - "DevOps interview preparation"
+      - "remote job search strategies"
+      - "salary negotiation tech"
+      - "LinkedIn profile optimization engineer"
+
+# ============================================================
+# NOTIFICATIONS
+# Email notifications for digest and urgent items
+# ============================================================
+notifications:
+  email:
+    enabled: true
+    recipient: illmadecoder@gmail.com
+
+    # What to send
+    daily_digest: true                 # Send full digest every morning
+    urgent_only: false                 # If true, only send when urgent items exist
+
+    # Gmail sending (uses same OAuth as reading)
+    use_gmail_api: true
+
+  slack:
+    enabled: false
+    webhook_url: ""
+
+  discord:
+    enabled: false
+    webhook_url: ""

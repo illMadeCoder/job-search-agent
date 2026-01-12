@@ -1,7 +1,8 @@
 # Job Search Agent - Docker Compose
 #
 # Usage:
-#   docker compose run --rm agent daily    # Run daily job search
+#   docker compose run --rm agent daily    # Run daily job search (5am)
+#   docker compose run --rm agent hourly   # Run hourly monitor (6am-9pm EST)
 #   docker compose run --rm agent health   # Run health check
 #   docker compose run --rm agent shell    # Interactive shell
 #
@@ -19,21 +20,12 @@ services:
     build: .
     user: "1000:1000"  # Run as non-root (adjust to your UID)
 
-    # Mount your data directory
+    # Mount repo root as workspace (includes config.yaml, resume, postings, digest)
     volumes:
-      - ${JOB_SEARCH_DATA:-./data}:/home/agent/job-search
+      - .:/home/agent/job-search
 
-      # Mount Claude config for API access (needs write for session state)
+      # Mount Claude config for API access
       - ${HOME}/.claude:/home/agent/.claude
-
-      # Mount scripts from repo (read-only)
-      - ./scripts:/home/agent/job-search/scripts:ro
-      - ./postings/_schema.yaml:/home/agent/job-search/postings/_schema.yaml:ro
-      - ./postings/_template.yaml:/home/agent/job-search/postings/_template.yaml:ro
-      - ./digest/_schema.yaml:/home/agent/job-search/digest/_schema.yaml:ro
-      - ./digest/_template.yaml:/home/agent/job-search/digest/_template.yaml:ro
-      - ./sources.yaml:/home/agent/job-search/sources.yaml:ro
-      - ./CLAUDE.md:/home/agent/job-search/CLAUDE.md:ro
 
     # Pass through Anthropic API key
     environment:
