@@ -26,6 +26,7 @@ fi
 export PATH="$PATH:$(go env GOPATH 2>/dev/null || echo "$HOME/go")/bin"
 
 if ! claude -p "$(cat scripts/health-check-prompt.md)" \
+  --model opus \
   --allowedTools "WebFetch,Read,Write,Edit,Bash,Glob,Grep"; then
     echo "ERROR: Claude agent failed with exit code $?"
 fi

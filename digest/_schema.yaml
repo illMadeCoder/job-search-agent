@@ -103,11 +103,13 @@ hot:
     posting: string
     company: string
     role: string
+    url: string               # REQUIRED - direct link to apply (for email buttons)
     why_hot:                  # Reasons this ranks high
       - string                # "92% keyword match"
       - string                # "Referral: John Doe (Senior SRE)"
       - string                # "$180-220k range"
     match_rate: number
+    salary_min: number        # For email display
     salary_max: number
     has_referral: boolean
     referral_contact: string  # Name if has_referral
@@ -299,11 +301,11 @@ trends:
         you_have: boolean
 
   salary:
-    recent_avg: number        # Average salary.max in recent postings
-    older_avg: number
+    recent_avg: number        # Average midpoint (min+max)/2 in recent postings
+    older_avg: number         # Average midpoint in older postings
     change_pct: number        # % change
     trend: enum               # up | down | stable
-    note: string              # "Salaries up 8% in last week"
+    note: string              # "Avg salary $165k across 5 postings"
 
   sources:
     improving:                # Sources producing more results

@@ -30,16 +30,12 @@ def get_service():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     repo_dir = os.path.dirname(script_dir)
     cwd = os.getcwd()
-    data_dir = os.environ.get('JOB_SEARCH_DATA', '')
 
-    # Search order: env var > cwd > script's repo > data subdir
+    # Search for token files
     search_paths = [
-        os.path.join(data_dir, 'gmail-tokens-*.json') if data_dir else None,
         os.path.join(cwd, 'gmail-tokens-*.json'),
         os.path.join(repo_dir, 'gmail-tokens-*.json'),
-        os.path.join(repo_dir, 'data', 'gmail-tokens-*.json'),
     ]
-    search_paths = [p for p in search_paths if p]  # Remove None
 
     token_file = None
     for pattern in search_paths:
@@ -50,6 +46,7 @@ def get_service():
 
     if not token_file:
         print("ERROR: No gmail-tokens-*.json found", file=sys.stderr)
+        print("Run: python3 scripts/gmail-oauth-setup.py", file=sys.stderr)
         sys.exit(1)
 
     with open(token_file) as f:
@@ -83,20 +80,14 @@ def get_service():
 def html_to_plain(html: str) -> str:
     """Convert HTML to plain text for email fallback."""
     import re
-    # Remove style tags and content
     text = re.sub(r'<style[^>]*>.*?</style>', '', html, flags=re.DOTALL)
-    # Remove script tags
     text = re.sub(r'<script[^>]*>.*?</script>', '', text, flags=re.DOTALL)
-    # Replace common block elements with newlines
     text = re.sub(r'</div>', '\n', text)
     text = re.sub(r'</h[1-6]>', '\n\n', text)
     text = re.sub(r'<br\s*/?>', '\n', text)
-    # Remove remaining HTML tags
     text = re.sub(r'<[^>]+>', '', text)
-    # Decode HTML entities
     text = text.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>')
     text = text.replace('&nbsp;', ' ').replace('&quot;', '"')
-    # Clean up whitespace
     text = re.sub(r'\n\s*\n', '\n\n', text)
     text = re.sub(r' +', ' ', text)
     return text.strip()
@@ -106,14 +97,11 @@ def send_email(to: str, subject: str, body: str, html: bool = False):
     """Send an email via Gmail API."""
     service = get_service()
 
-    # Get sender email
     profile = service.users().getProfile(userId='me').execute()
     sender = profile['emailAddress']
 
-    # Create message
     if html:
         msg = MIMEMultipart('alternative')
-        # Create plain text fallback from HTML
         plain_text = html_to_plain(body)
         msg.attach(MIMEText(plain_text, 'plain'))
         msg.attach(MIMEText(body, 'html'))
@@ -124,7 +112,6 @@ def send_email(to: str, subject: str, body: str, html: bool = False):
     msg['from'] = sender
     msg['subject'] = subject
 
-    # Encode and send
     raw = base64.urlsafe_b64encode(msg.as_bytes()).decode()
 
     try:
@@ -153,7 +140,6 @@ def main():
     parser = argparse.ArgumentParser(description='Gmail send utility')
     subparsers = parser.add_subparsers(dest='command', required=True)
 
-    # send command
     send_parser = subparsers.add_parser('send', help='Send email')
     send_parser.add_argument('--to', required=True, help='Recipient email')
     send_parser.add_argument('--subject', required=True, help='Email subject')

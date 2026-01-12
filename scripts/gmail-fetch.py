@@ -19,33 +19,29 @@ import sys
 import json
 import argparse
 from glob import glob
-from datetime import datetime
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
 import base64
 import re
 
+
 def find_token_files():
-    """Find Gmail token files in multiple locations."""
+    """Find Gmail token files."""
     script_dir = os.path.dirname(os.path.abspath(__file__))
     repo_dir = os.path.dirname(script_dir)
     cwd = os.getcwd()
-    data_dir = os.environ.get('JOB_SEARCH_DATA', '')
 
-    # Search order: env var > cwd > script's repo > data subdir
     search_paths = [
-        os.path.join(data_dir, 'gmail-tokens-*.json') if data_dir else None,
         os.path.join(cwd, 'gmail-tokens-*.json'),
         os.path.join(repo_dir, 'gmail-tokens-*.json'),
-        os.path.join(repo_dir, 'data', 'gmail-tokens-*.json'),
     ]
 
     token_files = []
-    for pattern in [p for p in search_paths if p]:
+    for pattern in search_paths:
         token_files.extend(sorted(glob(pattern)))
 
-    return list(dict.fromkeys(token_files))  # Dedupe preserving order
+    return list(dict.fromkeys(token_files))
 
 
 def get_services():
@@ -86,6 +82,7 @@ def get_services():
 
     return services
 
+
 def list_emails(query='newer_than:1d', max_results=20):
     """List emails matching query from all accounts."""
     services = get_services()
@@ -124,9 +121,9 @@ def list_emails(query='newer_than:1d', max_results=20):
         except Exception as e:
             print(f"Error fetching from {account}: {e}", file=sys.stderr)
 
-    # Sort by date (newest first)
     all_emails.sort(key=lambda x: x['date'], reverse=True)
     return all_emails
+
 
 def read_email(message_id):
     """Read full email content by ID."""
@@ -143,7 +140,6 @@ def read_email(message_id):
 
             headers = {h['name']: h['value'] for h in msg['payload']['headers']}
 
-            # Extract body
             body = ''
             if 'parts' in msg['payload']:
                 for part in msg['payload']['parts']:
@@ -156,7 +152,6 @@ def read_email(message_id):
                         data = part['body'].get('data', '')
                         if data:
                             html = base64.urlsafe_b64decode(data).decode('utf-8', errors='ignore')
-                            # Basic HTML stripping
                             body = re.sub(r'<[^>]+>', ' ', html)
                             body = re.sub(r'\s+', ' ', body).strip()
             else:
@@ -172,33 +167,32 @@ def read_email(message_id):
                 'from': headers.get('From', ''),
                 'to': headers.get('To', ''),
                 'subject': headers.get('Subject', ''),
-                'body': body[:5000],  # Limit body size
+                'body': body[:5000],
                 'labels': msg.get('labelIds', [])
             }
-        except Exception as e:
-            continue  # Try next account
+        except Exception:
+            continue
 
     return {'error': f'Message {message_id} not found'}
+
 
 def list_accounts():
     """List configured Gmail accounts."""
     services = get_services()
     return [{'email': s['email'], 'token_file': s['token_file']} for s in services]
 
+
 def main():
     parser = argparse.ArgumentParser(description='Gmail fetch utility')
     subparsers = parser.add_subparsers(dest='command', required=True)
 
-    # list command
     list_parser = subparsers.add_parser('list', help='List emails')
     list_parser.add_argument('--query', '-q', default='newer_than:1d', help='Gmail search query')
     list_parser.add_argument('--max', '-m', type=int, default=20, help='Max results')
 
-    # read command
     read_parser = subparsers.add_parser('read', help='Read email by ID')
     read_parser.add_argument('message_id', help='Message ID')
 
-    # accounts command
     subparsers.add_parser('accounts', help='List configured accounts')
 
     args = parser.parse_args()
@@ -212,6 +206,7 @@ def main():
     elif args.command == 'accounts':
         accounts = list_accounts()
         print(json.dumps(accounts, indent=2))
+
 
 if __name__ == '__main__':
     main()

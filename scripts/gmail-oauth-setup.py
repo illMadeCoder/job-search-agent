@@ -30,10 +30,9 @@ except ImportError:
     print("  pip install google-auth-oauthlib google-api-python-client")
     sys.exit(1)
 
-# Scopes needed for job search agent
 SCOPES = [
-    'https://www.googleapis.com/auth/gmail.readonly',  # Read emails
-    'https://www.googleapis.com/auth/gmail.send',      # Send notifications
+    'https://www.googleapis.com/auth/gmail.readonly',
+    'https://www.googleapis.com/auth/gmail.send',
 ]
 
 
@@ -65,7 +64,6 @@ def main():
                         help='Path to credentials.json')
     args = parser.parse_args()
 
-    # Find credentials file
     if args.credentials:
         creds_path = Path(args.credentials)
     else:
@@ -94,7 +92,6 @@ def main():
         print(f"  - {scope.split('/')[-1]}")
     print()
 
-    # Run OAuth flow
     flow = InstalledAppFlow.from_client_secrets_file(str(creds_path), SCOPES)
 
     print("Opening browser for authentication...")
@@ -103,15 +100,16 @@ def main():
 
     creds = flow.run_local_server(port=0)
 
-    # Verify by getting profile
     service = build('gmail', 'v1', credentials=creds)
     profile = service.users().getProfile(userId='me').execute()
     email = profile['emailAddress']
 
     print(f"Authenticated as: {email}")
 
-    # Save token
-    token_file = Path.cwd() / f"gmail-tokens-{args.account}.json"
+    # Save token in repo root
+    script_dir = Path(__file__).parent
+    repo_dir = script_dir.parent
+    token_file = repo_dir / f"gmail-tokens-{args.account}.json"
 
     token_data = {
         'token': creds.token,
@@ -129,11 +127,9 @@ def main():
     print()
     print("Setup complete! You can now use gmail-fetch.py and gmail-send.py")
 
-    # Test send capability
     print()
     print("Testing permissions...")
     try:
-        # Just verify we have the scopes, don't actually send
         if 'https://www.googleapis.com/auth/gmail.send' in creds.scopes:
             print("  ✓ Send permission granted")
         else:

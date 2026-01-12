@@ -311,6 +311,8 @@ Read all filter criteria from `config.yaml`. Do NOT hardcode values.
 # From config.yaml:
 search.required_keywords      # At least one must match
 search.exclude_keywords       # Disqualify if any match
+search.exclude_roles          # Disqualify these role titles (outside core competency)
+search.one_per_company        # If true, keep only best match per company
 location.remote_only          # Disqualify if not remote and this is true
 location.countries            # Disqualify if not in list
 salary.minimum                # Disqualify if below (unless undisclosed and `include_undisclosed`)
@@ -332,6 +334,20 @@ companies.blacklist           # Always disqualify
 | Tier | `companies.tiers.reserved` | **DISCARD** - do not create folder |
 | Blacklist | `companies.blacklist` | **DISCARD** - do not create folder |
 | Dedupe | Check `postings/` | **DISCARD** - folder already exists |
+| Role Title | `search.exclude_roles` | **DISCARD** - outside core competency |
+
+## 2.4.1 One Role Per Company
+
+**IMPORTANT**: If `config.search.one_per_company` is true (default), apply this filter AFTER all other filters:
+
+1. Group remaining qualified jobs by company
+2. For each company with multiple roles:
+   - Calculate match_rate for each role (see section 2.6)
+   - Keep ONLY the role with the highest match_rate
+   - **DISCARD** all other roles from that company
+3. Log discarded roles with reason: "Lower match than {kept_role} at same company ({match}% vs {kept_match}%)"
+
+**Rationale**: Applying to multiple roles at the same company looks unfocused and can hurt your candidacy. Pick your best shot.
 
 **Log discarded jobs** in the digest under `agent_log.phase_2_collection` with reason:
 ```yaml
@@ -931,9 +947,34 @@ Write complete digest to `digest/{YYYY-MM-DD}.yaml` per schema.
 
 **IMPORTANT - Use actual timestamps:**
 - `generated_at`: Current UTC time when digest is written (e.g., `"2026-01-10T17:56:00Z"`)
-- `agent_log.run_start`: Actual UTC time when this run started
-- `agent_log.run_end`: Actual UTC time when this run ends
+- `agent_run.started_at`: Actual UTC time when this run started
+- `agent_run.finished_at`: Actual UTC time when this run ends
 - Do NOT use placeholder times like `05:00:00Z` or `05:30:00Z` - use the real current time
+
+**Collect resource metrics** for admin visibility:
+```bash
+# Get peak RAM usage (Linux - from /proc/self/status)
+peak_ram_mb=$(grep VmPeak /proc/self/status 2>/dev/null | awk '{print int($2/1024)}' || echo "0")
+
+# Get CPU time (user + system) in seconds
+cpu_info=$(cat /proc/self/stat 2>/dev/null)
+cpu_seconds=$(echo "$cpu_info" | awk '{print ($14+$15)/100}' || echo "0")
+
+# Calculate CPU % = (cpu_seconds / wall_time_seconds) * 100
+# wall_time_seconds = duration_min * 60
+cpu_pct=$(echo "scale=0; ($cpu_seconds / ($duration_min * 60)) * 100" | bc || echo "0")
+```
+
+Write to `agent_run.resources`:
+```yaml
+agent_run:
+  resources:
+    peak_ram_mb: {peak_ram_mb}
+    cpu_pct: {cpu_pct}           # CPU utilization percentage
+    cpu_seconds: {cpu_seconds}   # Raw CPU time (for debugging)
+    api_calls: {count of WebFetch/API calls made}
+    tokens_used: null  # If available from Claude API response
+```
 
 ## Print Summary
 
@@ -1002,9 +1043,9 @@ should_send = send_digest or (urgent_only and has_urgent)
 - If urgent items: `[URGENT] Job Search: {count} items need attention`
 - Normal digest: `Job Search Digest - {date} - {hot_count} opportunities`
 
-**Email body** - Use mobile-friendly HTML (no tables, card-based layout):
+**Email body** - Use enhanced mobile-friendly HTML with 7 sections:
 
-Write to `/tmp/digest-email.html`:
+Write to `/tmp/digest-email.html`. The template below shows all sections - **only include sections that have data**.
 
 ```html
 <!DOCTYPE html>
@@ -1013,117 +1054,278 @@ Write to `/tmp/digest-email.html`:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 16px; background: #f5f5f5; color: #333; }
-    .container { max-width: 600px; margin: 0 auto; }
-    .card { background: white; border-radius: 8px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-    .urgent { border-left: 4px solid #dc3545; }
-    .hot { border-left: 4px solid #fd7e14; }
-    .info { border-left: 4px solid #0d6efd; }
-    h1 { font-size: 20px; margin: 0 0 16px 0; }
-    h2 { font-size: 16px; margin: 0 0 12px 0; color: #666; }
-    .job { padding: 12px 0; border-bottom: 1px solid #eee; }
-    .job:last-child { border-bottom: none; padding-bottom: 0; }
-    .company { font-weight: 600; font-size: 15px; }
-    .role { color: #666; font-size: 14px; }
-    .meta { display: flex; gap: 12px; margin-top: 6px; font-size: 13px; color: #888; }
-    .badge { background: #e9ecef; padding: 2px 8px; border-radius: 4px; }
-    .score { background: #d4edda; color: #155724; }
-    .salary { background: #cce5ff; color: #004085; }
-    .stats { display: flex; flex-wrap: wrap; gap: 8px; }
-    .stat { background: #f8f9fa; padding: 8px 12px; border-radius: 6px; text-align: center; flex: 1; min-width: 70px; }
-    .stat-value { font-size: 20px; font-weight: 600; }
-    .stat-label { font-size: 11px; color: #666; text-transform: uppercase; }
-    .footer { text-align: center; font-size: 12px; color: #999; margin-top: 16px; }
-    a { color: #0d6efd; text-decoration: none; }
+    * { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; background: #0f172a; color: #334155; }
+    .container { max-width: 480px; margin: 0 auto; }
+    /* Header */
+    .header { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); padding: 20px; }
+    .header h1 { color: white; font-size: 17px; font-weight: 600; margin: 0 0 2px 0; }
+    .header .date { color: rgba(255,255,255,0.85); font-size: 13px; }
+    /* Stats bar */
+    .stats-bar { display: flex; background: rgba(255,255,255,0.15); border-radius: 8px; margin-top: 14px; overflow: hidden; }
+    .stat-item { flex: 1; text-align: center; padding: 10px 4px; border-right: 1px solid rgba(255,255,255,0.1); }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { color: white; font-size: 20px; font-weight: 700; }
+    .stat-label { color: rgba(255,255,255,0.8); font-size: 10px; text-transform: uppercase; }
+    /* Content */
+    .content { background: #f8fafc; padding: 12px; }
+    .section { background: white; border-radius: 12px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .section-header { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+    /* Urgent (red) */
+    .urgent { border-left: 4px solid #ef4444; }
+    .urgent .section-header { color: #dc2626; }
+    .urgent-item { padding: 10px 0; border-bottom: 1px solid #fef2f2; }
+    .urgent-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .urgent-item:first-of-type { padding-top: 0; }
+    .urgent-label { font-size: 10px; font-weight: 600; color: #ef4444; text-transform: uppercase; margin-bottom: 4px; }
+    .urgent-title { font-weight: 600; font-size: 14px; color: #1e293b; }
+    .urgent-detail { font-size: 13px; color: #64748b; margin-top: 2px; }
+    .urgent-btn { display: inline-block; background: #fef2f2; color: #dc2626; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 6px; text-decoration: none; margin-top: 8px; }
+    /* New matches (purple) */
+    .new-matches { border-left: 4px solid #8b5cf6; }
+    .new-matches .section-header { color: #7c3aed; }
+    .job-card { background: #faf5ff; border-radius: 10px; padding: 12px; margin-bottom: 8px; }
+    .job-card:last-of-type { margin-bottom: 0; }
+    .job-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+    .job-company { font-weight: 700; font-size: 15px; color: #1e293b; }
+    .job-match { background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 12px; }
+    .job-role { font-size: 13px; color: #475569; margin-bottom: 8px; }
+    .job-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+    .job-tag { background: white; color: #64748b; font-size: 11px; padding: 3px 8px; border-radius: 4px; }
+    .job-tag.salary { background: #dcfce7; color: #166534; }
+    .apply-btn { display: block; background: #7c3aed; color: white; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 13px; }
+    /* Pipeline (blue) */
+    .pipeline { border-left: 4px solid #3b82f6; }
+    .pipeline .section-header { color: #2563eb; }
+    .pipeline-group { margin-bottom: 12px; }
+    .pipeline-group:last-child { margin-bottom: 0; }
+    .pipeline-label { font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 6px; }
+    .pipeline-card { background: #eff6ff; border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; }
+    .pipeline-company { font-weight: 600; font-size: 14px; color: #1e293b; }
+    .pipeline-role { font-size: 12px; color: #64748b; }
+    .pipeline-status { font-size: 12px; color: #3b82f6; margin-top: 4px; }
+    .pipeline-list { list-style: none; padding: 0; margin: 0; }
+    .pipeline-list li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 13px; }
+    .pipeline-list li:last-child { border-bottom: none; }
+    .pipeline-list .days { color: #94a3b8; font-size: 12px; }
+    .pipeline-list .days.warning { color: #f59e0b; }
+    /* Outreach (green) */
+    .outreach { border-left: 4px solid #22c55e; }
+    .outreach .section-header { color: #16a34a; }
+    .outreach-item { padding: 10px 0; border-bottom: 1px solid #f0fdf4; }
+    .outreach-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .outreach-type { font-size: 10px; font-weight: 600; color: #22c55e; text-transform: uppercase; margin-bottom: 4px; }
+    .outreach-name { font-weight: 600; font-size: 14px; color: #1e293b; }
+    .outreach-context { font-size: 12px; color: #64748b; margin-top: 2px; }
+    .outreach-preview { font-size: 12px; color: #475569; font-style: italic; margin-top: 6px; padding: 8px; background: #f0fdf4; border-radius: 6px; }
+    /* Market pulse (gray) */
+    .pulse { border-left: 4px solid #94a3b8; }
+    .pulse .section-header { color: #64748b; }
+    .pulse-item { display: flex; gap: 8px; font-size: 13px; color: #475569; padding: 6px 0; }
+    .pulse-item strong { color: #1e293b; }
+    .skills-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; padding-top: 10px; border-top: 1px solid #f1f5f9; }
+    .skill-chip { background: #fef3c7; color: #92400e; font-size: 11px; padding: 4px 10px; border-radius: 20px; }
+    /* Learning (purple) */
+    .learning { border-left: 4px solid #6366f1; }
+    .learning .section-header { color: #4f46e5; }
+    .article-card { background: #eef2ff; border-radius: 8px; padding: 12px; }
+    .article-title { font-weight: 600; font-size: 14px; color: #1e293b; margin-bottom: 4px; }
+    .article-source { font-size: 11px; color: #6366f1; margin-bottom: 8px; }
+    .article-summary { font-size: 13px; color: #475569; line-height: 1.4; margin-bottom: 10px; }
+    .article-btn { display: inline-block; background: #6366f1; color: white; font-size: 12px; font-weight: 600; padding: 8px 14px; border-radius: 6px; text-decoration: none; }
+    /* Agent health (dark) */
+    .agent { border-left: 4px solid #475569; background: #1e293b; }
+    .agent .section-header { color: #94a3b8; }
+    .agent-stats { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+    .agent-stat { font-size: 12px; color: #94a3b8; }
+    .agent-stat strong { color: #e2e8f0; }
+    .agent-issues { margin-top: 10px; padding-top: 10px; border-top: 1px solid #334155; }
+    .agent-issue { font-size: 12px; color: #94a3b8; padding: 4px 0; display: flex; gap: 6px; }
+    .agent-issue .icon { flex-shrink: 0; }
+    .agent-issue.error { color: #fca5a5; }
+    .agent-issue.fixed { color: #86efac; }
+    .agent-issue.task { color: #fcd34d; }
+    .agent-beads { margin-top: 8px; }
+    .bead-item { font-size: 11px; color: #cbd5e1; background: #334155; padding: 6px 10px; border-radius: 6px; margin-bottom: 4px; }
+    .bead-item .category { color: #6366f1; font-weight: 600; text-transform: uppercase; font-size: 9px; }
+    /* Footer */
+    .footer { padding: 16px; text-align: center; }
+    .footer-text { color: #64748b; font-size: 11px; }
+    .footer-link { color: #6366f1; text-decoration: none; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Job Search Digest</h1>
-
-    <!-- URGENT (only if items exist) -->
-    <div class="card urgent">
-      <h2>Urgent</h2>
-      <div>Offer from {company} expires in 2 days</div>
+    <!-- HEADER + STATS (always show) -->
+    <div class="header">
+      <h1>Your Job Search Digest</h1>
+      <div class="date">{day_of_week}, {month} {day}, {year}</div>
+      <div class="stats-bar">
+        <div class="stat-item"><div class="stat-num">{new_count}</div><div class="stat-label">New</div></div>
+        <div class="stat-item"><div class="stat-num">{applied_count}</div><div class="stat-label">Applied</div></div>
+        <div class="stat-item"><div class="stat-num">{interview_count}</div><div class="stat-label">Interview</div></div>
+        <div class="stat-item"><div class="stat-num">{offer_count}</div><div class="stat-label">Offers</div></div>
+      </div>
     </div>
 
-    <!-- HOT OPPORTUNITIES -->
-    <div class="card hot">
-      <h2>Hot Opportunities ({count})</h2>
-
-      <div class="job">
-        <div class="company">Vercel</div>
-        <div class="role">Staff Cloud Security Engineer</div>
-        <div class="meta">
-          <span class="badge score">85 pts</span>
-          <span class="badge">71% match</span>
-          <span class="badge salary">$336k</span>
+    <div class="content">
+      <!-- URGENT (only if digest.urgent has items) -->
+      <div class="section urgent">
+        <div class="section-header"><span>⚠️</span> Action Required</div>
+        <!-- For each item in digest.urgent -->
+        <div class="urgent-item">
+          <div class="urgent-label">{urgent_type}</div>
+          <div class="urgent-title">{company} - {role}</div>
+          <div class="urgent-detail">{details}</div>
+          <a href="{link}" class="urgent-btn">{action_text}</a>
         </div>
       </div>
 
-      <div class="job">
-        <div class="company">Stripe</div>
-        <div class="role">Platform Engineer</div>
-        <div class="meta">
-          <span class="badge score">82 pts</span>
-          <span class="badge">75% match</span>
-          <span class="badge salary">$280k</span>
+      <!-- NEW MATCHES (only if digest.hot has items) -->
+      <div class="section new-matches">
+        <div class="section-header"><span>✨</span> New Matches ({count})</div>
+        <!-- For each item in digest.hot (max 5) -->
+        <div class="job-card">
+          <div class="job-top">
+            <div class="job-company">{company}</div>
+            <div class="job-match">{match_rate}%</div>
+          </div>
+          <div class="job-role">{role}</div>
+          <div class="job-tags">
+            <span class="job-tag salary">${salary_min/1000}-{salary_max/1000}k</span>
+            <span class="job-tag">{location}</span>
+            <span class="job-tag">{recency}</span>
+          </div>
+          <a href="{posting_url}" class="apply-btn">View & Apply</a>
         </div>
       </div>
-      <!-- repeat for each hot job -->
-    </div>
 
-    <!-- PIPELINE STATS -->
-    <div class="card info">
-      <h2>Pipeline</h2>
-      <div class="stats">
-        <div class="stat"><div class="stat-value">{n}</div><div class="stat-label">Pending</div></div>
-        <div class="stat"><div class="stat-value">{n}</div><div class="stat-label">Applied</div></div>
-        <div class="stat"><div class="stat-value">{n}</div><div class="stat-label">Interview</div></div>
-        <div class="stat"><div class="stat-value">{n}</div><div class="stat-label">Offers</div></div>
+      <!-- PIPELINE (only if non-terminal postings exist) -->
+      <div class="section pipeline">
+        <div class="section-header"><span>📊</span> Your Pipeline</div>
+        <!-- Interviewing group (if any) -->
+        <div class="pipeline-group">
+          <div class="pipeline-label">Interviewing ({count})</div>
+          <div class="pipeline-card">
+            <div class="pipeline-company">{company}</div>
+            <div class="pipeline-role">{role}</div>
+            <div class="pipeline-status">{last_event} · {next_step}</div>
+          </div>
+        </div>
+        <!-- Applied group (if any) -->
+        <div class="pipeline-group">
+          <div class="pipeline-label">Applied & Waiting ({count})</div>
+          <ul class="pipeline-list">
+            <li><span>{company} · {role}</span><span class="days">{days} days</span></li>
+            <li><span>{company} · {role}</span><span class="days warning">{days} days ⚠️</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- OUTREACH (only if digest.outreach has items) -->
+      <div class="section outreach">
+        <div class="section-header"><span>👋</span> Reach Out</div>
+        <div class="outreach-item">
+          <div class="outreach-type">{type: Referral/Follow Up/Thank You}</div>
+          <div class="outreach-name">{name} @ {company}</div>
+          <div class="outreach-context">{context}</div>
+          <div class="outreach-preview">"{draft_message}"</div>
+        </div>
+      </div>
+
+      <!-- MARKET PULSE (always show if any data) -->
+      <div class="section pulse">
+        <div class="section-header"><span>📈</span> Market Pulse</div>
+        <div class="pulse-item">💰 Avg max salary <strong>${avg_salary}k</strong> ({trend})</div>
+        <div class="pulse-item">📊 Your response rate: <strong>{response_rate}%</strong> ({responded}/{applied})</div>
+        <div class="pulse-item">🔥 <strong>{top_keyword}</strong> in {pct}% of postings</div>
+        <div class="skills-row">
+          <!-- Top 3 missing skills -->
+          <span class="skill-chip">{skill} ({count})</span>
+        </div>
+      </div>
+
+      <!-- DAILY LEARNING (if config.output.learning.enabled) -->
+      <div class="section learning">
+        <div class="section-header"><span>📚</span> Today's Read</div>
+        <div class="article-card">
+          <div class="article-title">{article_title}</div>
+          <div class="article-source">{source} · {read_time} min read</div>
+          <div class="article-summary">{applies_to_you}</div>
+          <a href="{article_url}" class="article-btn">Read Article →</a>
+        </div>
+      </div>
+
+      <!-- AGENT HEALTH (always show - admin visibility into agent performance) -->
+      <div class="section agent">
+        <div class="section-header"><span>🤖</span> Agent Health</div>
+        <div class="agent-stats">
+          <span class="agent-stat">🧠 <strong>Opus 4.5</strong></span>
+          <span class="agent-stat">⏱️ <strong>{duration}min</strong></span>
+          <span class="agent-stat">💾 <strong>{peak_ram_mb}MB</strong></span>
+          <span class="agent-stat">⚡ <strong>{cpu_pct}%</strong></span>
+          <span class="agent-stat">📡 <strong>{sources_ok}/{sources_total}</strong></span>
+          <span class="agent-stat">📥 <strong>{jobs_found}→{jobs_added}</strong></span>
+        </div>
+
+        <!-- Errors from this run -->
+        <div class="agent-issues">
+          <!-- For each error in agent_run.errors (show max 3) -->
+          <div class="agent-issue error"><span class="icon">❌</span> {source}: {error}</div>
+          <!-- For each auto_fix in self_improvement.auto_fixes -->
+          <div class="agent-issue fixed"><span class="icon">✅</span> Auto-fixed: {description}</div>
+        </div>
+
+        <!-- Beads: observations and tasks -->
+        <div class="agent-beads">
+          <!-- For each observation in self_improvement.observations (max 3) -->
+          <div class="bead-item">
+            <span class="category">{category}</span> {issue}
+            <span style="color:#64748b">({occurrences}x)</span>
+          </div>
+          <!-- For each task in self_improvement.tasks_created -->
+          <div class="bead-item">
+            <span class="category">TASK</span> {description}
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- ALERTS (only if items exist) -->
-    <div class="card">
-      <h2>Alerts</h2>
-      <div>• 2 applications going stale (25+ days)</div>
-      <div>• 1 posting no longer active</div>
-    </div>
-
-    <!-- TODO -->
-    <div class="card">
-      <h2>Your Todo</h2>
-      <div>• Browse LinkedIn ~15 min</div>
-      <div>• Process 4 hot opportunities</div>
-      <div>• Follow up with {company}</div>
-    </div>
-
-    <!-- SKILLS GAP -->
-    <div class="card">
-      <h2>Skills Gap</h2>
-      <div class="meta">
-        <span class="badge">terraform (4)</span>
-        <span class="badge">gcp (3)</span>
-        <span class="badge">go (2)</span>
-      </div>
-    </div>
-
+    <!-- FOOTER -->
     <div class="footer">
-      Generated {timestamp} • Full digest in repo
+      <div class="footer-text">
+        Generated {time} PT · {date}<br>
+        <a href="#" class="footer-link">View full digest</a>
+      </div>
     </div>
   </div>
 </body>
 </html>
 ```
 
+**Section display logic**:
+| Section | When to Show |
+|---------|--------------|
+| Header + Stats | Always |
+| Urgent | Only if `digest.urgent[]` has items |
+| New Matches | Only if `digest.hot[]` has items |
+| Pipeline | Only if any postings with state `applied` or `interviewing` exist |
+| Outreach | Only if `digest.outreach` has referrals, follow_ups, or thank_yous |
+| Market Pulse | Always (shows trends and skills gap) |
+| Daily Learning | If `config.output.learning.enabled` is true |
+| Agent Health | Always (admin visibility into agent performance and beads) |
+
+**To populate stats counts**, scan `postings/` folders:
+- New = count of `digest.hot[]`
+- Applied = count folders with `application.state: applied`
+- Interview = count folders with `application.state: interviewing`
+- Offers = count folders with `application.state: offer`
+
 **Guidelines for email HTML**:
-- NO markdown tables - use card-based layout
-- NO # headers - use styled `<h2>` tags
-- Keep sections short - mobile screens are small
-- Only include sections that have content
-- Use inline-friendly CSS (some clients strip `<style>`)
-- Test: content should be readable without CSS
+- Only include sections that have data (use conditional logic)
+- Color-coded left borders: red=urgent, purple=new, blue=pipeline, green=outreach, gray=insights
+- Large tap targets (min 44px) for mobile
+- Content readable even if CSS is stripped
 
 ### Send via Gmail API
 
