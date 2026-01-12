@@ -1,54 +1,48 @@
-# ============================================
-# Personal Data (NEVER commit)
-# ============================================
-
-# LinkedIn data export
-linkedin_archive/
-connections.csv
-
-# Gmail OAuth credentials
-credentials.json
-gmail-tokens*.json
-
-# Your personal config (template is tracked)
-config.yaml
-
-# Your actual resume (template ok, personal content not)
-jb_resume_*.tex
-jb_resume_*.pdf
-
-# ============================================
-# Job Search Data (contains applications/PII)
-# ============================================
-
-# Actual postings (keep schemas/templates)
-postings/*/
-
-# Actual digests (keep schemas/templates)
-digest/*.yaml
-!digest/_schema.yaml
-!digest/_template.yaml
-
-# ============================================
-# Local State
-# ============================================
-
-# Beads database (agent memory)
-.beads/
-
-# Python virtual environment
+# Development
 .venv/
+__pycache__/
+*.pyc
 
-# Logs (keep observations for pattern detection)
-logs/
-!logs/.gitkeep
-!logs/observations.jsonl
-
-# ============================================
-# Editor/OS files
-# ============================================
+# Editor/OS
 *.swp
 *~
 .DS_Store
 *.Zone.Identifier
+
+# Runtime state
+.beads/
+/tmp/phase*.yaml
+
+# Docker mount (if used)
 data/
+
+# ============================================
+# PRIVATE FILES - Do not commit to public repo
+# ============================================
+
+# Personal resume
+*.tex
+jb_resume_*.tex
+
+# Gmail OAuth credentials and tokens
+credentials.json
+gmail-tokens*.json
+
+# Personal configuration (use config.template.yaml as reference)
+config.yaml
+
+# LinkedIn personal data
+linkedin_archive/
+
+# Personal job postings and tracking
+postings/
+!postings/.gitkeep
+
+# Personal digest files
+digest/*.yaml
+!digest/_schema.yaml
+!digest/.gitkeep
+
+# Logs
+logs/
+!logs/.gitkeep
