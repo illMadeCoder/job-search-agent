@@ -46,37 +46,44 @@ Sort by deadline (soonest first). Include specific action.
 
 ---
 
-## Step 3: Generate HOT Section
+## Step 3: Generate HOT Section (Top 10 from Priority Queue)
 
-**Target**: Surface at least 3 opportunities per day for a healthy application pace.
-If fewer than 3 qualify, note this in the digest summary with suggestions (expand search, relax filters).
+**Read the priority queue** - Phase 2 maintains the ranked list:
 
-Score new + pending postings using `config.yaml → scoring.weights`:
-
-```yaml
-# Scoring formula
-base = (match.matched / match.total) * 100
-if referral_candidates: base += referral_bonus
-if salary.max >= salary.target: base += salary_above_target
-if location.geo contains "NY" or "New York" or "NYC": base += ny_state_bonus
-if posted_today: base += posted_today
-elif posted_yesterday: base += posted_yesterday
-else: base -= (days_old - 2) * recency_penalty_per_day
+```bash
+cat postings/_priority_queue.yaml
 ```
 
-Include postings above `hot_threshold` with:
-- **url** (REQUIRED) - read from posting.yaml `url` field - needed for email apply buttons
-- **salary_min** and **salary_max** - for email display
-- Why it's hot (match, referral, salary, NY location)
-- Action (e.g., "Message John for referral, then apply")
+### Use Top 10 from Queue
 
-**CRITICAL**: Every hot entry MUST include the `url` field from the posting's posting.yaml.
+The `top_10` section contains pre-ranked jobs. For each entry:
+
+1. Read the posting's `posting.yaml` to get full details
+2. Include in HOT section with:
+   - **url** (REQUIRED) - for email apply buttons
+   - **salary_min** and **salary_max** - for display
+   - **score** and **rank** - from queue
+   - **reason** - why it's ranked here
+   - **days_in_queue** - urgency indicator
+   - Action (e.g., "Message John for referral, then apply")
+
+### Mark as Shown
+
+For each job included in digest, increment `times_shown` in the queue.
+
+### Handle Edge Cases
+
+If `top_10` has < 3 jobs:
+1. Pull from `queue` (positions 11+)
+2. Note in digest: "Limited opportunities - expand search?"
+3. Suggest filter relaxations
+
+If `top_10` is empty:
+1. Check if all jobs moved to backlog (user not acting)
+2. Suggest: "Review backlog for overlooked opportunities"
+
+**CRITICAL**: Every entry MUST include the `url` field from posting.yaml.
 Without the URL, the email "View & Apply" buttons won't work.
-
-If < 3 hot postings, consider:
-1. Including slightly lower-scoring matches (above 50%)
-2. Flagging "Expand search" in manual hunt section
-3. Suggesting filter relaxations (e.g., "Consider hybrid for high-comp roles")
 
 ---
 
@@ -174,7 +181,30 @@ Process:
 
 ---
 
-## Step 11: Write Digest
+## Step 11: Update Priority Queue
+
+After generating the HOT section, update the priority queue:
+
+### Increment times_shown
+
+For each job that appeared in today's digest:
+```yaml
+times_shown: {previous + 1}
+last_shown: {today}
+```
+
+### Write Updated Queue
+
+```bash
+# Write back to postings/_priority_queue.yaml
+updated: {now UTC}
+```
+
+This ensures jobs that keep appearing without action eventually get demoted.
+
+---
+
+## Step 12: Write Digest
 
 Write to `digest/{YYYY-MM-DD}.yaml` per schema.
 
@@ -195,13 +225,13 @@ agent_run:
 
 ---
 
-## Step 12: Update Tracker
+## Step 13: Update Tracker
 
 Update `postings/_tracker.md` for dashboard view.
 
 ---
 
-## Step 13: Send Email
+## Step 14: Send Email
 
 If `config.notifications.email.enabled`:
 
@@ -440,7 +470,7 @@ python3 scripts/gmail-send.py send \
 
 ---
 
-## Step 14: Print Summary
+## Step 15: Print Summary
 
 ```
 Phase 3 Complete: Digest Generated

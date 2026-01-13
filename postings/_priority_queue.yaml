@@ -1,0 +1,72 @@
+# Priority Queue for Job Postings
+#
+# Maintains a ranked list of pending_review postings.
+# Updated by Phase 2 (job collection), read by Phase 3 (digest).
+#
+# Jobs move through: queue → (applied|backlog|rejected)
+
+schema_version: 1
+updated: null  # UTC timestamp of last update
+
+# ============================================================
+# TOP 10 - Shown in daily digest
+# These are the highest priority jobs to apply to TODAY
+# ============================================================
+top_10: []
+# Each entry:
+#   - folder: company.role.pending_review.timestamp/
+#     score: 0-100+ (composite score)
+#     rank: 1-10
+#     days_in_queue: N (days since added)
+#     times_shown: N (how many digests it's appeared in)
+#     reason: "Why this is ranked here"
+
+# ============================================================
+# FULL QUEUE - All pending_review postings, ranked
+# ============================================================
+queue: []
+# Each entry:
+#   - folder: company.role.pending_review.timestamp/
+#     score: N
+#     added: YYYY-MM-DD (when first queued)
+#     last_shown: YYYY-MM-DD (last appeared in digest)
+#     times_shown: N
+#     factors:
+#       match_rate: N (0-100)
+#       freshness: N (bonus for new, penalty for old)
+#       salary: N (bonus if above target)
+#       referral: N (bonus if have connection)
+#       ny_location: N (bonus if NY based)
+
+# ============================================================
+# BACKLOG - Demoted jobs (seen but no action)
+# Still valid, but deprioritized. Can be promoted back.
+# ============================================================
+backlog: []
+# Each entry:
+#   - folder: ...
+#     score: N (original score)
+#     demoted_on: YYYY-MM-DD
+#     reason: "Why demoted"
+#     times_shown: N (before demotion)
+
+# ============================================================
+# SCORING FORMULA
+# ============================================================
+# score = match_rate
+#       + referral_bonus (20 if has connection)
+#       + salary_bonus (10 if max >= target)
+#       + ny_bonus (15 if NY location)
+#       + freshness_bonus (15 if <1 day, 10 if <3 days, 5 if <7 days, 0 otherwise)
+#       - staleness_penalty (2 per day in queue after 3 days)
+#       - shown_penalty (5 per time shown without action, after 2 shows)
+
+# ============================================================
+# QUEUE RULES
+# ============================================================
+# 1. New jobs start in queue with freshness bonus
+# 2. Top 10 recalculated daily based on score
+# 3. After 5 days in queue without action → move to backlog
+# 4. After appearing in 3 digests without action → move to backlog
+# 5. User can manually promote from backlog or demote from queue
+# 6. Applied/rejected jobs are removed entirely (tracked in posting state)

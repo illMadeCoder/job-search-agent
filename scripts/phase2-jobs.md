@@ -339,6 +339,82 @@ Generate comprehensive prep:
 
 ---
 
+## B.11 Update Priority Queue
+
+Maintain `postings/_priority_queue.yaml` for the daily digest.
+
+### Read Current Queue
+
+```bash
+cat postings/_priority_queue.yaml
+```
+
+### Add New Jobs to Queue
+
+For each NEW posting created in this run:
+
+```yaml
+- folder: {folder_name}
+  score: {calculated}
+  added: {today}
+  last_shown: null
+  times_shown: 0
+  factors:
+    match_rate: {from posting.yaml}
+    freshness: 15  # New job bonus
+    salary: {10 if salary.max >= 155000 else 0}
+    referral: {20 if has referral else 0}
+    ny_location: {15 if NY else 0}
+```
+
+### Recalculate All Scores
+
+For ALL jobs in queue (including existing):
+
+```yaml
+score = match_rate
+      + referral_bonus (20 if has connection)
+      + salary_bonus (10 if max >= target $155k)
+      + ny_bonus (15 if NY location)
+      + freshness_bonus:
+          - 15 if added today
+          - 10 if added 1-2 days ago
+          - 5 if added 3-6 days ago
+          - 0 if added 7+ days ago
+      - staleness_penalty: 2 * (days_in_queue - 3) if > 3 days
+      - shown_penalty: 5 * (times_shown - 2) if shown > 2 times
+```
+
+### Apply Queue Rules
+
+1. **Demote stale jobs**: If `days_in_queue > 5` AND `times_shown >= 3` → move to backlog
+2. **Remove applied/rejected**: If posting state changed → remove from queue
+3. **Re-rank**: Sort queue by score descending
+
+### Update Top 10
+
+Take highest 10 scores from queue:
+
+```yaml
+top_10:
+  - folder: ...
+    score: 92
+    rank: 1
+    days_in_queue: 0
+    times_shown: 0
+    reason: "92% match, has referral, NY based"
+  - folder: ...
+    score: 87
+    rank: 2
+    ...
+```
+
+### Write Updated Queue
+
+Write back to `postings/_priority_queue.yaml` with `updated: {now}`.
+
+---
+
 ## Write State
 
 Write to `/tmp/phase2-state.yaml`:
