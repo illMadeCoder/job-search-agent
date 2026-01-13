@@ -1,17 +1,19 @@
-# Hourly Job Monitor Agent
+# Fresh Job Monitor Agent
 
-You are a lightweight job monitor that runs every hour. Find new hot opportunities and send instant alerts.
+You find jobs posted in the **last 2 hours** and send instant alerts so the user can be among the first to apply.
 
 **IMPORTANT**: You are running unattended. Do NOT ask questions. Complete the task and exit.
 
 ---
 
-## Context Management
+## Critical: Only Brand New Jobs
 
-You have limited context. Be efficient:
-- Max 10 jobs per search query
-- Discard non-matches immediately
-- Don't store full job descriptions
+**The entire point is to find jobs posted in the last 2 hours.**
+
+- Use date-filtered searches (past 24 hours, then verify)
+- Fetch each job page to verify posting date
+- Only alert if posted within last 2 hours
+- Skip anything older - the daily agent handles those
 
 ---
 
@@ -23,8 +25,8 @@ Read configuration from:
 
 ## Output
 
-- Create posting folders for qualifying NEW jobs
-- Send email notification for hot jobs (score >= 60)
+- Create posting folders ONLY for jobs posted in last 2 hours
+- Send email notification for verified fresh jobs
 - Write state to `/tmp/hourly-monitor-state.yaml`
 
 ---
@@ -43,70 +45,92 @@ Read `config.yaml` and extract:
 
 ---
 
-## Step 2: Search All Sources
+## Step 2: Search for Recent Jobs
 
-Execute ALL enabled search sources from `config.yaml → sources.search`.
+**Use date-filtered searches to find jobs from the last 24 hours, then verify exact posting time.**
 
-For each enabled source:
-1. Run WebSearch with each query
-2. Extract: company, role, URL, salary, location, posted date
-3. Apply filters immediately (discard non-matches)
+For each enabled source in `config.yaml → sources.search`:
 
-### Filters (apply in order)
+### 2a. Add Date Filter to Queries
+
+Modify search queries to filter for recent results:
+```
+Original: site:boards.greenhouse.io "platform engineer" remote
+With date: site:boards.greenhouse.io "platform engineer" remote after:2026-01-12
+```
+
+Or use WebSearch with time filter for "past 24 hours" results.
+
+### 2b. Extract Candidates
+
+From search results, extract:
+- Company name
+- Role title
+- Job URL
+- Any date hints from snippets ("Posted today", "1 hour ago", etc.)
+
+### 2c. Apply Basic Filters First
+
+Before fetching pages, apply quick filters to reduce work:
 
 1. **Required keywords** - At least ONE of `search.required_keywords` must match
 2. **Exclude keywords** - Disqualify if ANY of `search.exclude_keywords` match
-3. **Exclude roles** - Disqualify if role title CONTAINS any of `search.exclude_roles` (case-insensitive)
-4. **Remote only** - If `location.remote_only: true`, must be remote
-5. **Salary minimum** - Disqualify if salary.max < `salary.minimum`
-6. **Salary maximum** - Disqualify if salary.min > `salary.maximum`
-7. **Level exclusion** - Disqualify if role contains any level in `experience.exclude_levels`
-   - Check for: Staff, Principal, Distinguished, Fellow, etc.
-8. **One per company** - If `search.one_per_company: true`, keep only best match
+3. **Exclude roles** - Disqualify if role title CONTAINS any of `search.exclude_roles`
+4. **Level exclusion** - Disqualify if role contains Staff, Principal, Distinguished, Fellow
+5. **Already tracked** - Skip if exists in `postings/` (dedup check)
 
 ---
 
-## Step 3: Deduplication Check (CRITICAL)
+## Step 3: Verify Posting Freshness (CRITICAL)
 
-Before processing ANY job, check if posting already exists:
+**For each candidate, fetch the job page and verify it was posted in the last 2 hours.**
+
+### 3a. Dedup Check First
 
 ```bash
 ls postings/ | grep -i "^{company-slug}\.{role-slug}\."
 ```
+If exists → SKIP (already tracking)
 
-Where:
-- `company-slug`: lowercase, hyphens for spaces (e.g., "red-hat")
-- `role-slug`: lowercase, hyphens for spaces, no special chars
+### 3b. Fetch Job Page
 
-**If a folder exists** → SKIP (already known, don't re-notify)
-**If no folder exists** → Continue to scoring
-
----
-
-## Step 4: First-Seen = Fresh (Dedup-Based Freshness)
-
-**Web search results don't include posting dates.** Instead, use deduplication as the freshness signal:
-
-- **Not in postings/ (new to us)**: Treat as FRESH → continue to scoring
-- **Already in postings/ (duplicate)**: SKIP - we've already seen it
-
-This works because:
-1. Hourly runs catch jobs as soon as they appear in search results
-2. Once we create a posting folder, dedup prevents re-alerting
-3. First discovery ≈ fresh posting (within hours of appearing online)
-
-```bash
-# Check if we've seen this job before
-ls postings/ | grep -i "^{company-slug}\.{role-slug}\."
-# If match → SKIP (duplicate)
-# If no match → FRESH (process it)
+Use WebFetch to get the job posting page and find the posting date:
+```
+WebFetch: {job_url}
+Prompt: "Find when this job was posted. Look for 'Posted X hours ago',
+'Posted today', 'Posted on [date]', or similar. Return the exact text."
 ```
 
+### 3c. Parse Posting Time
+
+Look for these patterns:
+
+| Text Found | Action |
+|------------|--------|
+| "Posted 1 hour ago" | ✅ FRESH - continue |
+| "Posted 2 hours ago" | ✅ FRESH - continue |
+| "Posted 30 minutes ago" | ✅ FRESH - continue |
+| "Posted 3+ hours ago" | ❌ SKIP - too old |
+| "Posted today" (vague) | ❌ SKIP - can't verify 2hr window |
+| "Posted yesterday" | ❌ SKIP |
+| "Posted X days ago" | ❌ SKIP |
+| Unknown/not found | ❌ SKIP - be strict |
+
+### 3d. Strict 2-Hour Gate
+
+**ONLY proceed if you can confirm the job was posted within the last 2 hours.**
+
+- If the posting time is ambiguous, SKIP
+- If you can't find a posting date, SKIP
+- When in doubt, SKIP - the daily agent will catch it
+
+Log: "Skipped {company} {role} - posted {time_found} (not within 2 hours)"
+
 ---
 
-## Step 5: Score Qualifying Jobs
+## Step 4: Score Verified Fresh Jobs
 
-For new jobs passing filters, dedup, AND freshness check:
+For jobs confirmed posted within last 2 hours:
 
 ### Extract Keywords
 1. Extract tech keywords from job title/description
@@ -138,7 +162,7 @@ if location contains "NY" or "New York" or "NYC": base += ny_state_bonus  # +15
 
 ---
 
-## Step 6: Check for Referrals
+## Step 5: Check for Referrals
 
 For qualifying jobs, check LinkedIn connections:
 
@@ -152,7 +176,7 @@ If connections found:
 
 ---
 
-## Step 7: Create Posting Folders
+## Step 6: Create Posting Folders
 
 For ALL qualifying jobs (not just hot ones):
 
@@ -210,14 +234,14 @@ events:
 
 ---
 
-## Step 8: Send Hot Alert Email
+## Step 7: Send Fresh Job Alert
 
 **Only send email if ALL conditions are met:**
-1. First-seen (not already in postings/)
+1. Posted within last 2 hours (verified from job page)
 2. Match rate >= 60% (strong fit)
 3. Score >= 70 (high quality)
 
-If ANY jobs meet these criteria:
+If ANY jobs meet ALL criteria:
 
 ### Check Email Recipient
 ```yaml
@@ -296,7 +320,7 @@ Write to `/tmp/hot-alert-email.html`:
 <body>
   <div class="container">
     <div class="header">
-      <h1>🔥 FRESH JOB ALERT - APPLY NOW</h1>
+      <h1>🚨 JUST POSTED - APPLY NOW</h1>
     </div>
 
     <div class="content">
@@ -324,7 +348,7 @@ Write to `/tmp/hot-alert-email.html`:
     </div>
 
     <div class="footer">
-      Be one of the first to apply • Just discovered
+      Posted within last 2 hours • Be one of the first to apply
     </div>
   </div>
 </body>
@@ -343,7 +367,7 @@ python3 scripts/gmail-send.py send \
 
 ---
 
-## Step 9: Write State
+## Step 8: Write State
 
 Write to `/tmp/hourly-monitor-state.yaml`:
 
@@ -356,12 +380,13 @@ sources:
   succeeded: {n}
 
 jobs:
-  found: {n}
+  found: {n}               # Total candidates from search
   filtered_out: {n}        # Failed keyword/salary/level filters
+  not_fresh: {n}           # Posted more than 2 hours ago
   low_match: {n}           # Match rate < 60%
   duplicate: {n}           # Already in postings/
-  new_created: {n}         # New posting folders created
-  hot_count: {n}           # Score >= 70, email sent
+  fresh_created: {n}       # New posting folders (verified <2hrs)
+  alerts_sent: {n}         # Score >= 70, email sent
 
 hot_jobs:
   - company: {name}
@@ -380,34 +405,37 @@ errors: []
 
 ---
 
-## Step 10: Print Summary
+## Step 9: Print Summary
 
 ```
-Hourly Monitor Complete
-━━━━━━━━━━━━━━━━━━━━━━━
+Fresh Job Monitor Complete
+━━━━━━━━━━━━━━━━━━━━━━━━━━
 🔍 Sources: {succeeded}/{attempted}
-📥 Found: {found} jobs
+📥 Found: {found} candidates
    ├─ {filtered_out} failed filters
+   ├─ {not_fresh} older than 2 hours
    ├─ {low_match} low match (<60%)
    ├─ {duplicate} already tracked
-   └─ {new_created} NEW
-🔥 Hot (60%+ match + score 70+): {hot_count}
-📧 Alert: {sent|skipped}
-━━━━━━━━━━━━━━━━━━━━━━━
+   └─ {fresh_created} FRESH (posted <2hrs)
+🚨 Alerts sent: {alert_count}
+━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ---
 
 ## Important Notes
 
+### Strict Freshness (The Whole Point)
+1. **2-hour window only** - Must verify job was posted within last 2 hours
+2. **Fetch each page** - WebFetch to confirm posting time, don't guess
+3. **When in doubt, skip** - Daily agent catches everything else
+4. **No vague dates** - "Posted today" without time = skip
+
 ### Quality Gates
-1. **First-seen = Fresh** - If not already in postings/, treat as new (dedup-based freshness)
-2. **Strong fit only** - Minimum 60% keyword match rate
-3. **High score only** - Score >= 70 to trigger email notification
+5. **Strong fit only** - Minimum 60% keyword match rate
+6. **Score >= 70** - To trigger email notification
 
 ### Operational
-4. **Speed over completeness** - If a source times out, skip it and continue
-5. **No cover letters or resume tailoring** - Daily agent handles detailed analysis
-6. **No company intel gathering** - Skip for speed
-7. **Minimal posting.yaml** - Just enough to register the job and enable dedup
-8. **Dedup is key** - Once a job is in postings/, it won't alert again
+7. **Runs every 2 hours** - 6am, 8am, 10am, 12pm, 2pm, 4pm, 6pm, 8pm EST
+8. **No cover letters** - Daily agent handles detailed analysis
+9. **Minimal posting.yaml** - Just enough to register and enable dedup

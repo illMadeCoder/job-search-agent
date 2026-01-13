@@ -93,11 +93,11 @@ case "$1" in
         ;;
 
     hourly)
-        echo "=== Hourly Job Monitor ==="
+        echo "=== Fresh Job Monitor (2-hour window) ==="
         echo "Started: $(date -Iseconds)"
         claude -p "$(cat scripts/hourly-monitor.md)" \
             --model opus \
-            --allowedTools "WebSearch,Read,Write,Bash,Glob,Grep"
+            --allowedTools "WebFetch,WebSearch,Read,Write,Bash,Glob,Grep"
         echo "Finished: $(date -Iseconds)"
         ;;
 

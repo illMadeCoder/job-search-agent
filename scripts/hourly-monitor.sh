@@ -1,10 +1,11 @@
 #!/bin/bash
-# Hourly Job Monitor - runs every hour via cron
-# Lightweight job search that sends instant alerts for hot opportunities
+# Fresh Job Monitor - runs every 2 hours via cron
+# Finds jobs posted in the last 2 hours and sends instant alerts
 #
 # Skips: Email scanning, Full digest, Self-improvement
-# Does: Job collection + instant notification for hot matches (score >= 60)
+# Does: Fresh job discovery + instant notification for brand new postings
 #
+# Schedule: Every 2 hours, 6am-10pm EST
 # Quiet hours: 10pm-6am EST (no runs, no notifications)
 #
 # Usage: ./scripts/hourly-monitor.sh
@@ -52,10 +53,10 @@ fi
 # Clean up stale state
 rm -f /tmp/hourly-monitor-state.yaml
 
-# Run the lightweight agent
+# Run the fresh job monitor agent
 if claude -p "$(cat scripts/hourly-monitor.md)" \
   --model opus \
-  --allowedTools "WebSearch,Read,Write,Bash,Glob,Grep" 2>&1; then
+  --allowedTools "WebFetch,WebSearch,Read,Write,Bash,Glob,Grep" 2>&1; then
     echo ""
     echo "════════════════════════════════════════════════════════════"
     echo " HOURLY MONITOR COMPLETE"
