@@ -11,7 +11,7 @@
 # Usage: ./scripts/hourly-monitor.sh
 # Docker: docker compose run --rm agent hourly
 
-REPO_DIR="${JOB_SEARCH_REPO:-$HOME/agentic-job-hunter}"
+REPO_DIR="${JOB_SEARCH_REPO:-$HOME/job-search-agent}"
 cd "$REPO_DIR" || exit 1
 
 # Check quiet hours (10pm-6am EST)

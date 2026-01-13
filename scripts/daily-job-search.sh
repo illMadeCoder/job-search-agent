@@ -14,7 +14,7 @@
 # We handle errors explicitly per-phase
 
 # Change to your repo directory
-REPO_DIR="${JOB_SEARCH_REPO:-$HOME/agentic-job-hunter}"
+REPO_DIR="${JOB_SEARCH_REPO:-$HOME/job-search-agent}"
 cd "$REPO_DIR" || exit 1
 
 DATE=$(date +%Y-%m-%d)
