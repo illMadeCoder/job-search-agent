@@ -8,7 +8,54 @@
 # For manual sources, Claude can still analyze/process data
 # once the user provides it.
 
-schema_version: 1
+schema_version: 2
+
+# ============================================================
+# RSS SOURCES - Structured feeds, reliable, bypasses bot detection
+# ============================================================
+rss:
+
+  weworkremotely:
+    name: We Work Remotely
+    type: rss
+    reliability: high
+    feeds:
+      all: "https://weworkremotely.com/remote-jobs.rss"
+      programming: "https://weworkremotely.com/categories/remote-programming-jobs.rss"
+      devops: "https://weworkremotely.com/categories/remote-devops-sysadmin-jobs.rss"
+      design: "https://weworkremotely.com/categories/remote-design-jobs.rss"
+      product: "https://weworkremotely.com/categories/remote-product-jobs.rss"
+      management: "https://weworkremotely.com/categories/remote-management-jobs.rss"
+    recommended_feeds:
+      - programming
+      - devops
+      - product
+    parse:
+      item_element: item
+      fields:
+        title: title
+        link: link
+        description: description
+        pub_date: pubDate
+        category: category
+        region: region
+        type: type  # Full-Time, Contract, etc.
+    notes: |
+      RSS bypasses the 403 on the website.
+      Use category feeds to reduce noise.
+      pubDate is RFC 822 format.
+    rate_limit: respectful (1 req/min per feed)
+
+  remoterocketship:
+    name: Remote Rocketship
+    type: rss
+    reliability: unknown
+    feeds:
+      all: "https://www.remoterocketship.com/feed"
+    notes: |
+      Test if RSS exists and works.
+      Fallback to search if blocked.
+    status: untested
 
 # ============================================================
 # API SOURCES - Claude can fetch directly, structured responses
@@ -283,17 +330,31 @@ workflow:
   daily_autonomous:
     description: What Claude does at 5am without user
     sources:
+      - rss.weworkremotely (programming, devops, product feeds)
       - api.greenhouse (check known companies)
       - api.lever (check known companies)
       - api.remoteok (full scan)
       - api.hn_whoishiring (if new thread)
       - search.google_jobs (discovery)
     actions:
+      - Fetch RSS feeds first (most reliable, structured)
       - Health check existing postings (URLs may fail, log don't assume)
       - Fetch from API sources
       - Search for new postings
       - Create posting.yaml for qualifying jobs
       - Update tracker
+
+  hourly_monitor:
+    description: What Claude does every 2 hours (6am-8pm) for fresh jobs
+    sources:
+      - rss.weworkremotely (check pubDate for <2hr old posts)
+      - api.remoteok (check date field)
+    actions:
+      - Fetch RSS/API sources
+      - Filter to jobs posted within last 2 hours
+      - Skip jobs already in postings/
+      - Send instant email alert for fresh matches
+      - Create posting.yaml for qualifying jobs
 
   user_session:
     description: When user is actively working with Claude

@@ -45,13 +45,76 @@ Read `config.yaml` and extract:
 
 ---
 
-## Step 2: Search for Recent Jobs
+## Step 2: Fetch RSS Feeds (Primary Source)
+
+**RSS feeds are the most reliable source - structured data, no bot detection, exact timestamps.**
+
+### 2a. Fetch WeWorkRemotely RSS
+
+Fetch the category feeds (reference `sources.yaml → rss.weworkremotely`):
+
+```bash
+# Fetch programming jobs RSS
+curl -s "https://weworkremotely.com/categories/remote-programming-jobs.rss"
+
+# Fetch devops jobs RSS
+curl -s "https://weworkremotely.com/categories/remote-devops-sysadmin-jobs.rss"
+
+# Fetch product jobs RSS
+curl -s "https://weworkremotely.com/categories/remote-product-jobs.rss"
+```
+
+### 2b. Parse RSS Items
+
+For each `<item>` in the feed:
+
+```xml
+<item>
+  <title>Company: Role Title</title>
+  <link>https://weworkremotely.com/remote-jobs/...</link>
+  <pubDate>Mon, 13 Jan 2026 14:30:00 +0000</pubDate>
+  <category>Programming</category>
+  <region>Anywhere in the World</region>
+  <type>Full-Time</type>
+</item>
+```
+
+Extract:
+- **title**: Split on `: ` to get company and role
+- **link**: Job URL
+- **pubDate**: RFC 822 timestamp - parse to check freshness
+- **region**: Location info
+- **type**: Full-Time, Contract, etc.
+
+### 2c. Check Freshness from pubDate
+
+Parse the `pubDate` and compare to current time:
+
+```python
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
+
+pub_date = parsedate_to_datetime("Mon, 13 Jan 2026 14:30:00 +0000")
+now = datetime.now(timezone.utc)
+hours_ago = (now - pub_date).total_seconds() / 3600
+
+if hours_ago <= 2:
+    # FRESH - process this job
+else:
+    # Skip - too old
+```
+
+**RSS gives exact timestamps - no need to WebFetch the job page to verify freshness.**
+
+---
+
+## Step 3: Search for Recent Jobs (Secondary Source)
 
 **Use date-filtered searches to find jobs from the last 24 hours, then verify exact posting time.**
 
 For each enabled source in `config.yaml → sources.search`:
 
-### 2a. Add Date Filter to Queries
+### 3a. Add Date Filter to Queries
 
 Modify search queries to filter for recent results:
 ```
@@ -61,7 +124,7 @@ With date: site:boards.greenhouse.io "platform engineer" remote after:2026-01-12
 
 Or use WebSearch with time filter for "past 24 hours" results.
 
-### 2b. Extract Candidates
+### 3b. Extract Candidates
 
 From search results, extract:
 - Company name
@@ -69,7 +132,7 @@ From search results, extract:
 - Job URL
 - Any date hints from snippets ("Posted today", "1 hour ago", etc.)
 
-### 2c. Apply Basic Filters First
+### 3c. Apply Basic Filters First
 
 Before fetching pages, apply quick filters to reduce work:
 
@@ -81,18 +144,18 @@ Before fetching pages, apply quick filters to reduce work:
 
 ---
 
-## Step 3: Verify Posting Freshness (CRITICAL)
+## Step 4: Verify Posting Freshness for Search Results (CRITICAL)
 
 **For each candidate, fetch the job page and verify it was posted in the last 2 hours.**
 
-### 3a. Dedup Check First
+### 4a. Dedup Check First
 
 ```bash
 ls postings/ | grep -i "^{company-slug}\.{role-slug}\."
 ```
 If exists → SKIP (already tracking)
 
-### 3b. Fetch Job Page
+### 4b. Fetch Job Page
 
 Use WebFetch to get the job posting page and find the posting date:
 ```
@@ -101,7 +164,7 @@ Prompt: "Find when this job was posted. Look for 'Posted X hours ago',
 'Posted today', 'Posted on [date]', or similar. Return the exact text."
 ```
 
-### 3c. Parse Posting Time
+### 4c. Parse Posting Time
 
 Look for these patterns:
 
@@ -116,7 +179,7 @@ Look for these patterns:
 | "Posted X days ago" | ❌ SKIP |
 | Unknown/not found | ❌ SKIP - be strict |
 
-### 3d. Strict 2-Hour Gate
+### 4d. Strict 2-Hour Gate
 
 **ONLY proceed if you can confirm the job was posted within the last 2 hours.**
 
@@ -126,7 +189,7 @@ Look for these patterns:
 
 Log: "Skipped {company} {role} - posted {time_found} (not within 2 hours)"
 
-### 3e. Validate Hard Criteria (Remote/US)
+### 4e. Validate Hard Criteria (Remote/US)
 
 **While you have the job page, verify it meets hard requirements:**
 
@@ -158,7 +221,7 @@ Log: "Skipped {company} {role} - {reason}" if disqualified
 
 ---
 
-## Step 4: Score Verified Fresh Jobs
+## Step 5: Score Verified Fresh Jobs
 
 For jobs confirmed posted within last 2 hours:
 
@@ -192,7 +255,7 @@ if location contains "NY" or "New York" or "NYC": base += ny_state_bonus  # +15
 
 ---
 
-## Step 5: Check for Referrals
+## Step 6: Check for Referrals
 
 For qualifying jobs, check LinkedIn connections:
 
@@ -206,7 +269,7 @@ If connections found:
 
 ---
 
-## Step 6: Create Posting Folders
+## Step 7: Create Posting Folders
 
 For ALL qualifying jobs (not just hot ones):
 
@@ -264,7 +327,7 @@ events:
 
 ---
 
-## Step 7: Send Fresh Job Alert
+## Step 8: Send Fresh Job Alert
 
 **Only send email if ALL conditions are met:**
 1. Posted within last 2 hours (verified from job page)
@@ -397,7 +460,7 @@ python3 scripts/gmail-send.py send \
 
 ---
 
-## Step 8: Write State
+## Step 9: Write State
 
 Write to `/tmp/hourly-monitor-state.yaml`:
 
@@ -441,7 +504,7 @@ errors: []
 
 ---
 
-## Step 9: Print Summary
+## Step 10: Print Summary
 
 ```
 Fresh Job Monitor Complete

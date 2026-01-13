@@ -156,7 +156,44 @@ For each `.applied` folder:
 
 # Part B: Collect New Postings
 
-## B.1 API Sources
+## B.0 RSS Feeds (Most Reliable)
+
+**RSS feeds are the most reliable source - structured data, no bot detection, exact timestamps.**
+
+Reference `sources.yaml → rss` for available feeds.
+
+### WeWorkRemotely
+
+Fetch category feeds with curl (safe - small payloads):
+
+```bash
+# Fetch programming jobs RSS
+curl -s "https://weworkremotely.com/categories/remote-programming-jobs.rss"
+
+# Fetch devops jobs RSS
+curl -s "https://weworkremotely.com/categories/remote-devops-sysadmin-jobs.rss"
+
+# Fetch product jobs RSS
+curl -s "https://weworkremotely.com/categories/remote-product-jobs.rss"
+```
+
+Parse each `<item>`:
+- **title**: Split on `: ` → company, role
+- **link**: Job URL
+- **pubDate**: RFC 822 timestamp (exact posting time)
+- **region**: Location info
+- **type**: Full-Time, Contract, etc.
+
+Apply filters immediately after parsing each feed. Keep only jobs matching:
+- Required keywords
+- Not excluded keywords/roles
+- Remote US-friendly
+
+**Note**: WWR RSS bypasses the 403 that blocks WebFetch on their website.
+
+---
+
+## B.1 API Sources (Via WebSearch)
 
 ### RemoteOK
 **DO NOT use WebFetch** - API returns 100k+ tokens and will crash.
