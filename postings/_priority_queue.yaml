@@ -6,49 +6,162 @@
 # Jobs move through: queue → (applied|backlog|rejected)
 
 schema_version: 1
-updated: null  # UTC timestamp of last update
+updated: "2026-01-13T00:15:00Z"
 
 # ============================================================
 # TOP 10 - Shown in daily digest
 # These are the highest priority jobs to apply to TODAY
 # ============================================================
-top_10: []
-# Each entry:
-#   - folder: company.role.pending_review.timestamp/
-#     score: 0-100+ (composite score)
-#     rank: 1-10
-#     days_in_queue: N (days since added)
-#     times_shown: N (how many digests it's appeared in)
-#     reason: "Why this is ranked here"
+top_10:
+  - folder: redpanda.sre-platform.pending_review.2026-01-12T2350Z
+    score: 94
+    rank: 1
+    days_in_queue: 0
+    times_shown: 1
+    last_shown: "2026-01-12"
+    reason: "90% match, data streaming infrastructure, strong tech fit"
+
+  - folder: clickhouse.senior-site-reliability-engineer.pending_review.2026-01-12T0200Z
+    score: 94
+    rank: 2
+    days_in_queue: 0
+    times_shown: 1
+    last_shown: "2026-01-12"
+    reason: "90% match, database company, 8+ yrs req matches experience"
+
+  - folder: hopper.sre-platform-infrastructure.pending_review.2026-01-12T0530Z
+    score: 93
+    rank: 3
+    days_in_queue: 0
+    times_shown: 1
+    last_shown: "2026-01-12"
+    reason: "80% match, travel tech, GCP/K8s focus"
+
+  - folder: together-ai.site-reliability-engineer.pending_review.2026-01-12T1130Z
+    score: 93
+    rank: 4
+    days_in_queue: 0
+    times_shown: 1
+    last_shown: "2026-01-12"
+    reason: "80% match, AI/ML infrastructure, high growth startup"
+
+  - folder: axon.senior-site-reliability-engineer-ii.pending_review.2026-01-12T0200Z
+    score: 93
+    rank: 5
+    days_in_queue: 0
+    times_shown: 1
+    last_shown: "2026-01-12"
+    reason: "80% match, enterprise stability, public company"
+
+  - folder: thumbtack.sr-software-engineer-site-reliability.pending_review.2026-01-12T0145Z
+    score: 93
+    rank: 6
+    days_in_queue: 0
+    times_shown: 1
+    last_shown: "2026-01-12"
+    reason: "80% match, marketplace platform, Series G funding"
+
+  - folder: better-stack.devops-engineer.pending_review.2026-01-12T2350Z
+    score: 93
+    rank: 7
+    days_in_queue: 0
+    times_shown: 1
+    last_shown: "2026-01-12"
+    reason: "80% match, observability tools - dogfooding opportunity"
+
+  - folder: pantheon.platform-engineer.pending_review.2026-01-12T1200Z
+    score: 93
+    rank: 8
+    days_in_queue: 0
+    times_shown: 1
+    last_shown: "2026-01-12"
+    reason: "80% match, web hosting/developer tools"
+
+  - folder: dexcare.senior-site-reliability-engineer.pending_review.2026-01-12T0145Z
+    score: 93
+    rank: 9
+    days_in_queue: 0
+    times_shown: 1
+    last_shown: "2026-01-12"
+    reason: "80% match, healthcare tech (reserved tier consideration)"
+
+  - folder: ltk.senior-platform-engineer.pending_review.2026-01-12T1200Z
+    score: 92
+    rank: 10
+    days_in_queue: 0
+    times_shown: 1
+    last_shown: "2026-01-12"
+    reason: "70% match, cloud infrastructure, creator economy"
 
 # ============================================================
-# FULL QUEUE - All pending_review postings, ranked
+# FULL QUEUE - All pending_review postings, ranked (new from this run)
 # ============================================================
-queue: []
-# Each entry:
-#   - folder: company.role.pending_review.timestamp/
-#     score: N
-#     added: YYYY-MM-DD (when first queued)
-#     last_shown: YYYY-MM-DD (last appeared in digest)
-#     times_shown: N
-#     factors:
-#       match_rate: N (0-100)
-#       freshness: N (bonus for new, penalty for old)
-#       salary: N (bonus if above target)
-#       referral: N (bonus if have connection)
-#       ny_location: N (bonus if NY based)
+queue:
+  - folder: redpanda.sre-platform.pending_review.2026-01-12T2350Z
+    score: 94
+    added: "2026-01-12"
+    last_shown: "2026-01-12"
+    times_shown: 1
+    factors:
+      match_rate: 90
+      freshness: 15
+      salary: 0
+      referral: 0
+      ny_location: 0
+
+  - folder: better-stack.devops-engineer.pending_review.2026-01-12T2350Z
+    score: 93
+    added: "2026-01-12"
+    last_shown: "2026-01-12"
+    times_shown: 1
+    factors:
+      match_rate: 80
+      freshness: 15
+      salary: 0
+      referral: 0
+      ny_location: 0
+
+  - folder: filevine.sre-ai-forms.pending_review.2026-01-12T2350Z
+    score: 92
+    added: "2026-01-12"
+    last_shown: null
+    times_shown: 0
+    factors:
+      match_rate: 70
+      freshness: 15
+      salary: 0
+      referral: 0
+      ny_location: 0
+
+  - folder: big-cartel.devops-engineer.pending_review.2026-01-12T2350Z
+    score: 92
+    added: "2026-01-12"
+    last_shown: null
+    times_shown: 0
+    factors:
+      match_rate: 70
+      freshness: 15
+      salary: 0
+      referral: 0
+      ny_location: 0
+
+  - folder: upstart.data-platform-engineer.pending_review.2026-01-12T2350Z
+    score: 91
+    added: "2026-01-12"
+    last_shown: null
+    times_shown: 0
+    factors:
+      match_rate: 60
+      freshness: 15
+      salary: 0
+      referral: 0
+      ny_location: 0
 
 # ============================================================
 # BACKLOG - Demoted jobs (seen but no action)
 # Still valid, but deprioritized. Can be promoted back.
 # ============================================================
 backlog: []
-# Each entry:
-#   - folder: ...
-#     score: N (original score)
-#     demoted_on: YYYY-MM-DD
-#     reason: "Why demoted"
-#     times_shown: N (before demotion)
 
 # ============================================================
 # SCORING FORMULA

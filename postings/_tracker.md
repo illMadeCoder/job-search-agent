@@ -1,6 +1,6 @@
 # Posting Tracker
 
-*Last updated: 2026-01-12T12:30Z*
+*Last updated: 2026-01-13T00:15Z*
 
 ## Needs Review (.review flag)
 
@@ -12,41 +12,31 @@
 
 | Folder | Created | Recommendation | Score |
 |--------|---------|----------------|-------|
+| redpanda.sre-platform.pending_review.2026-01-12T2350Z | 2026-01-12 | cold_apply | 94 |
+| clickhouse.senior-site-reliability-engineer.pending_review.2026-01-12T0200Z | 2026-01-12 | cold_apply | 94 |
+| hopper.sre-platform-infrastructure.pending_review.2026-01-12T0530Z | 2026-01-12 | cold_apply | 93 |
+| together-ai.site-reliability-engineer.pending_review.2026-01-12T1130Z | 2026-01-12 | cold_apply | 93 |
+| axon.senior-site-reliability-engineer-ii.pending_review.2026-01-12T0200Z | 2026-01-12 | cold_apply | 93 |
+| thumbtack.sr-software-engineer-site-reliability.pending_review.2026-01-12T0145Z | 2026-01-12 | cold_apply | 93 |
+| better-stack.devops-engineer.pending_review.2026-01-12T2350Z | 2026-01-12 | cold_apply | 93 |
+| pantheon.platform-engineer.pending_review.2026-01-12T1200Z | 2026-01-12 | cold_apply | 93 |
+| dexcare.senior-site-reliability-engineer.pending_review.2026-01-12T0145Z | 2026-01-12 | cold_apply | 93 |
+| ltk.senior-platform-engineer.pending_review.2026-01-12T1200Z | 2026-01-12 | cold_apply | 92 |
 | vercel.software-engineer-deployment-infrastructure.pending_review.2026-01-11T2201Z | 2026-01-11 | cold_apply | 90 |
 | red-hat.forward-deployed-engineer-ai-inference.pending_review.2026-01-11T2201Z | 2026-01-11 | cold_apply | 87 |
 | grafana-labs.senior-software-engineer-platform-infracore.pending_review.2026-01-12T0145Z | 2026-01-12 | cold_apply | 83 |
 | tailscale.backend-engineer-platform.pending_review.2026-01-12T0145Z | 2026-01-12 | cold_apply | 80 |
 | ezcater.senior-devops-engineer.pending_review.2026-01-12T0530Z | 2026-01-12 | cold_apply | 78 |
 | tacen.infrastructure-engineer.pending_review.2026-01-12T1200Z | 2026-01-12 | cold_apply | 75 |
-| cloudflare.senior-systems-engineer.pending_review.2026-01-12T1130Z | 2026-01-12 | cold_apply | 70 |
-| together-ai.site-reliability-engineer.pending_review.2026-01-12T1130Z | 2026-01-12 | cold_apply | 70 |
-| netlify.senior-site-reliability-engineer.pending_review.2026-01-12T1130Z | 2026-01-12 | cold_apply | 68 |
-| supabase.cloud-platform-sre.pending_review.2026-01-12T1130Z | 2026-01-12 | cold_apply | 67 |
-| hopper.sre-platform-infrastructure.pending_review.2026-01-12T0530Z | 2026-01-12 | cold_apply | 65 |
-| appcues.sr-platform-engineer.pending_review.2026-01-12T0530Z | 2026-01-12 | cold_apply | 65 |
-| ltk.senior-platform-engineer.pending_review.2026-01-12T1200Z | 2026-01-12 | cold_apply | 65 |
-| goodleap.site-reliability-engineer.pending_review.2026-01-12T1200Z | 2026-01-12 | cold_apply | 65 |
-| rula.senior-sre-devops.pending_review.2026-01-12T1200Z | 2026-01-12 | cold_apply | 65 |
-| lightning-labs.platform-engineer.pending_review.2026-01-12T1200Z | 2026-01-12 | cold_apply | 65 |
-| wordpress-vip.systems-engineer-sre.pending_review.2026-01-12T1200Z | 2026-01-12 | cold_apply | 65 |
-| pantheon.platform-engineer.pending_review.2026-01-12T1200Z | 2026-01-12 | cold_apply | 63 |
-| level-home.platform-engineer.pending_review.2026-01-12T1200Z | 2026-01-12 | cold_apply | 60 |
-| qsic.senior-platform-engineer.pending_review.2026-01-12T0145Z | 2026-01-12 | cold_apply | 60 |
-| dexcare.senior-site-reliability-engineer.pending_review.2026-01-12T0145Z | 2026-01-12 | cold_apply | 60 |
-| clickhouse.senior-site-reliability-engineer.pending_review.2026-01-12T0200Z | 2026-01-12 | cold_apply | 60 |
-| axon.senior-site-reliability-engineer-ii.pending_review.2026-01-12T0200Z | 2026-01-12 | cold_apply | 60 |
-| hiddenlayer.platform-engineer.pending_review.2026-01-12T0200Z | 2026-01-12 | cold_apply | 60 |
-| canary-technologies.lead-site-reliability-engineer.pending_review.2026-01-12T0200Z | 2026-01-12 | cold_apply | 60 |
-| splice.site-reliability-engineer.pending_review.2026-01-12T0200Z | 2026-01-12 | cold_apply | 60 |
-| vgs.sr-infrastructure-engineer.pending_review.2026-01-12T0145Z | 2026-01-12 | cold_apply | 58 |
-| thumbtack.sr-software-engineer-site-reliability.pending_review.2026-01-12T0145Z | 2026-01-12 | cold_apply | 58 |
-| launchdarkly.backend-engineer-data-platform.pending_review.2026-01-12T0145Z | 2026-01-12 | cold_apply | 55 |
+| And 28 more... | | | |
 
 ## Applied (.applied)
 
 | Folder | Applied | Expiry |
 |--------|---------|--------|
 | - | - | - |
+
+**Note**: Received application confirmations for Flex, Toast, Omada Health, Carrot but no tracking folders exist.
 
 ## Interviewing (.interviewing)
 
@@ -65,8 +55,8 @@
 ## Stats
 
 - **Needs review**: 0
-- **Pending review**: 29
-- **Applied**: 0
+- **Pending review**: 44
+- **Applied**: 0 (4 external confirmations untracked)
 - **Interviewing**: 0
 - **Offers**: 0
 - **Rejected**: 0
@@ -75,37 +65,42 @@
 
 ---
 
-## Hot Opportunities (Score >= 60)
+## Hot Opportunities (Priority Queue Top 10)
 
-| Company | Role | Score | Match | Salary Range | Action |
-|---------|------|-------|-------|--------------|--------|
-| Vercel | Software Engineer, Deployment Infrastructure | 90 | 75% | $180k-$260k | Apply - CI/CD focus |
-| Red Hat | Forward Deployed Engineer AI Inference | 87 | 67% | $189k-$312k | Apply - Kubernetes stretch |
-| Grafana Labs | Senior Software Engineer - Platform InfraCore | 83 | 73% | $154k-$185k | Apply - Strong match |
-| Tailscale | Backend Engineer, Platform | 80 | 68% | $163k-$226k | Apply - Identity/auth |
-| ezCater | Senior DevOps Engineer | 78 | 83% | $142k-$172k | Apply - Payments match |
-| Tacen | Infrastructure Engineer | 75 | 70% | $150k-$180k | Apply - Fintech |
-| Cloudflare | Senior Systems Engineer, Durable Objects | 70 | 60% | Undisclosed | Apply - Edge computing |
+| Rank | Company | Role | Score | Salary Range | Action |
+|------|---------|------|-------|--------------|--------|
+| 1 | Redpanda Data | SRE / Platform Engineer | 94 | Undisclosed | Apply - 90% match |
+| 2 | ClickHouse | Senior SRE | 94 | Undisclosed | Apply - cover letter ready |
+| 3 | Hopper | SRE Platform Infrastructure | 93 | Undisclosed | Apply - GCP/K8s |
+| 4 | Together AI | Site Reliability Engineer | 93 | Undisclosed | Apply - AI infrastructure |
+| 5 | Axon | Senior SRE II | 93 | $145k-$200k | Apply - public company |
+| 6 | Thumbtack | Sr. Software Engineer, SRE | 93 | $179k-$273k | Apply - excellent comp |
+| 7 | Better Stack | DevOps Engineer | 93 | Undisclosed | Apply - observability |
+| 8 | Pantheon | Platform Engineer | 93 | Undisclosed | Apply - multi-tenant |
+| 9 | DexCare | Senior SRE | 93 | $125k-$169k | RESERVED (healthcare) |
+| 10 | LTK | Senior Platform Engineer | 92 | Undisclosed | Apply - creator economy |
 
 ---
 
 ## Today's Collection Summary (2026-01-12)
 
-**12:00 Run (Phase 2):**
-- **Sources checked**: 12 (11 successful)
-- **Jobs found**: 65
-- **Jobs qualified**: 25
-- **Jobs added**: 8
+**Evening Run (Phase 2 + 3):**
+- **Sources checked**: 9 (9 successful)
+- **Jobs found**: 67
+- **Jobs qualified**: 5 (after dedup)
+- **Jobs added**: 5
 
-**New postings today:** LTK, Level Home, Pantheon, GoodLeap, Rula, Lightning Labs, WordPress VIP, Tacen
+**New postings today (evening):** Redpanda Data, Better Stack, Filevine, Big Cartel, Upstart
+
+**Application confirmations received:** Flex, Toast, Omada Health, Carrot
 
 ---
 
 ## Trends Snapshot
 
-- **Average salary midpoint**: $191,500 (8 postings with disclosed salary)
-- **Top skill gaps**: AWS (55%), DynamoDB (10%), GCP (10%)
-- **Rising keywords**: LLM inference, Durable Objects
+- **Average salary midpoint**: $185k (10 postings with disclosed salary)
+- **Top skill gaps**: AWS (55%), GCP (10%), Go (35%)
+- **Rising keywords**: LLM inference, data streaming
 - **Stable demand**: Kubernetes (100%), Terraform (90%), Go (55%)
 - **Study priority**: AWS certification, AI infrastructure basics
 
@@ -113,7 +108,8 @@
 
 ## Mock Interview Prep
 
-**Date**: 2026-01-14 @ 9:45am ET
+**Session 1**: 2026-01-13 @ 5:00pm ET (TODAY)
+**Session 2**: 2026-01-14 @ 9:45am ET
 **Format**: Video call with Addy Radwan (peer practice)
 **Focus**: Behavioral questions using STAR method
 
