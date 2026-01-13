@@ -126,6 +126,29 @@ Look for these patterns:
 
 Log: "Skipped {company} {role} - posted {time_found} (not within 2 hours)"
 
+### 3e. Validate Hard Criteria (Remote/US)
+
+**While you have the job page, verify it meets hard requirements:**
+
+| Check | Disqualifying Pattern | Action |
+|-------|----------------------|--------|
+| Not remote | "hybrid", "in-office", "on-site days" | SKIP |
+| Location restricted | "must be located in {city}", "within X miles" | SKIP |
+| Non-US | "{country} only" where country != US | SKIP |
+| Wrong level | "Staff", "Principal", "Distinguished" in title | SKIP |
+
+**Examples:**
+```
+❌ "This is a hybrid role with 2 days in office"
+❌ "Must be located within 50 miles of Austin"
+❌ "Remote (UK only)"
+❌ "Staff Platform Engineer"
+✅ "Fully remote, US-based"
+✅ "100% Remote - Work from anywhere in the US"
+```
+
+Log: "Skipped {company} {role} - {reason}" if disqualified
+
 ---
 
 ## Step 4: Score Verified Fresh Jobs
@@ -383,10 +406,16 @@ jobs:
   found: {n}               # Total candidates from search
   filtered_out: {n}        # Failed keyword/salary/level filters
   not_fresh: {n}           # Posted more than 2 hours ago
+  not_remote: {n}          # Failed remote/location validation
   low_match: {n}           # Match rate < 60%
   duplicate: {n}           # Already in postings/
   fresh_created: {n}       # New posting folders (verified <2hrs)
   alerts_sent: {n}         # Score >= 70, email sent
+
+validation_failures:       # Jobs that looked good but failed hard criteria
+  - company: {name}
+    role: {title}
+    reason: {hybrid|location-restricted|non-US|wrong-level}
 
 hot_jobs:
   - company: {name}
@@ -414,10 +443,16 @@ Fresh Job Monitor Complete
 📥 Found: {found} candidates
    ├─ {filtered_out} failed filters
    ├─ {not_fresh} older than 2 hours
+   ├─ {not_remote} not fully remote/US
    ├─ {low_match} low match (<60%)
    ├─ {duplicate} already tracked
    └─ {fresh_created} FRESH (posted <2hrs)
 🚨 Alerts sent: {alert_count}
+
+{if validation_failures > 0}
+⚠️  Validation failures:
+   {company} - {reason}
+{end if}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 

@@ -46,6 +46,66 @@ Sort by deadline (soonest first). Include specific action.
 
 ---
 
+## Step 2.5: Validate Top 10 (Hard Criteria Check)
+
+**CRITICAL**: Before including any job in the digest, verify it still meets hard criteria.
+Jobs can appear remote in search results but the actual page reveals hybrid/location restrictions.
+
+### Process
+
+For each job in the priority queue's `top_10`:
+
+1. **WebFetch the posting URL** to get the full job description
+2. **Check for disqualifying patterns**:
+
+| Pattern | Means | Action |
+|---------|-------|--------|
+| `hybrid`, `in-office days`, `on-site` | Not fully remote | Expire |
+| `must be located in {city}`, `{city} area required` | Location-restricted | Expire |
+| `must be within X miles`, `relocation` | Not remote | Expire |
+| `{country} only` (non-US) | Outside US | Expire |
+| `Staff`, `Principal`, `Distinguished` in title | Wrong level | Expire |
+| Posting returns 404/410 | Job closed | Expire |
+
+### Handle Invalid Postings
+
+If a posting fails validation:
+
+```bash
+# 1. Mark posting as expired
+# Update postings/{folder}/posting.yaml:
+state: expired
+expired_at: {now}
+expired_reason: "Validation failed: {reason}"
+
+# 2. Remove from priority queue
+# Delete from top_10 and queue in _priority_queue.yaml
+
+# 3. Log the removal
+echo "EXPIRED: {company} - {role} ({reason})" >> /tmp/validation-log.txt
+```
+
+### Rebuild Top 10
+
+After removing invalid entries:
+1. If top_10 has < 10 entries, pull from `queue` to fill
+2. Re-rank based on score
+3. Continue with validated jobs only
+
+### Example Disqualifying Text
+
+```
+❌ "This is a hybrid role with 2-3 days in our NYC office"
+❌ "Must be located within 50 miles of San Francisco"
+❌ "UK remote only"
+❌ "Staff Site Reliability Engineer" (title indicates Staff level)
+✅ "Fully remote, US-based"
+✅ "Remote (US timezones)"
+✅ "100% Remote - Work from anywhere in the US"
+```
+
+---
+
 ## Step 3: Generate HOT Section (Top 10 from Priority Queue)
 
 **Read the priority queue** - Phase 2 maintains the ranked list:
@@ -478,6 +538,11 @@ Phase 3 Complete: Digest Generated
 
 📋 DIGEST: digest/{date}.yaml
 
+🔍 VALIDATION:
+   Checked: {n} postings
+   Expired: {n} (not remote, wrong level, etc.)
+   {list expired: company - reason}
+
 🔥 URGENT ({n}):
    {list items}
 
@@ -506,6 +571,14 @@ phase: digest
 generated_at: {UTC timestamp}
 
 digest_file: digest/{date}.yaml
+
+validation:
+  checked: {n}
+  expired: {n}
+  expired_postings:
+    - folder: {folder}
+      company: {company}
+      reason: {reason}  # "hybrid", "location-restricted", "404", etc.
 
 email:
   sent: {bool}
