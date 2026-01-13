@@ -14,6 +14,9 @@
 REPO_DIR="${JOB_SEARCH_REPO:-$HOME/job-search-agent}"
 cd "$REPO_DIR" || exit 1
 
+# Ensure claude CLI and other tools are in PATH (cron uses minimal PATH)
+export PATH="$HOME/.local/bin:$PATH"
+
 # Check quiet hours (10pm-6am EST)
 HOUR_EST=$(TZ="America/New_York" date +%H)
 if [ "$HOUR_EST" -ge 22 ] || [ "$HOUR_EST" -lt 6 ]; then

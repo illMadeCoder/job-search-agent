@@ -17,6 +17,9 @@
 REPO_DIR="${JOB_SEARCH_REPO:-$HOME/job-search-agent}"
 cd "$REPO_DIR" || exit 1
 
+# Ensure claude CLI and other tools are in PATH (cron uses minimal PATH)
+export PATH="$HOME/.local/bin:$PATH"
+
 DATE=$(date +%Y-%m-%d)
 TIMESTAMP=$(date +%Y-%m-%dT%H%M)
 
