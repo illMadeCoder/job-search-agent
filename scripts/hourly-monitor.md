@@ -135,7 +135,11 @@ Log: "Skipped {company} {role} - posted {time_found} (not within 2 hours)"
 | Not remote | "hybrid", "in-office", "on-site days" | SKIP |
 | Location restricted | "must be located in {city}", "within X miles" | SKIP |
 | Non-US | "{country} only" where country != US | SKIP |
+| Europe-based | "Europe", "UK", "EMEA", "EU only", "European" | SKIP |
+| Europe cities | "Berlin", "London", "Amsterdam", "Dublin" without US | SKIP |
 | Wrong level | "Staff", "Principal", "Distinguished" in title | SKIP |
+| Job closed | "job is no longer open", "position has been filled" | SKIP |
+| Job closed | "this role has been closed", "no longer accepting" | SKIP |
 
 **Examples:**
 ```
@@ -143,6 +147,9 @@ Log: "Skipped {company} {role} - posted {time_found} (not within 2 hours)"
 ❌ "Must be located within 50 miles of Austin"
 ❌ "Remote (UK only)"
 ❌ "Staff Platform Engineer"
+❌ "The job you are looking for is no longer open"
+❌ "Location: Berlin, Germany"
+❌ "Remote - EMEA"
 ✅ "Fully remote, US-based"
 ✅ "100% Remote - Work from anywhere in the US"
 ```

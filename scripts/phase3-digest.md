@@ -55,8 +55,16 @@ Jobs can appear remote in search results but the actual page reveals hybrid/loca
 
 For each job in the priority queue's `top_10`:
 
-1. **WebFetch the posting URL** to get the full job description
-2. **Check for disqualifying patterns**:
+1. **Check if already applied** - Before anything else:
+   ```bash
+   # Check if posting folder has state: applied or interviewing
+   ls postings/ | grep -i "^{company-slug}\..*\.\(applied\|interviewing\)\."
+   ```
+   If found → SKIP from hot list (but don't expire - it's valid, just already in process)
+
+2. **WebFetch the posting URL** to get the full job description
+
+3. **Check for disqualifying patterns**:
 
 | Pattern | Means | Action |
 |---------|-------|--------|
@@ -64,8 +72,13 @@ For each job in the priority queue's `top_10`:
 | `must be located in {city}`, `{city} area required` | Location-restricted | Expire |
 | `must be within X miles`, `relocation` | Not remote | Expire |
 | `{country} only` (non-US) | Outside US | Expire |
+| `Europe`, `UK`, `EMEA`, `EU only`, `European` | Non-US region | Expire |
+| `Berlin`, `London`, `Amsterdam`, `Dublin` without US | Europe-based | Expire |
 | `Staff`, `Principal`, `Distinguished` in title | Wrong level | Expire |
 | Posting returns 404/410 | Job closed | Expire |
+| `job is no longer open`, `position has been filled` | Job closed | Expire |
+| `this role has been closed`, `no longer accepting` | Job closed | Expire |
+| `sorry, this job is no longer available` | Job closed | Expire |
 
 ### Handle Invalid Postings
 
@@ -99,10 +112,33 @@ After removing invalid entries:
 ❌ "Must be located within 50 miles of San Francisco"
 ❌ "UK remote only"
 ❌ "Staff Site Reliability Engineer" (title indicates Staff level)
+❌ "The job you are looking for is no longer open"
+❌ "This position has been filled"
+❌ "Location: Berlin, Germany" (Europe-based)
+❌ "Remote - EMEA" (non-US region)
+❌ "European timezone required"
 ✅ "Fully remote, US-based"
 ✅ "Remote (US timezones)"
 ✅ "100% Remote - Work from anywhere in the US"
 ```
+
+### Update posting.yaml (REQUIRED)
+
+When validation expires a job, you MUST update the posting folder:
+
+```bash
+# Find the posting folder
+FOLDER=$(ls postings/ | grep -i "^{company-slug}\." | head -1)
+
+# Update posting.yaml with expired state
+# Add/update these fields:
+application:
+  state: expired
+  expired_at: "{now UTC}"
+  expired_reason: "{reason}"  # e.g., "job_closed", "europe_only", "hybrid"
+```
+
+This ensures the posting state is the source of truth, not just the queue.
 
 ---
 
