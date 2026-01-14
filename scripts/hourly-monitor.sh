@@ -11,11 +11,14 @@
 # Usage: ./scripts/hourly-monitor.sh
 # Docker: docker compose run --rm agent hourly
 
+# Ensure HOME is set (cron may not set it)
+export HOME="${HOME:-/home/illm}"
+
 REPO_DIR="${JOB_SEARCH_REPO:-$HOME/job-search-agent}"
 cd "$REPO_DIR" || exit 1
 
 # Ensure claude CLI and other tools are in PATH (cron uses minimal PATH)
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="/home/illm/.local/bin:$PATH"
 
 # Check quiet hours (10pm-6am EST)
 HOUR_EST=$(TZ="America/New_York" date +%H)

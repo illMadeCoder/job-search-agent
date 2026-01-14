@@ -13,12 +13,15 @@
 # Don't use set -e - bash arithmetic ((x++)) returns 1 when x starts at 0
 # We handle errors explicitly per-phase
 
+# Ensure HOME is set (cron may not set it)
+export HOME="${HOME:-/home/illm}"
+
 # Change to your repo directory
 REPO_DIR="${JOB_SEARCH_REPO:-$HOME/job-search-agent}"
 cd "$REPO_DIR" || exit 1
 
 # Ensure claude CLI and other tools are in PATH (cron uses minimal PATH)
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="/home/illm/.local/bin:$PATH"
 
 DATE=$(date +%Y-%m-%d)
 TIMESTAMP=$(date +%Y-%m-%dT%H%M)
