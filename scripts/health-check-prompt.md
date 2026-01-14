@@ -39,7 +39,8 @@ For each posting folder in `postings/` that is NOT in a terminal state (offer, r
    ```
 
 6. **If posting is missing/closed**:
-   - Rename folder to add `.review` suffix: `company.applied/` → `company.applied.review/`
+   - Rename folder to add `.review` suffix
+   - Example: `company.role.applied.2026-01-10T0500Z/` → `company.role.applied.2026-01-10T0500Z.review/`
    - This flags it for user attention
 
 ### Phase 2: Scan for New Roles
@@ -92,21 +93,25 @@ The 5am job search agent will:
 
 ## Folder Naming Reference
 
+See `postings/README.md` for full lifecycle documentation.
+
 ```
 postings/
-├── acme-corp.pending_review/      # Awaiting your review
-├── acme-corp.applied/             # Applied, watching
-├── acme-corp.applied.review/      # Applied, needs attention!
-├── acme-corp.interviewing/        # In interview process
-├── acme-corp.interviewing.review/ # Interviewing, issue found!
-├── acme-corp.offer/               # Terminal: got offer
-├── acme-corp.rejected/            # Terminal: rejected
-├── acme-corp.expired/             # Terminal: no response
-└── acme-corp.withdrawn/           # Terminal: you withdrew
+├── {company}.{role}.{state}.{timestamp}Z/
+│   └── posting.yaml
 ```
 
-States that need checking: `pending_review`, `applied`, `interviewing`
-Terminal states (skip): `offer`, `rejected`, `expired`, `withdrawn`
+**Examples:**
+```
+acme-corp.senior-sre.pending_review.2026-01-10T0500Z/
+acme-corp.senior-sre.applied.2026-01-10T0500Z/
+acme-corp.senior-sre.applied.2026-01-10T0500Z.review/  # Needs attention!
+```
+
+**States that need checking:** `pending_review`, `applied`, `interviewing`
+**Terminal states (skip):** `offer`, `rejected`, `expired`, `withdrawn`
+
+**The `.review` suffix** flags folders needing human attention (URL 404, new roles found, etc.)
 
 ## Error Handling
 

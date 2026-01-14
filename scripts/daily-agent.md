@@ -402,7 +402,9 @@ For each job found, compare against resume (`jb_resume_2025.tex`):
 
 ## 2.7 Create Posting Folders
 
-For ALL qualifying jobs found:
+For ALL qualifying jobs found.
+
+**See `postings/README.md` for full lifecycle documentation.**
 
 **Folder format:**
 ```

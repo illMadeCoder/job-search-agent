@@ -271,7 +271,9 @@ If connections found:
 
 ## Step 7: Create Posting Folders
 
-For ALL qualifying jobs (not just hot ones):
+For ALL qualifying jobs (not just hot ones).
+
+**See `postings/README.md` for full lifecycle documentation.**
 
 ### Folder Path
 ```

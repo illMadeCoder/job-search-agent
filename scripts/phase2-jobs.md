@@ -424,6 +424,8 @@ For each job:
 
 ## B.7 Create Posting Folders
 
+**See `postings/README.md` for full lifecycle documentation.**
+
 ### Deduplication Check (REQUIRED)
 Before creating ANY posting folder, check if it already exists:
 
