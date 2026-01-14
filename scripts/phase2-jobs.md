@@ -222,6 +222,38 @@ WebSearch: site:news.ycombinator.com "Ask HN: Who is hiring" January 2026
 Then WebFetch the thread URL (single page, manageable size).
 Parse for remote platform/SRE/devops roles. Limit to 10 best matches.
 
+### Hiring Without Whiteboards (Weekly - Mondays Only)
+
+**Only run on Mondays** - this curated list doesn't change frequently.
+
+```bash
+# Check day of week
+if [ "$(date +%u)" -eq 1 ]; then
+  # It's Monday - scan the list
+fi
+```
+
+Fetch the raw markdown:
+```
+curl -s "https://raw.githubusercontent.com/poteto/hiring-without-whiteboards/main/README.md"
+```
+
+Parse entries matching pattern:
+```
+- [Company Name](careers_url) | Location | Interview description
+```
+
+**Filter for:**
+- Location contains "Remote" (case-insensitive)
+- Skip "Europe only", "UK only", "Canada only"
+
+**For matching companies:**
+1. Check if they use Greenhouse/Lever (prefer API)
+2. Otherwise: `WebSearch: "{company}" platform engineer OR SRE remote`
+3. Limit to 10 new companies per run
+
+**Value:** These companies use practical interviews (take-homes, pair programming) not leetcode.
+
 ## B.2 Search Sources
 
 Execute ALL enabled search sources from `config.yaml → sources.search`.

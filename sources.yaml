@@ -58,6 +58,47 @@ rss:
     status: untested
 
 # ============================================================
+# CURATED SOURCES - GitHub lists, community-maintained
+# ============================================================
+curated:
+
+  hiring_without_whiteboards:
+    name: Hiring Without Whiteboards
+    type: curated
+    reliability: high
+    url: "https://raw.githubusercontent.com/poteto/hiring-without-whiteboards/main/README.md"
+    description: |
+      Curated list of companies that don't do whiteboard/leetcode interviews.
+      Focus on practical, real-world problems instead.
+    parse:
+      format: markdown
+      pattern: |
+        - [Company Name](careers_url) | Location(s) | Interview process description
+      example: |
+        - [Airtable](https://airtable.com/careers) | San Francisco, CA; Remote | Take home project
+    workflow: |
+      1. Fetch raw README.md from GitHub
+      2. Parse markdown list entries
+      3. Filter for companies with "Remote" in location
+      4. For each matching company:
+         - Check if uses Greenhouse/Lever (use API)
+         - Otherwise WebSearch "{company} platform engineer remote"
+      5. Cross-reference with existing postings to avoid duplicates
+    filters:
+      location_must_contain:
+        - Remote
+        - remote
+      skip_if_location_contains:
+        - Europe only
+        - UK only
+        - Canada only
+    notes: |
+      Good for discovering companies with practical interview processes.
+      Run weekly (not daily) - list doesn't change frequently.
+      Use as company discovery, then check their careers pages.
+    schedule: weekly
+
+# ============================================================
 # API SOURCES - Claude can fetch directly, structured responses
 # ============================================================
 api:
@@ -336,11 +377,13 @@ workflow:
       - api.remoteok (full scan)
       - api.hn_whoishiring (if new thread)
       - search.google_jobs (discovery)
+      - curated.hiring_without_whiteboards (weekly - check if Monday)
     actions:
       - Fetch RSS feeds first (most reliable, structured)
       - Health check existing postings (URLs may fail, log don't assume)
       - Fetch from API sources
       - Search for new postings
+      - On Mondays: scan Hiring Without Whiteboards for new remote companies
       - Create posting.yaml for qualifying jobs
       - Update tracker
 
