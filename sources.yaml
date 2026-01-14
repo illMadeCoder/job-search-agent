@@ -60,6 +60,33 @@ rss:
 # ============================================================
 # CURATED SOURCES - GitHub lists, community-maintained
 # ============================================================
+#
+# IMPORTANT: Randomization Strategy
+# ----------------------------------
+# Long lists have alphabetical/recognition bias. To ensure fair coverage:
+#
+# 1. SHUFFLE before scanning:
+#    ```python
+#    import random
+#    random.seed(int(date.today().strftime("%Y%m%d")))  # Reproducible per day
+#    random.shuffle(companies)
+#    ```
+#
+# 2. TRACK scanned companies in state file:
+#    /tmp/curated-scan-state.yaml:
+#      hiring_without_whiteboards:
+#        last_scanned: 2026-01-13
+#        offset: 150  # Resume from here next week
+#        recently_checked: [company1, company2, ...]
+#
+# 3. ROTATE through list over multiple weeks:
+#    - Week 1: companies[0:100]
+#    - Week 2: companies[100:200]
+#    - Week 3: companies[200:300]
+#    - Week 4: companies[300:400], then wrap to 0
+#
+# 4. LIMIT per run: max 50 companies checked per source per run
+#
 curated:
 
   hiring_without_whiteboards:

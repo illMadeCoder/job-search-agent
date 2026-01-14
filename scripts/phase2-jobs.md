@@ -247,10 +247,32 @@ Parse entries matching pattern:
 - Location contains "Remote" (case-insensitive)
 - Skip "Europe only", "UK only", "Canada only"
 
-**For matching companies:**
-1. Check if they use Greenhouse/Lever (prefer API)
-2. Otherwise: `WebSearch: "{company}" platform engineer OR SRE remote`
-3. Limit to 10 new companies per run
+#### Randomization (IMPORTANT - avoid alphabetical bias)
+
+```python
+import random
+from datetime import date
+
+# Get week number for rotation
+week_num = date.today().isocalendar()[1]
+
+# Filter to remote companies first
+remote_companies = [c for c in all_companies if "remote" in c.location.lower()]
+
+# Shuffle with weekly seed (same order all week, different next week)
+random.seed(week_num)
+random.shuffle(remote_companies)
+
+# Take batch of 50 (rotate through ~500 companies over 10 weeks)
+batch_size = 50
+offset = (week_num % 10) * batch_size
+batch = remote_companies[offset:offset + batch_size]
+```
+
+**For each company in batch:**
+1. Check if already in `postings/` (skip if exists)
+2. Check if they use Greenhouse/Lever (prefer API)
+3. Otherwise: `WebSearch: "{company}" platform engineer OR SRE remote`
 
 **Value:** These companies use practical interviews (take-homes, pair programming) not leetcode.
 
@@ -267,10 +289,19 @@ Find section "Companies with Remote DNA" and parse entries:
 [Company Name](careers_url) - Description
 ```
 
-**For each company:**
+#### Randomization (same as above)
+
+```python
+# Use week number as seed, take batch of 40
+week_num = date.today().isocalendar()[1]
+random.seed(week_num + 1000)  # Different seed than hiring-without-whiteboards
+random.shuffle(companies)
+batch = companies[(week_num % 5) * 40 : (week_num % 5) * 40 + 40]
+```
+
+**For each company in batch:**
 1. Check if already in `postings/` or `greenhouse_companies`/`lever_companies`
 2. If new: `WebSearch: "{company}" platform engineer OR SRE remote`
-3. Limit to 10 new companies per run
 
 **Value:** 200+ remote-first companies (GitLab, Automattic, Basecamp, etc.)
 
