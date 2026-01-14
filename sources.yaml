@@ -98,6 +98,62 @@ curated:
       Use as company discovery, then check their careers pages.
     schedule: weekly
 
+  awesome_remote_job:
+    name: Awesome Remote Job
+    type: curated
+    reliability: high
+    url: "https://raw.githubusercontent.com/lukasz-madon/awesome-remote-job/master/README.md"
+    description: |
+      200+ companies with "Remote DNA" - fully distributed or remote-first.
+      Includes career page links and brief descriptions.
+    parse:
+      format: markdown
+      section: "Companies with Remote DNA"
+      pattern: |
+        [Company Name](careers_url) - Brief description
+      example: |
+        [Automattic](https://automattic.com/work-with-us/) - Makers of WordPress.com
+        [GitLab](https://about.gitlab.com/jobs/) - Competitor to GitHub
+    workflow: |
+      1. Fetch raw README.md
+      2. Find "Companies with Remote DNA" section
+      3. Parse markdown links: [Company](url)
+      4. For each company, search for platform/SRE/devops roles
+    notes: |
+      Comprehensive list of remote-first companies.
+      Many are well-known (GitLab, Automattic, Basecamp).
+      Run weekly - cross-reference with existing postings.
+    schedule: weekly
+
+  four_day_week:
+    name: 4 Day Work Week Companies
+    type: curated
+    reliability: medium
+    url: "https://api.github.com/repos/rafaelcamargo/4dayweek/contents/src/companies/data"
+    description: |
+      Companies with 4-day work weeks. JSON files per company.
+      "Full" = year-round, "Partial" = seasonal/restricted.
+    parse:
+      format: json_directory
+      fields:
+        name: company name
+        adoption: "Full" or "Partial"
+        website: main URL
+        careers_page: hiring link
+        description: how they implement 4-day week
+    workflow: |
+      1. Fetch directory listing from GitHub API
+      2. For each .json file, fetch and parse
+      3. Filter for "Full" adoption (skip "Partial")
+      4. Check careers_page for platform/SRE roles
+    filters:
+      adoption: Full  # Skip partial implementations
+    notes: |
+      Work-life balance focused companies.
+      Smaller list but high quality.
+      Run monthly - list grows slowly.
+    schedule: monthly
+
 # ============================================================
 # API SOURCES - Claude can fetch directly, structured responses
 # ============================================================

@@ -254,6 +254,50 @@ Parse entries matching pattern:
 
 **Value:** These companies use practical interviews (take-homes, pair programming) not leetcode.
 
+### Awesome Remote Job (Weekly - Mondays Only)
+
+**Only run on Mondays** - curated list of remote-first companies.
+
+```
+curl -s "https://raw.githubusercontent.com/lukasz-madon/awesome-remote-job/master/README.md"
+```
+
+Find section "Companies with Remote DNA" and parse entries:
+```
+[Company Name](careers_url) - Description
+```
+
+**For each company:**
+1. Check if already in `postings/` or `greenhouse_companies`/`lever_companies`
+2. If new: `WebSearch: "{company}" platform engineer OR SRE remote`
+3. Limit to 10 new companies per run
+
+**Value:** 200+ remote-first companies (GitLab, Automattic, Basecamp, etc.)
+
+### 4 Day Work Week (Monthly - 1st of Month)
+
+**Only run on 1st of month** - small list, grows slowly.
+
+```bash
+if [ "$(date +%d)" -eq 01 ]; then
+  # Fetch company list from GitHub API
+  curl -s "https://api.github.com/repos/rafaelcamargo/4dayweek/contents/src/companies/data"
+fi
+```
+
+Each company is a JSON file with:
+```json
+{
+  "name": "Company",
+  "adoption": "Full",  // or "Partial"
+  "careers_page": "https://..."
+}
+```
+
+**Filter for:** `adoption: "Full"` (skip Partial - seasonal only)
+
+**Value:** Work-life balance focused companies with 4-day weeks.
+
 ## B.2 Search Sources
 
 Execute ALL enabled search sources from `config.yaml → sources.search`.
