@@ -37,6 +37,7 @@ linkedin_archive/
 # Personal job postings and tracking
 postings/
 !postings/.gitkeep
+!postings/README.md
 !postings/_schema.yaml
 !postings/_template.yaml
 !postings/_tracker.md
