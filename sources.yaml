@@ -347,11 +347,11 @@ workflow:
   hourly_monitor:
     description: What Claude does every 2 hours (6am-8pm) for fresh jobs
     sources:
-      - rss.weworkremotely (check pubDate for <2hr old posts)
+      - rss.weworkremotely (check pubDate for <12hr old posts)
       - api.remoteok (check date field)
     actions:
       - Fetch RSS/API sources
-      - Filter to jobs posted within last 2 hours
+      - Filter to jobs posted within last 12 hours
       - Skip jobs already in postings/
       - Send instant email alert for fresh matches
       - Create posting.yaml for qualifying jobs
