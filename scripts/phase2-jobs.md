@@ -273,7 +273,7 @@ batch = remote_companies[offset:offset + batch_size]
 1. Check if already in `postings/` (skip if exists)
 2. Check if they use Greenhouse/Lever (prefer API)
 3. Otherwise: `WebSearch: "{company}" platform engineer OR SRE remote`
-4. **For each matching job found → CREATE posting folder** (see B.5)
+4. **For each matching job found → CREATE posting folder** (see B.7)
    - Same process as other sources: dedup, filter, score, create posting.yaml
 
 **Value:** These companies use practical interviews (take-homes, pair programming) not leetcode.
@@ -304,7 +304,7 @@ batch = companies[(week_num % 5) * 40 : (week_num % 5) * 40 + 40]
 **For each company in batch:**
 1. Check if already in `postings/` or `greenhouse_companies`/`lever_companies`
 2. If new: `WebSearch: "{company}" platform engineer OR SRE remote`
-3. **For each matching job found → CREATE posting folder** (see B.5)
+3. **For each matching job found → CREATE posting folder** (see B.7)
    - Same process as other sources: dedup, filter, score, create posting.yaml
 
 **Value:** 200+ remote-first companies (GitLab, Automattic, Basecamp, etc.)
@@ -334,7 +334,7 @@ Each company is a JSON file with:
 **For each company with Full adoption:**
 1. Check if already in `postings/` (skip if exists)
 2. Visit `careers_page` or `WebSearch: "{company}" platform engineer OR SRE remote`
-3. **For each matching job found → CREATE posting folder** (see B.5)
+3. **For each matching job found → CREATE posting folder** (see B.7)
    - Same process as other sources: dedup, filter, score, create posting.yaml
 
 **Value:** Work-life balance focused companies with 4-day weeks.
