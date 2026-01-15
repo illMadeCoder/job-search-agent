@@ -14,8 +14,13 @@
 # Ensure HOME is set (cron may not set it)
 export HOME="${HOME:-/home/illm}"
 
-REPO_DIR="${JOB_SEARCH_REPO:-$HOME/job-search-agent}"
-cd "$REPO_DIR" || exit 1
+# Scripts directory (where this script and hourly-monitor.md live)
+SCRIPTS_DIR="${JOB_SEARCH_SCRIPTS:-$HOME/job-search-agent/scripts}"
+
+# Data directory (where config.yaml, postings/, digest/, etc. live)
+# Can be separate from scripts (e.g., DATA_DIR=~/resume for private data)
+DATA_DIR="${JOB_SEARCH_DATA:-$HOME/job-search-agent}"
+cd "$DATA_DIR" || exit 1
 
 # Ensure claude CLI and other tools are in PATH (cron uses minimal PATH)
 export PATH="/home/illm/.local/bin:$PATH"
@@ -51,16 +56,17 @@ echo " Started: $(date -Iseconds)"
 echo " Log: $LOG_FILE"
 echo "════════════════════════════════════════════════════════════"
 
-# Activate venv for Gmail access
-if ! source .venv/bin/activate 2>&1; then
-    echo "WARNING: Failed to activate venv"
+# Activate venv for Gmail access (venv lives in scripts repo, not data dir)
+REPO_ROOT="$(dirname "$SCRIPTS_DIR")"
+if ! source "$REPO_ROOT/.venv/bin/activate" 2>&1; then
+    echo "WARNING: Failed to activate venv from $REPO_ROOT/.venv"
 fi
 
 # Clean up stale state
 rm -f /tmp/hourly-monitor-state.yaml
 
 # Run the fresh job monitor agent
-if claude -p "$(cat scripts/hourly-monitor.md)" \
+if claude -p "$(cat $SCRIPTS_DIR/hourly-monitor.md)" \
   --model opus \
   --allowedTools "WebFetch,WebSearch,Read,Write,Bash,Glob,Grep" 2>&1; then
     echo ""

@@ -63,6 +63,25 @@ bd create "LinkedIn archive refresh" -p 3 --defer "+7d"
 
 Scan inbox for job-related emails from the last 24 hours.
 
+## 0.0 Verify Gmail Configuration
+
+**IMPORTANT**: Do NOT assume Gmail is unconfigured. Always test first.
+
+Run this command to check if Gmail tokens exist and are valid:
+```bash
+source .venv/bin/activate && python scripts/gmail-fetch.py accounts
+```
+
+**If successful** (returns JSON array with email addresses): Proceed to 0.1
+**If error** (file not found, auth error): Log the specific error and skip to Phase 1
+
+Example success output:
+```json
+[{"email": "user@gmail.com", "token_file": "gmail-tokens-1.json"}]
+```
+
+Do NOT skip Gmail scanning based on assumptions. Only skip if the above command fails.
+
 ## 0.1 Fetch Recent Emails
 
 Read email settings from `config.yaml → email`:
@@ -101,12 +120,22 @@ source .venv/bin/activate && python scripts/gmail-fetch.py read MESSAGE_ID
 ### LinkedIn Emails
 | From Address | Subject Pattern | Type | Action |
 |--------------|-----------------|------|--------|
+| `jobs-noreply@linkedin.com` | "your application was sent to {Company}" | `confirmation` | Create/update posting |
 | `messages-noreply@linkedin.com` | "InMail" or recruiter name | `recruiter_outreach` | Create posting |
 | `messages-noreply@linkedin.com` | Role title + "roles near you" | `job_alert` | Note for manual review |
 | `messages-noreply@linkedin.com` | "add [Name]" | `connection_suggestion` | Skip |
-| `jobs-noreply@linkedin.com` | Any | `job_alert` | Note for manual review |
+| `jobalerts-noreply@linkedin.com` | "your job alert" | `job_alert` | Note for manual review |
 | `billing-noreply@linkedin.com` | Any | Skip | Not job-related |
 | `updates-noreply@linkedin.com` | Any | Skip | Social feed updates |
+| `career-interests-noreply@linkedin.com` | Any | Skip | Profile notifications |
+
+**LinkedIn Application Confirmations**: When subject matches "your application was sent to {Company}":
+- Extract company name from subject
+- Role is usually not in email - search for it:
+  ```
+  WebSearch: site:linkedin.com/jobs "{company}" platform engineer OR SRE OR devops
+  ```
+- If role found, create posting; otherwise create with `role: unknown` and flag for manual review
 
 ### Content-Based Classification
 | Pattern | Type | Action |
@@ -156,19 +185,82 @@ events:
 - Match to posting
 - Add `rejection` event with stage
 - Update `application.state: rejected`
-- Rename folder to `.rejected`
+- Rename file to `.rejected`
 
 ### Offer → URGENT
 - Match to posting
 - Add `offer_received` event (parse details if visible)
 - Update `application.state: offer`
-- Rename folder to `.offer`
+- Rename file to `.offer`
 - Add to digest urgent section with deadline
 
-### Confirmation → Verify
-- Match to posting
-- Add `application_confirmed` event
-- Verify dates align
+### Confirmation → Create or Update Posting
+
+When you receive an application confirmation email:
+
+1. **Extract info from email**:
+   - Company name (from sender domain, email body, or subject)
+   - Role title (from subject or body - look for "applied to", "application for", etc.)
+   - ATS platform (from sender domain: greenhouse.io, lever.co, etc.)
+
+2. **Check if posting exists**:
+   ```bash
+   ls postings/ | grep -i "{company-slug}"
+   ```
+
+3. **If posting EXISTS**: Add `application_confirmed` event
+   ```yaml
+   events:
+     - type: application_confirmed
+       date: {email date}
+       data:
+         email_id: {gmail message id}
+         ats: {greenhouse|lever|linkedin|etc}
+   ```
+
+4. **If posting does NOT exist**: Create it
+
+   a. **Find the job posting URL**:
+      - For Greenhouse: `WebSearch: site:boards.greenhouse.io "{company}" "{role}"`
+      - For Lever: `WebSearch: site:jobs.lever.co "{company}" "{role}"`
+      - For LinkedIn: Note URL cannot be fetched (manual source)
+      - For others: `WebSearch: "{company}" careers "{role}"`
+
+   b. **Fetch job details** (if URL found):
+      - Use WebFetch to get full job description
+      - Extract salary, requirements, tech stack
+      - Calculate keyword match against resume
+
+   c. **Create posting file**:
+      ```
+      postings/{company-slug}.{role-slug}.applied.{timestamp}Z.yaml
+      ```
+      Note: State is `applied` (not `pending_review`) since you already applied
+
+   d. **Populate posting** with available info:
+      ```yaml
+      company: {from email}
+      role: {from email}
+      url: {if found, else null}
+      job_description: {if fetched, else null}
+      application:
+        state: applied
+        applied_date: {email date}
+        method: {linkedin|direct|etc}
+      events:
+        - type: created
+          date: {now}
+          data:
+            source: email_confirmation
+            ats: {platform}
+        - type: applied
+          date: {email date}
+          data:
+            method: {inferred from email}
+            confirmation_email_id: {gmail id}
+      ```
+
+5. **Log in digest**: Add to `confirmations` list with `posting_created: true/false`
 
 ## 0.4 Record Results
 
@@ -186,15 +278,15 @@ In digest `email_scan` section:
 
 ## 1.1 Health Check Active Postings
 
-For each non-terminal posting folder (not `.offer`, `.rejected`, `.expired`, `.withdrawn`):
+For each non-terminal posting file (not `.offer`, `.rejected`, `.expired`, `.withdrawn`):
 
-1. **List active folders** matching:
-   - `*.pending_review.*`
-   - `*.applied.*`
-   - `*.interviewing.*`
+1. **List active files** matching:
+   - `*.pending_review.*.yaml`
+   - `*.applied.*.yaml`
+   - `*.interviewing.*.yaml`
 
 2. **Check each posting URL**:
-   - Read `posting.yaml` to get `url`
+   - Read the posting YAML file to get `url`
    - Use WebFetch to check if posting still exists
    - **IMPORTANT**: If fetch fails (403, 999, timeout), do NOT assume job is gone
      - Many sites block bots - log the failure but don't flag as missing
@@ -203,20 +295,20 @@ For each non-terminal posting folder (not `.offer`, `.rejected`, `.expired`, `.w
 
 3. **Search for new roles at each company**:
    - Search "{company} careers remote platform engineer OR SRE"
-   - If new relevant role found: add `.review` flag to folder name
+   - If new relevant role found: add `.review` flag to file name
    - Include in `health_check` event's `new_roles_found` array
 
-4. **Update folder timestamps** to current UTC time
-   - Rename folder to update the timestamp portion to today's date/time
+4. **Update file timestamps** to current UTC time
+   - Rename file to update the timestamp portion to today's date/time
 
 ## 1.2 Check Expirations
 
-For each `.applied` folder:
+For each `.applied` file:
 
-1. Read `posting.yaml`, get `application.applied_date`
+1. Read the posting YAML file, get `application.applied_date`
 2. Compute expiry: `applied_date + 30 days`
 3. If today >= computed expiry:
-   - Rename folder: `.applied` → `.expired`
+   - Rename file: `.applied` → `.expired`
    - Set `application.state: expired`
    - Set `outcome.result: expired`, `outcome.date: today`
    - Append `expired` event with `days_waited: 30`
@@ -224,10 +316,10 @@ For each `.applied` folder:
 ## 1.3 Verify All Updated
 
 **CRITICAL**: Rescan until complete
-- List all active folders again
-- Check that EVERY folder has today's UTC date in its timestamp (YYYY-MM-DD matches today)
-- If any folder has an old timestamp, process it and repeat
-- Only proceed to Phase 2 when ALL active folders have today's timestamp
+- List all active files again
+- Check that EVERY file has today's UTC date in its timestamp (YYYY-MM-DD matches today)
+- If any file has an old timestamp, process it and repeat
+- Only proceed to Phase 2 when ALL active files have today's timestamp
 
 ---
 
@@ -305,7 +397,7 @@ Log in summary: "Manual sources skipped - user should browse LinkedIn/Indeed dur
 
 Read all filter criteria from `config.yaml`. Do NOT hardcode values.
 
-**CRITICAL: Jobs that fail ANY filter below must be DISCARDED COMPLETELY. Do NOT create posting folders for disqualified jobs. Do NOT set `recommendation: skip` for disqualified jobs. Simply do not process them further.**
+**CRITICAL: Jobs that fail ANY filter below must be DISCARDED COMPLETELY. Do NOT create posting files for disqualified jobs. Do NOT set `recommendation: skip` for disqualified jobs. Simply do not process them further.**
 
 ```yaml
 # From config.yaml:
@@ -325,15 +417,15 @@ companies.blacklist           # Always disqualify
 
 | Filter | Config Path | Action if Fails |
 |--------|-------------|-----------------|
-| Remote | `location.remote_only` | **DISCARD** - do not create folder |
-| Location | `location.countries` | **DISCARD** - do not create folder |
-| Salary | `salary.minimum` | **DISCARD** - do not create folder |
-| Keywords | `search.required_keywords` | **DISCARD** - do not create folder |
-| Exclusions | `search.exclude_keywords` | **DISCARD** - do not create folder |
-| Experience | `experience.*` | **DISCARD** - do not create folder |
-| Tier | `companies.tiers.reserved` | **DISCARD** - do not create folder |
-| Blacklist | `companies.blacklist` | **DISCARD** - do not create folder |
-| Dedupe | Check `postings/` | **DISCARD** - folder already exists |
+| Remote | `location.remote_only` | **DISCARD** - do not create file |
+| Location | `location.countries` | **DISCARD** - do not create file |
+| Salary | `salary.minimum` | **DISCARD** - do not create file |
+| Keywords | `search.required_keywords` | **DISCARD** - do not create file |
+| Exclusions | `search.exclude_keywords` | **DISCARD** - do not create file |
+| Experience | `experience.*` | **DISCARD** - do not create file |
+| Tier | `companies.tiers.reserved` | **DISCARD** - do not create file |
+| Blacklist | `companies.blacklist` | **DISCARD** - do not create file |
+| Dedupe | Check `postings/` | **DISCARD** - file already exists |
 | Role Title | `search.exclude_roles` | **DISCARD** - outside core competency |
 
 ## 2.4.1 One Role Per Company
@@ -400,18 +492,18 @@ For each job found, compare against resume (`jb_resume_2025.tex`):
    - Total keywords extracted → `match.total`
    - Populate `match.keywords_matched` and `match.keywords_missing`
 
-## 2.7 Create Posting Folders
+## 2.7 Create Posting Files
 
 For ALL qualifying jobs found.
 
 **See `postings/README.md` for full lifecycle documentation.**
 
-**Folder format:**
+**File format:**
 ```
-postings/{company-slug}.{role-slug}.pending_review.{YYYY-MM-DDTHHMM}Z/
+postings/{company-slug}.{role-slug}.pending_review.{YYYY-MM-DDTHHMM}Z.yaml
 ```
 
-**Create `posting.yaml`** per schema (see `_schema.yaml` for full structure).
+**Create posting file** per schema (see `_schema.yaml` for full structure).
 
 Key fields to populate:
 - `schema_version: 1`
@@ -1317,11 +1409,11 @@ Write to `/tmp/digest-email.html`. The template below shows all sections - **onl
 | Daily Learning | If `config.output.learning.enabled` is true |
 | Agent Health | Always (admin visibility into agent performance and beads) |
 
-**To populate stats counts**, scan `postings/` folders:
+**To populate stats counts**, scan `postings/*.yaml` files:
 - New = count of `digest.hot[]`
-- Applied = count folders with `application.state: applied`
-- Interview = count folders with `application.state: interviewing`
-- Offers = count folders with `application.state: offer`
+- Applied = count files with `application.state: applied`
+- Interview = count files with `application.state: interviewing`
+- Offers = count files with `application.state: offer`
 
 **Guidelines for email HTML**:
 - Only include sections that have data (use conditional logic)

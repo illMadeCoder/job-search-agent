@@ -16,9 +16,13 @@
 # Ensure HOME is set (cron may not set it)
 export HOME="${HOME:-/home/illm}"
 
-# Change to your repo directory
-REPO_DIR="${JOB_SEARCH_REPO:-$HOME/job-search-agent}"
-cd "$REPO_DIR" || exit 1
+# Scripts directory (where this script and phase*.md live)
+SCRIPTS_DIR="${JOB_SEARCH_SCRIPTS:-$HOME/job-search-agent/scripts}"
+
+# Data directory (where config.yaml, postings/, digest/, etc. live)
+# Can be separate from scripts (e.g., DATA_DIR=~/resume for private data)
+DATA_DIR="${JOB_SEARCH_DATA:-$HOME/job-search-agent}"
+cd "$DATA_DIR" || exit 1
 
 # Ensure claude CLI and other tools are in PATH (cron uses minimal PATH)
 export PATH="/home/illm/.local/bin:$PATH"
@@ -50,9 +54,10 @@ echo " Started: $(date -Iseconds)"
 echo " Logs: logs/phases/phase*-${TIMESTAMP}.log"
 echo "════════════════════════════════════════════════════════════"
 
-# Activate venv for Gmail access
-if ! source .venv/bin/activate 2>&1; then
-    echo "WARNING: Failed to activate venv"
+# Activate venv for Gmail access (venv lives in scripts repo, not data dir)
+REPO_ROOT="$(dirname "$SCRIPTS_DIR")"
+if ! source "$REPO_ROOT/.venv/bin/activate" 2>&1; then
+    echo "WARNING: Failed to activate venv from $REPO_ROOT/.venv"
 fi
 
 # Add Go bin to PATH for beads (bd)
@@ -76,7 +81,7 @@ echo "└───────────────────────�
 PHASE1_START=$(date -Iseconds)
 echo "Started: $PHASE1_START"
 
-if claude -p "$(cat scripts/phase1-email.md)" \
+if claude -p "$(cat $SCRIPTS_DIR/phase1-email.md)" \
   --model opus \
   --allowedTools "Read,Write,Bash,Glob,Grep" 2>&1 | tee "$PHASE1_LOG"; then
     echo "Phase 1: SUCCESS"
@@ -110,7 +115,7 @@ echo "└───────────────────────�
 PHASE2_START=$(date -Iseconds)
 echo "Started: $PHASE2_START"
 
-if claude -p "$(cat scripts/phase2-jobs.md)" \
+if claude -p "$(cat $SCRIPTS_DIR/phase2-jobs.md)" \
   --model opus \
   --allowedTools "WebFetch,WebSearch,Read,Write,Edit,Bash,Glob,Grep" 2>&1 | tee "$PHASE2_LOG"; then
     echo "Phase 2: SUCCESS"
@@ -147,7 +152,7 @@ echo "└───────────────────────�
 PHASE3_START=$(date -Iseconds)
 echo "Started: $PHASE3_START"
 
-if claude -p "$(cat scripts/phase3-digest.md)" \
+if claude -p "$(cat $SCRIPTS_DIR/phase3-digest.md)" \
   --model opus \
   --allowedTools "WebFetch,WebSearch,Read,Write,Edit,Bash,Glob,Grep" 2>&1 | tee "$PHASE3_LOG"; then
     echo "Phase 3: SUCCESS"
@@ -170,7 +175,7 @@ echo "└───────────────────────�
 PHASE4_START=$(date -Iseconds)
 echo "Started: $PHASE4_START"
 
-if claude -p "$(cat scripts/phase4-improve.md)" \
+if claude -p "$(cat $SCRIPTS_DIR/phase4-improve.md)" \
   --model opus \
   --allowedTools "Read,Write,Edit,Bash,Glob,Grep" 2>&1 | tee "$PHASE4_LOG"; then
     echo "Phase 4: SUCCESS"

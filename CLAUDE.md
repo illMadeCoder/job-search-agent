@@ -60,11 +60,13 @@ An autonomous job search system powered by Claude that runs daily at 5am to:
 
 ---
 
-## Folder Naming Convention
+## Posting File Naming
 
 ```
-postings/{company}.{role}.{state}.{YYYY-MM-DDTHHMM}Z/
+postings/{company}.{role}.{state}.{YYYY-MM-DDTHHMM}Z.yaml
 ```
+
+Each posting is a single YAML file (not a folder).
 
 ### States
 
@@ -80,7 +82,7 @@ postings/{company}.{role}.{state}.{YYYY-MM-DDTHHMM}Z/
 
 ### Review Flag
 
-`.review` suffix = needs attention (posting missing OR new roles found)
+`.review` segment in filename = needs attention (posting missing OR new roles found)
 
 ---
 
@@ -97,7 +99,7 @@ See `postings/_schema.yaml` for full reference.
 
 | Type | When | Key Data |
 |------|------|----------|
-| `created` | Folder created | source, posting_status |
+| `created` | File created | source, posting_status |
 | `recruiter_inbound` | Recruiter contacted you | channel, message_snippet |
 | `health_check` | Daily check | posting_status, new_roles_found |
 | `applied` | Submitted app | method, referrer, resume_version |
@@ -112,11 +114,32 @@ See `postings/_schema.yaml` for full reference.
 
 ## Daily Automation
 
+### Configuration
+
+Scripts support separate data and script directories via environment variables:
+
+| Variable | Purpose | Default |
+|----------|---------|---------|
+| `JOB_SEARCH_DATA` | Where config.yaml, postings/, digest/ live | `~/job-search-agent` |
+| `JOB_SEARCH_SCRIPTS` | Where scripts/*.sh and *.md live | `~/job-search-agent/scripts` |
+
+**Typical setup for private data**:
+```bash
+# Put private data in ~/resume, scripts in ~/job-search-agent
+export JOB_SEARCH_DATA="$HOME/resume"
+export JOB_SEARCH_SCRIPTS="$HOME/job-search-agent/scripts"
+```
+
 ### Cron Schedule
 
 ```bash
-0 4 * * * /path/to/scripts/health-check.sh
-0 5 * * * /path/to/scripts/daily-job-search.sh
+# Option 1: All data in job-search-agent (default)
+0 4 * * * cd ~/job-search-agent && ./scripts/health-check.sh
+0 5 * * * cd ~/job-search-agent && ./scripts/daily-job-search.sh
+
+# Option 2: Private data in ~/resume, scripts in job-search-agent
+0 4 * * * JOB_SEARCH_DATA=$HOME/resume ~/job-search-agent/scripts/health-check.sh
+0 5 * * * JOB_SEARCH_DATA=$HOME/resume ~/job-search-agent/scripts/daily-job-search.sh
 ```
 
 ---
@@ -127,7 +150,7 @@ Uses [beads](https://github.com/steveyegge/beads) for task persistence across co
 
 | System | Purpose |
 |--------|---------|
-| `posting.yaml` | Job data, events (human review) |
+| `postings/*.yaml` | Job data, events (human review) |
 | `digest/*.yaml` | Daily summary (human review) |
 | **Beads** | Agent task queue (internal) |
 
