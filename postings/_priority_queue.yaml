@@ -6,279 +6,334 @@
 # Jobs move through: queue → (applied|backlog|rejected|expired)
 
 schema_version: 1
-updated: "2026-01-13T10:45:00Z"
+updated: "2026-01-17T10:11:29Z"
 
 # ============================================================
 # TOP 10 - Shown in daily digest
 # These are the highest priority jobs to apply to TODAY
 # ============================================================
 top_10:
-  - folder: maze.infra-devops-engineer.pending_review.2026-01-13T1000Z
-    score: 94
+  - folder: ramp.software-engineer-infrastructure.pending_review.2026-01-17T1001Z
+    score: 123
     rank: 1
     days_in_queue: 0
     times_shown: 1
-    last_shown: "2026-01-13"
-    reason: "82% match, multi-account K8s, worldwide remote, Feb deadline"
+    last_shown: "2026-01-17"
+    reason: "83% match, $185k-$375k salary, NY fintech processing $100B+, Terraform/K8s"
 
-  - folder: thumbtack.sr-software-engineer-site-reliability.pending_review.2026-01-12T0145Z
-    score: 93
+  - folder: camunda.senior-cloud-infrastructure-engineer.pending_review.2026-01-17T1001Z
+    score: 110
     rank: 2
-    days_in_queue: 2
-    times_shown: 3
-    last_shown: "2026-01-13"
-    reason: "77% match, $179k-$273k salary, public company"
+    days_in_queue: 0
+    times_shown: 1
+    last_shown: "2026-01-17"
+    reason: "85% match, $150k-$247k salary, East Coast Remote, K8s/Observability focus"
 
-  - folder: hopper.sre-platform-infrastructure.pending_review.2026-01-12T0530Z
-    score: 93
+  - folder: astra.senior-infrastructure-platform-engineer.pending_review.2026-01-16T1830Z
+    score: 105
     rank: 3
     days_in_queue: 1
-    times_shown: 3
-    last_shown: "2026-01-13"
-    reason: "73% match, travel tech, GCP/K8s focus, 100% remote USA"
+    times_shown: 2
+    last_shown: "2026-01-17"
+    reason: "80% match, $180k-$250k salary, first infra hire at fintech, GCP/Terraform"
+
+  - folder: thumbtack.sr-software-engineer-site-reliability.pending_review.2026-01-12T0145Z
+    score: 83
+    rank: 4
+    days_in_queue: 5
+    times_shown: 5
+    last_shown: "2026-01-17"
+    reason: "77% match, $179k-$273k salary, public company"
 
   - folder: axon.senior-site-reliability-engineer-ii.pending_review.2026-01-12T0200Z
-    score: 93
-    rank: 4
-    days_in_queue: 1
-    times_shown: 3
-    last_shown: "2026-01-13"
+    score: 83
+    rank: 5
+    days_in_queue: 5
+    times_shown: 5
+    last_shown: "2026-01-17"
     reason: "82% match, $145k-$200k salary, mission-driven public company"
 
   - folder: emc-insurance.platform-engineer-iii-devops.pending_review.2026-01-13T1000Z
-    score: 90
-    rank: 5
-    days_in_queue: 0
-    times_shown: 1
-    last_shown: "2026-01-13"
+    score: 83
+    rank: 6
+    days_in_queue: 4
+    times_shown: 3
+    last_shown: "2026-01-17"
     reason: "80% match, fully remote US, developer enablement focus"
 
-  - folder: pantheon.platform-engineer.pending_review.2026-01-12T1200Z
-    score: 88
-    rank: 6
-    days_in_queue: 1
-    times_shown: 3
-    last_shown: "2026-01-13"
-    reason: "70% match, 200k+ sites, billions of pageviews"
-
-  - folder: dexcare.senior-site-reliability-engineer.pending_review.2026-01-12T0145Z
-    score: 88
+  - folder: cubist.sre-platform-engineering.pending_review.2026-01-16T1830Z
+    score: 73
     rank: 7
-    days_in_queue: 2
-    times_shown: 3
-    last_shown: "2026-01-13"
-    reason: "67% match, $125k-$169k salary, healthcare tier (RESERVED)"
+    days_in_queue: 1
+    times_shown: 2
+    last_shown: "2026-01-17"
+    reason: "58% match, AWS/K8s/observability, crypto infra, Remote USA"
+
+  - folder: first-american.sr-aws-platform-engineer.pending_review.2026-01-13T1000Z
+    score: 73
+    rank: 8
+    days_in_queue: 4
+    times_shown: 1
+    last_shown: "2026-01-17"
+    reason: "70% match, Fortune 100 company, fully remote US"
+
+  - folder: hopper.sre-platform-infrastructure.pending_review.2026-01-12T0530Z
+    score: 69
+    rank: 9
+    days_in_queue: 5
+    times_shown: 5
+    last_shown: "2026-01-17"
+    reason: "73% match, travel tech, GCP/K8s focus, 100% remote USA"
 
   - folder: padsplit.platform-engineer.pending_review.2026-01-13T1000Z
-    score: 87
-    rank: 8
-    days_in_queue: 0
-    times_shown: 1
-    last_shown: "2026-01-13"
-    reason: "70% match, $150k-$175k salary, PropTech startup"
-
-  - folder: ltk.senior-platform-engineer.pending_review.2026-01-12T1200Z
-    score: 87
-    rank: 9
-    days_in_queue: 1
-    times_shown: 3
-    last_shown: "2026-01-13"
-    reason: "70% match, creator economy platform, fully remote"
-
-  - folder: weedmaps.senior-site-reliability-engineer.pending_review.2026-01-13T1000Z
-    score: 85
+    score: 68
     rank: 10
-    days_in_queue: 0
-    times_shown: 1
-    last_shown: "2026-01-13"
-    reason: "70% match, 100% cloud-native K8s/Docker/AWS"
+    days_in_queue: 4
+    times_shown: 3
+    last_shown: "2026-01-17"
+    reason: "70% match, $150k-$175k salary, PropTech startup"
 
 # ============================================================
 # FULL QUEUE - All pending_review postings, ranked
 # ============================================================
 queue:
-  # New jobs added today (2026-01-13)
-  - folder: maze.infra-devops-engineer.pending_review.2026-01-13T1000Z
-    score: 94
-    added: "2026-01-13"
-    last_shown: "2026-01-13"
+  # New jobs added today (2026-01-17)
+  - folder: ramp.software-engineer-infrastructure.pending_review.2026-01-17T1001Z
+    score: 123
+    added: "2026-01-17"
+    last_shown: "2026-01-17"
     times_shown: 1
     factors:
-      match_rate: 82
+      match_rate: 83
       freshness: 15
-      salary: 0
+      salary: 10  # Above $155k target
+      referral: 0
+      ny_location: 15
+
+  - folder: camunda.senior-cloud-infrastructure-engineer.pending_review.2026-01-17T1001Z
+    score: 110
+    added: "2026-01-17"
+    last_shown: "2026-01-17"
+    times_shown: 1
+    factors:
+      match_rate: 85
+      freshness: 15
+      salary: 10  # Above $155k target
       referral: 0
       ny_location: 0
 
-  - folder: emc-insurance.platform-engineer-iii-devops.pending_review.2026-01-13T1000Z
-    score: 90
-    added: "2026-01-13"
-    last_shown: "2026-01-13"
-    times_shown: 1
+  # Jobs from 2026-01-16 (1 day old)
+  - folder: astra.senior-infrastructure-platform-engineer.pending_review.2026-01-16T1830Z
+    score: 105
+    added: "2026-01-16"
+    last_shown: "2026-01-17"
+    times_shown: 2
     factors:
       match_rate: 80
       freshness: 15
+      salary: 10  # Above $155k target
+      referral: 0
+      ny_location: 0
+
+  - folder: cubist.sre-platform-engineering.pending_review.2026-01-16T1830Z
+    score: 73
+    added: "2026-01-16"
+    last_shown: "2026-01-17"
+    times_shown: 2
+    factors:
+      match_rate: 58
+      freshness: 15
       salary: 0
       referral: 0
       ny_location: 0
+
+  # Jobs from 2026-01-13 (4 days old) - freshness=5, staleness=-2
+  - folder: emc-insurance.platform-engineer-iii-devops.pending_review.2026-01-13T1000Z
+    score: 83
+    added: "2026-01-13"
+    last_shown: "2026-01-17"
+    times_shown: 3
+    factors:
+      match_rate: 80
+      freshness: 5
+      salary: 0
+      referral: 0
+      ny_location: 0
+      staleness: -2
 
   - folder: padsplit.platform-engineer.pending_review.2026-01-13T1000Z
-    score: 87
+    score: 68
     added: "2026-01-13"
-    last_shown: "2026-01-13"
-    times_shown: 1
+    last_shown: "2026-01-17"
+    times_shown: 3
     factors:
       match_rate: 70
-      freshness: 15
+      freshness: 5
       salary: 0
       referral: 0
       ny_location: 0
+      staleness: -2
+      shown_penalty: -5
 
   - folder: weedmaps.senior-site-reliability-engineer.pending_review.2026-01-13T1000Z
-    score: 85
+    score: 68
     added: "2026-01-13"
-    last_shown: "2026-01-13"
+    last_shown: "2026-01-16"
+    times_shown: 2
+    factors:
+      match_rate: 70
+      freshness: 5
+      salary: 0
+      referral: 0
+      ny_location: 0
+      staleness: -2
+      shown_penalty: -5
+
+  - folder: first-american.sr-aws-platform-engineer.pending_review.2026-01-13T1000Z
+    score: 73
+    added: "2026-01-13"
+    last_shown: "2026-01-17"
     times_shown: 1
     factors:
       match_rate: 70
-      freshness: 15
+      freshness: 5
       salary: 0
       referral: 0
       ny_location: 0
-
-  - folder: first-american.sr-aws-platform-engineer.pending_review.2026-01-13T1000Z
-    score: 85
-    added: "2026-01-13"
-    last_shown: null
-    times_shown: 0
-    factors:
-      match_rate: 70
-      freshness: 15
-      salary: 0
-      referral: 0
-      ny_location: 0
+      staleness: -2
 
   - folder: crowdstrike.sr-data-platform-engineer.pending_review.2026-01-13T1000Z
-    score: 81
+    score: 63
     added: "2026-01-13"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 60
-      freshness: 15
+      freshness: 5
       salary: 0
       referral: 0
       ny_location: 0
+      staleness: -2
 
-  # Jobs from yesterday (2026-01-12) - freshness reduced
+  # Jobs from 2026-01-12 (5 days old) - freshness=0, staleness=-4
   - folder: thumbtack.sr-software-engineer-site-reliability.pending_review.2026-01-12T0145Z
-    score: 93
+    score: 83
     added: "2026-01-12"
-    last_shown: "2026-01-13"
-    times_shown: 3
+    last_shown: "2026-01-17"
+    times_shown: 5
     factors:
       match_rate: 77
-      freshness: 10
+      freshness: 0
       salary: 10  # Above target
       referral: 0
       ny_location: 0
-
-  - folder: hopper.sre-platform-infrastructure.pending_review.2026-01-12T0530Z
-    score: 93
-    added: "2026-01-12"
-    last_shown: "2026-01-13"
-    times_shown: 3
-    factors:
-      match_rate: 73
-      freshness: 10
-      salary: 0
-      referral: 0
-      ny_location: 0
+      staleness: -4
 
   - folder: axon.senior-site-reliability-engineer-ii.pending_review.2026-01-12T0200Z
-    score: 93
+    score: 83
     added: "2026-01-12"
-    last_shown: "2026-01-13"
-    times_shown: 3
+    last_shown: "2026-01-17"
+    times_shown: 5
     factors:
       match_rate: 82
-      freshness: 5  # 8 days old
+      freshness: 0
       salary: 10
       referral: 0
       ny_location: 0
+      staleness: -4
+      shown_penalty: -5
+
+  - folder: hopper.sre-platform-infrastructure.pending_review.2026-01-12T0530Z
+    score: 69
+    added: "2026-01-12"
+    last_shown: "2026-01-17"
+    times_shown: 5
+    factors:
+      match_rate: 73
+      freshness: 0
+      salary: 0
+      referral: 0
+      ny_location: 0
+      staleness: -4
 
   - folder: pantheon.platform-engineer.pending_review.2026-01-12T1200Z
-    score: 88
+    score: 66
     added: "2026-01-12"
-    last_shown: "2026-01-13"
-    times_shown: 3
+    last_shown: "2026-01-16"
+    times_shown: 4
     factors:
       match_rate: 70
-      freshness: 10
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
+      staleness: -4
 
   - folder: dexcare.senior-site-reliability-engineer.pending_review.2026-01-12T0145Z
-    score: 88
+    score: 63
     added: "2026-01-12"
-    last_shown: "2026-01-13"
-    times_shown: 3
+    last_shown: "2026-01-16"
+    times_shown: 4
     factors:
       match_rate: 67
-      freshness: 0  # 21 days old
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
+      staleness: -4
     notes: "RESERVED - Healthcare tier"
 
   - folder: ltk.senior-platform-engineer.pending_review.2026-01-12T1200Z
-    score: 87
+    score: 66
     added: "2026-01-12"
-    last_shown: "2026-01-13"
-    times_shown: 3
+    last_shown: "2026-01-16"
+    times_shown: 4
     factors:
       match_rate: 70
-      freshness: 10
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
+      staleness: -4
 
   - folder: filevine.sre-ai-forms.pending_review.2026-01-12T2350Z
-    score: 87
+    score: 66
     added: "2026-01-12"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 70
-      freshness: 10
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
+      staleness: -4
 
   - folder: big-cartel.devops-engineer.pending_review.2026-01-12T2350Z
-    score: 87
+    score: 66
     added: "2026-01-12"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 70
-      freshness: 10
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
+      staleness: -4
 
   - folder: upstart.data-platform-engineer.pending_review.2026-01-12T2350Z
-    score: 76
+    score: 56
     added: "2026-01-12"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 60
-      freshness: 10
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
+      staleness: -4
 
 # ============================================================
 # REMOVED FROM QUEUE - Reason
@@ -287,6 +342,9 @@ queue:
 # redpanda.sre-platform: Expired 2026-01-13 - posting not found
 # together-ai.site-reliability-engineer: Expired 2026-01-13 - hybrid SF, not remote
 # better-stack.devops-engineer: Expired 2026-01-13 - role not listed
+# files-com.infrastructure-engineer: Rejected on 2026-01-16 - not moving forward
+# confluent.senior-software-engineer: Applied on 2026-01-16
+# maze.infra-devops-engineer: Expired 2026-01-17 - Europe only, not US remote
 
 # ============================================================
 # BACKLOG - Demoted jobs (seen but no action)

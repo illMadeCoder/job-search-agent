@@ -1,36 +1,37 @@
 # Posting Tracker
 
-*Last updated: 2026-01-13T10:45Z*
+*Last updated: 2026-01-17T10:11Z*
 
 ## Needs Review (.review flag)
 
 | Folder | Issue | Action Needed |
 |--------|-------|---------------|
-| - | - | - |
+| pantheon.platform-engineer.pending_review.2026-01-12T1200Z | URL redirects | Verify directly at pantheon.io/careers |
 
 ## Pending Review (.pending_review)
 
 | Folder | Created | Recommendation | Score |
 |--------|---------|----------------|-------|
-| maze.infra-devops-engineer.pending_review.2026-01-13T1000Z | 2026-01-13 | cold_apply | 94 |
-| thumbtack.sr-software-engineer-site-reliability.pending_review.2026-01-12T0145Z | 2026-01-12 | cold_apply | 93 |
-| hopper.sre-platform-infrastructure.pending_review.2026-01-12T0530Z | 2026-01-12 | cold_apply | 93 |
-| axon.senior-site-reliability-engineer-ii.pending_review.2026-01-12T0200Z | 2026-01-12 | cold_apply | 93 |
-| emc-insurance.platform-engineer-iii-devops.pending_review.2026-01-13T1000Z | 2026-01-13 | cold_apply | 90 |
-| pantheon.platform-engineer.pending_review.2026-01-12T1200Z | 2026-01-12 | cold_apply | 88 |
-| dexcare.senior-site-reliability-engineer.pending_review.2026-01-12T0145Z | 2026-01-12 | cold_apply | 88 |
-| padsplit.platform-engineer.pending_review.2026-01-13T1000Z | 2026-01-13 | cold_apply | 87 |
-| ltk.senior-platform-engineer.pending_review.2026-01-12T1200Z | 2026-01-12 | cold_apply | 87 |
-| weedmaps.senior-site-reliability-engineer.pending_review.2026-01-13T1000Z | 2026-01-13 | cold_apply | 85 |
-| And 37 more... | | | |
+| ramp.software-engineer-infrastructure.pending_review.2026-01-17T1001Z | 2026-01-17 | cold_apply | 123 |
+| camunda.senior-cloud-infrastructure-engineer.pending_review.2026-01-17T1001Z | 2026-01-17 | cold_apply | 110 |
+| astra.senior-infrastructure-platform-engineer.pending_review.2026-01-16T1830Z | 2026-01-16 | cold_apply | 105 |
+| thumbtack.sr-software-engineer-site-reliability.pending_review.2026-01-12T0145Z | 2026-01-12 | cold_apply | 83 |
+| axon.senior-site-reliability-engineer-ii.pending_review.2026-01-12T0200Z | 2026-01-12 | cold_apply | 83 |
+| emc-insurance.platform-engineer-iii-devops.pending_review.2026-01-13T1000Z | 2026-01-13 | cold_apply | 83 |
+| cubist.sre-platform-engineering.pending_review.2026-01-16T1830Z | 2026-01-16 | cold_apply | 73 |
+| first-american.sr-aws-platform-engineer.pending_review.2026-01-13T1000Z | 2026-01-13 | cold_apply | 73 |
+| hopper.sre-platform-infrastructure.pending_review.2026-01-12T0530Z | 2026-01-12 | cold_apply | 69 |
+| padsplit.platform-engineer.pending_review.2026-01-13T1000Z | 2026-01-13 | cold_apply | 68 |
+| And 39 more... | | | |
 
 ## Applied (.applied)
 
 | Folder | Applied | Expiry |
 |--------|---------|--------|
 | clickhouse.senior-site-reliability-engineer.applied.2026-01-12T0200Z | 2026-01-12 | 2026-02-11 |
+| confluent.senior-software-engineer-ii-platform-engineering.applied.2026-01-16T1824Z | 2026-01-16 | 2026-02-15 |
 
-**Note**: Received application confirmations for Flex, Toast, Omada Health, Carrot but no tracking folders exist.
+**Note**: Previous confirmations (Flex, Toast, Omada Health, Carrot) were applied outside tracking system.
 
 ## Interviewing (.interviewing)
 
@@ -42,6 +43,8 @@
 
 | Folder | Outcome | Date | Reason |
 |--------|---------|------|--------|
+| files-com.infrastructure-engineer.rejected.2026-01-12T2004Z | rejected | 2026-01-16 | Not moving forward - experience alignment |
+| maze.infra-devops-engineer.pending_review.2026-01-13T1000Z | expired | 2026-01-17 | Europe only - not US remote |
 | redpanda.sre-platform.pending_review.2026-01-12T2350Z | expired | 2026-01-13 | Posting not found on careers page |
 | together-ai.site-reliability-engineer.pending_review.2026-01-12T1130Z | expired | 2026-01-13 | Hybrid SF, not truly remote |
 | better-stack.devops-engineer.pending_review.2026-01-12T2350Z | expired | 2026-01-13 | Role not listed on careers page |
@@ -50,13 +53,13 @@
 
 ## Stats
 
-- **Needs review**: 0
-- **Pending review**: 47 (50 - 3 expired)
-- **Applied**: 1 (ClickHouse) + 4 external confirmations untracked
+- **Needs review**: 1 (Pantheon - URL redirect)
+- **Pending review**: 49
+- **Applied**: 2 (ClickHouse, Confluent)
 - **Interviewing**: 0
 - **Offers**: 0
-- **Rejected**: 1 (Deepgram - applied outside system)
-- **Expired**: 3 (validation failures)
+- **Rejected**: 1 (Files.com)
+- **Expired**: 4 (validation failures)
 - **Withdrawn**: 0
 
 ---
@@ -65,70 +68,71 @@
 
 | Rank | Company | Role | Score | Salary Range | Action |
 |------|---------|------|-------|--------------|--------|
-| 1 | Maze | Infra/DevOps Engineer | 94 | Undisclosed | Apply - multi-account K8s, Feb deadline |
-| 2 | Thumbtack | Sr. SWE, Site Reliability | 93 | $179k-$273k | Apply - excellent comp, public co |
-| 3 | Hopper | SRE Platform Infrastructure | 93 | Undisclosed | Apply - 100% remote USA, GCP/K8s |
-| 4 | Axon | Senior SRE II | 93 | $145k-$200k | Apply - mission-driven public co |
-| 5 | EMC Insurance | Platform Engineer III | 90 | Undisclosed | Apply - fully remote, enterprise |
-| 6 | Pantheon | Platform Engineer | 88 | Undisclosed | Apply - 200k sites at scale |
-| 7 | DexCare | Senior SRE | 88 | $125k-$169k | RESERVED (healthcare tier) |
-| 8 | PadSplit | Platform Engineer | 87 | $150k-$175k | Apply - PropTech, Django/Python |
-| 9 | LTK | Senior Platform Engineer | 87 | Undisclosed | Apply - creator economy |
-| 10 | Weedmaps | Senior SRE | 85 | Undisclosed | Apply - cloud-native K8s |
+| 1 | Ramp | Software Engineer, Infrastructure | 123 | $185k-$375k | **NEW** - Apply via Ashby |
+| 2 | Camunda | Sr Cloud Infra Engineer - K8s | 110 | $150k-$247k | **NEW** - Apply via Ashby |
+| 3 | Astra | Senior Infra & Platform Engineer | 105 | $180k-$250k | Apply - first infra hire, fintech |
+| 4 | Thumbtack | Sr. SWE, Site Reliability | 83 | $179k-$273k | Apply - excellent comp, public co |
+| 5 | Axon | Senior SRE II | 83 | $145k-$200k | Apply - mission-driven public co |
+| 6 | EMC Insurance | Platform Engineer III | 83 | Undisclosed | Apply - fully remote, enterprise |
+| 7 | Cubist | SRE Platform Engineering | 73 | Undisclosed | Apply - crypto infra |
+| 8 | First American | Sr AWS Platform Engineer | 73 | Undisclosed | Apply - Fortune 100 company |
+| 9 | Hopper | SRE Platform Infrastructure | 69 | Undisclosed | Apply - 100% remote USA, GCP/K8s |
+| 10 | PadSplit | Platform Engineer | 68 | $150k-$175k | Apply - PropTech, Django/Python |
 
 ---
 
-## Today's Collection Summary (2026-01-13)
+## Today's Collection Summary (2026-01-17)
 
 **Morning Run (Phase 2 + 3):**
-- **Sources checked**: 12 (10 successful)
-- **Jobs found**: 45
-- **Jobs qualified**: 15 (after filters)
-- **Jobs added**: 6
+- **Sources checked**: 8 (6 successful)
+- **Jobs found**: 42
+- **Jobs qualified**: 2 (after filters)
+- **Jobs added**: 2
 
-**New postings today:** Maze, EMC Insurance, PadSplit, Weedmaps, First American, CrowdStrike
+**New postings today:** Ramp, Camunda
+
+**Email scan results:**
+- Confirmations: Eastwall, Amwins (no matching postings)
+- Job alerts: 7 LinkedIn/ZipRecruiter alerts
 
 **Validation results:**
-- Checked: 10 postings
-- Expired: 3 (Redpanda, Together AI, Better Stack)
-
-**Application confirmations received:** ClickHouse (tracked), Flex, Toast, Omada Health, Carrot (untracked)
-
-**Rejection received:** Deepgram (applied outside system)
+- Checked: 10 postings (top 10)
+- Expired: 1 (Maze - Europe only, not US remote)
+- All others: ACTIVE
 
 ---
 
 ## Trends Snapshot
 
-- **Average salary midpoint**: $185k (6 postings with disclosed salary)
-- **Top skill gaps**: GCP (10%), Datadog (20%), Go (strengthening)
-- **Emerging themes**: AI infrastructure, data streaming
+- **Average salary midpoint**: $197k (8 postings with disclosed salary)
+- **Top opportunity**: Ramp at $185k-$375k (highest in queue)
+- **Top skill gaps**: Go (45%), GCP (20%), OpenTelemetry (20%)
+- **Emerging themes**: OpenTelemetry for observability, crypto infrastructure
 - **Stable demand**: Kubernetes (95%), Terraform (85%), AWS (80%)
 - **Study priority**: Go (in 45% of postings), GCP certification
 
 ---
 
-## Mock Interview Prep
+## Pipeline Status
 
-**Session 1**: 2026-01-13 @ 10:00pm ET (TODAY)
-**Session 2**: 2026-01-14 @ 9:45am ET
-**Format**: Video call with Addy Radwan (peer practice)
-**Focus**: Behavioral questions using STAR method
+**Active applications:**
+1. **ClickHouse** - Applied Jan 12 (5 days) - Waiting for response
+2. **Confluent** - Applied Jan 16 (1 day) - Confirmed
 
-**Prep checklist:**
-- [ ] Prepare 3-5 STAR stories (conflict, failure, leadership)
-- [ ] Test video setup
-- [ ] Review common behavioral questions
-- [ ] Practice explaining reasoning (why you made decisions)
+**Expected timeline:**
+- ClickHouse: Expect response by Jan 19-26 or follow up at 7 days
+- Confluent: Expect initial response in 3-7 days
 
 ---
 
 ## Daily Learning
 
-**Topic**: DevOps Interview Preparation
-**Article**: [DevOps Interview Questions & Answers: The Ultimate Guide for 2025](https://dev.to/sameerimtiaz/devops-interview-questions-answers-the-ultimate-guide-for-2025-48lm)
+**Topic**: LinkedIn Profile Optimization
+**Article**: [The Ultimate Guide to Optimizing Your LinkedIn Profile (2026)](https://jobright.ai/blog/ultimate-guide-optimizing-linkedin-profile/)
 
-**Key takeaway**: Explain your thought process - interviewers value reasoning over memorized answers.
+**Key takeaway**: LinkedIn profiles are now AI-ranked discovery assets. Lead with standardized job title + metric + skills. Get verified (30% more engagement). Update quarterly for recency boosts.
+
+**Action item**: Update headline to: "Platform Engineer | 10+ K8s Clusters, 99.99% Uptime | Terraform, AWS, Azure"
 
 ---
 

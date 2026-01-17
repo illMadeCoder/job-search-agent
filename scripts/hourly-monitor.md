@@ -34,22 +34,175 @@ Read configuration from:
 ## Step 1: Load Configuration
 
 Read `config.yaml` and extract:
-- `sources.search.*` - All enabled search sources
+- `sources.api.*` - **ALL API sources (Greenhouse, Lever, RemoteOK)** - CRITICAL
+- `sources.search.*` - All search sources
 - `scoring.weights.*` - For calculating scores
 - `scoring.hot_threshold` - Minimum score for alerts (60)
 - `search.*` - Filter criteria (required_keywords, exclude_keywords, exclude_roles)
 - `location.*` - Remote, country requirements
 - `salary.*` - Min/max range
 - `experience.*` - Level filters
+- `companies.blacklist` - Companies/staffing agencies to skip
 - `notifications.email.recipient` - Where to send alerts
 
 ---
 
-## Step 2: Fetch RSS Feeds (Primary Source)
+## Step 2: Check ALL API Sources (CRITICAL - Highest Quality)
 
-**RSS feeds are the most reliable source - structured data, no bot detection, exact timestamps.**
+**API sources provide exact timestamps and structured data. Check EVERY configured company.**
 
-### 2a. Fetch WeWorkRemotely RSS
+### 2a. RemoteOK API
+
+```bash
+curl -s "https://remoteok.com/api" | head -c 50000
+```
+
+Response is JSON array. For each job:
+```json
+{
+  "date": "2026-01-15T14:30:00+00:00",
+  "company": "Acme Corp",
+  "position": "Platform Engineer",
+  "tags": ["devops", "kubernetes"],
+  "url": "https://remoteok.com/jobs/...",
+  "location": "Worldwide",
+  "salary_min": 150000,
+  "salary_max": 200000
+}
+```
+
+**Filter for fresh jobs:**
+```python
+from datetime import datetime, timezone
+job_date = datetime.fromisoformat(job["date"].replace("+00:00", "+00:00"))
+hours_ago = (datetime.now(timezone.utc) - job_date).total_seconds() / 3600
+if hours_ago <= 12:
+    # FRESH - process
+```
+
+### 2b. Greenhouse API - Check EVERY Configured Company
+
+**IMPORTANT: You MUST check ALL companies in `config.yaml → sources.api.greenhouse.companies`**
+
+For EACH company in the list:
+```bash
+# Check EVERY company - don't skip any!
+curl -s "https://boards-api.greenhouse.io/v1/boards/{company}/jobs"
+```
+
+**Configured companies to check:**
+- cloudflare
+- stripe
+- datadog
+- hashicorp
+- mongodb
+- notion
+- discord
+- figma
+- vercel
+- zapier
+- *(plus any others in config)*
+
+Response includes `updated_at` for freshness:
+```json
+{
+  "jobs": [
+    {
+      "id": 123,
+      "title": "Platform Engineer",
+      "updated_at": "2026-01-15T10:30:00-05:00",
+      "absolute_url": "https://boards.greenhouse.io/company/jobs/123",
+      "location": {"name": "Remote - US"},
+      "departments": [{"name": "Engineering"}]
+    }
+  ]
+}
+```
+
+**Check freshness using `updated_at`:**
+```python
+updated = datetime.fromisoformat(job["updated_at"])
+hours_ago = (datetime.now(timezone.utc) - updated).total_seconds() / 3600
+if hours_ago <= 12:
+    # FRESH - could be new posting or updated
+    # Fetch full job to verify it's actually new
+```
+
+### 2c. Lever API - Check EVERY Configured Company
+
+For EACH company in `config.yaml → sources.api.lever.companies`:
+```bash
+curl -s "https://api.lever.co/v0/postings/{company}"
+```
+
+Response includes `createdAt` (Unix timestamp in ms):
+```json
+[
+  {
+    "id": "abc123",
+    "text": "Platform Engineer",
+    "createdAt": 1705330200000,
+    "hostedUrl": "https://jobs.lever.co/company/abc123",
+    "categories": {
+      "location": "Remote - US",
+      "team": "Platform"
+    }
+  }
+]
+```
+
+**Check freshness:**
+```python
+created = datetime.fromtimestamp(job["createdAt"] / 1000, tz=timezone.utc)
+hours_ago = (datetime.now(timezone.utc) - created).total_seconds() / 3600
+if hours_ago <= 12:
+    # FRESH - process
+```
+
+### 2d. Apply Filters to API Results
+
+For each fresh job from APIs, apply quick filters:
+
+1. **Blacklist check** - Skip if company in `companies.blacklist`
+2. **Required keywords** - At least ONE must match title
+3. **Exclude keywords** - Disqualify if ANY match (contract, junior, etc.)
+4. **Exclude roles** - Skip if role title matches exclusion list
+5. **Location** - Must be remote US (check location field)
+6. **Dedup** - Skip if already in `postings/`
+
+### 2e. Log API Coverage
+
+**You MUST log every API source checked:**
+```yaml
+api_sources_checked:
+  remoteok:
+    status: success|error
+    jobs_found: {n}
+    fresh_jobs: {n}
+  greenhouse:
+    - company: cloudflare
+      status: success|error
+      jobs_found: {n}
+      fresh_jobs: {n}
+    - company: stripe
+      status: success|error
+      ...
+    # EVERY configured company must appear here
+  lever:
+    - company: palantir
+      status: success|error
+      ...
+```
+
+**If a company is missing from this log, you failed to check it.**
+
+---
+
+## Step 3: Fetch RSS Feeds (Secondary Source)
+
+**RSS feeds provide structured data with exact timestamps.**
+
+### 3a. Fetch WeWorkRemotely RSS
 
 Fetch the category feeds (reference `sources.yaml → rss.weworkremotely`):
 
@@ -64,7 +217,7 @@ curl -s "https://weworkremotely.com/categories/remote-devops-sysadmin-jobs.rss"
 curl -s "https://weworkremotely.com/categories/remote-product-jobs.rss"
 ```
 
-### 2b. Parse RSS Items
+### 3b. Parse RSS Items
 
 For each `<item>` in the feed:
 
@@ -86,7 +239,7 @@ Extract:
 - **region**: Location info
 - **type**: Full-Time, Contract, etc.
 
-### 2c. Check Freshness from pubDate
+### 3c. Check Freshness from pubDate
 
 Parse the `pubDate` and compare to current time:
 
@@ -108,13 +261,13 @@ else:
 
 ---
 
-## Step 3: Search for Recent Jobs (Secondary Source)
+## Step 4: Search for Recent Jobs (Tertiary Source)
 
 **Use date-filtered searches to find jobs from the last 24 hours, then verify exact posting time.**
 
 For each enabled source in `config.yaml → sources.search`:
 
-### 3a. Add Date Filter to Queries
+### 4a. Add Date Filter to Queries
 
 Modify search queries to filter for recent results:
 ```
@@ -124,7 +277,7 @@ With date: site:boards.greenhouse.io "platform engineer" remote after:2026-01-12
 
 Or use WebSearch with time filter for "past 24 hours" results.
 
-### 3b. Extract Candidates
+### 4b. Extract Candidates
 
 From search results, extract:
 - Company name
@@ -132,7 +285,7 @@ From search results, extract:
 - Job URL
 - Any date hints from snippets ("Posted today", "1 hour ago", etc.)
 
-### 3c. Apply Basic Filters First
+### 4c. Apply Basic Filters First
 
 Before fetching pages, apply quick filters to reduce work:
 
@@ -144,18 +297,18 @@ Before fetching pages, apply quick filters to reduce work:
 
 ---
 
-## Step 4: Verify Posting Freshness for Search Results (CRITICAL)
+## Step 5: Verify Posting Freshness for Search Results (CRITICAL)
 
 **For each candidate, fetch the job page and verify it was posted in the last 12 hours.**
 
-### 4a. Dedup Check First
+### 5a. Dedup Check First
 
 ```bash
 ls postings/ | grep -i "^{company-slug}\.{role-slug}\."
 ```
 If exists → SKIP (already tracking)
 
-### 4b. Fetch Job Page
+### 5b. Fetch Job Page
 
 Use WebFetch to get the job posting page and find the posting date:
 ```
@@ -164,7 +317,7 @@ Prompt: "Find when this job was posted. Look for 'Posted X hours ago',
 'Posted today', 'Posted on [date]', or similar. Return the exact text."
 ```
 
-### 4c. Parse Posting Time
+### 5c. Parse Posting Time
 
 Look for these patterns:
 
@@ -179,7 +332,7 @@ Look for these patterns:
 | "Posted X days ago" | ❌ SKIP |
 | Unknown/not found | ❌ SKIP - be strict |
 
-### 4d. 12-Hour Freshness Gate
+### 5d. 12-Hour Freshness Gate
 
 **ONLY proceed if you can confirm the job was posted within the last 12 hours.**
 
@@ -189,7 +342,7 @@ Look for these patterns:
 
 Log: "Skipped {company} {role} - posted {time_found} (not within 12 hours)"
 
-### 4e. Validate Hard Criteria (Remote/US)
+### 5e. Validate Hard Criteria (Remote/US)
 
 **While you have the job page, verify it meets hard requirements:**
 
@@ -221,7 +374,7 @@ Log: "Skipped {company} {role} - {reason}" if disqualified
 
 ---
 
-## Step 5: Score Verified Fresh Jobs
+## Step 6: Score Verified Fresh Jobs
 
 For jobs confirmed posted within last 12 hours:
 
@@ -255,7 +408,7 @@ if location contains "NY" or "New York" or "NYC": base += ny_state_bonus  # +15
 
 ---
 
-## Step 6: Check for Referrals
+## Step 7: Check for Referrals
 
 For qualifying jobs, check LinkedIn connections:
 
@@ -269,18 +422,18 @@ If connections found:
 
 ---
 
-## Step 7: Create Posting Folders
+## Step 8: Create Posting Files
 
 For ALL qualifying jobs (not just hot ones).
 
 **See `postings/README.md` for full lifecycle documentation.**
 
-### Folder Path
+### File Path
 ```
-postings/{company-slug}.{role-slug}.pending_review.{YYYY-MM-DDTHHMM}Z/
+postings/{company-slug}.{role-slug}.pending_review.{YYYY-MM-DDTHHMM}Z.yaml
 ```
 
-### Minimal posting.yaml
+### Minimal posting content
 ```yaml
 # Immutable
 company: {name}
@@ -329,7 +482,7 @@ events:
 
 ---
 
-## Step 8: Send Fresh Job Alert
+## Step 9: Send Fresh Job Alert
 
 **Only send email if ALL conditions are met:**
 1. Posted within last 12 hours (verified from job page)
@@ -462,7 +615,7 @@ python3 scripts/gmail-send.py send \
 
 ---
 
-## Step 9: Write State
+## Step 10: Write State
 
 Write to `/tmp/hourly-monitor-state.yaml`:
 
@@ -470,18 +623,89 @@ Write to `/tmp/hourly-monitor-state.yaml`:
 run_at: {UTC timestamp}
 duration_seconds: {n}
 
+# API SOURCE COVERAGE - CRITICAL
+# Every configured source MUST appear here
+api_sources:
+  remoteok:
+    status: success|error|skipped
+    jobs_total: {n}
+    jobs_fresh: {n}        # Posted <12 hours
+    jobs_qualified: {n}    # Passed filters
+    error: {if any}
+
+  greenhouse:
+    # EVERY company in config must be listed
+    - company: cloudflare
+      status: success|error
+      jobs_total: {n}
+      jobs_fresh: {n}
+      jobs_qualified: {n}
+    - company: stripe
+      status: success|error
+      jobs_total: {n}
+      jobs_fresh: {n}
+      jobs_qualified: {n}
+    - company: datadog
+      status: success|error
+      ...
+    - company: hashicorp
+      status: success|error
+      ...
+    - company: mongodb
+      status: success|error
+      ...
+    - company: notion
+      status: success|error
+      ...
+    - company: discord
+      status: success|error
+      ...
+    - company: figma
+      status: success|error
+      ...
+    - company: vercel
+      status: success|error
+      ...
+    - company: zapier
+      status: success|error
+      ...
+
+  lever:
+    - company: palantir
+      status: success|error
+      jobs_total: {n}
+      jobs_fresh: {n}
+      jobs_qualified: {n}
+
+rss_sources:
+  - name: WeWorkRemotely DevOps
+    status: success|error
+    jobs_total: {n}
+    jobs_fresh: {n}
+  - name: WeWorkRemotely Programming
+    status: success|error
+    ...
+
+search_sources:
+  - name: Google Greenhouse
+    status: success|error
+    results: {n}
+  - name: Google Lever
+    status: success|error
+    results: {n}
+
 sources:
-  attempted: {n}
-  succeeded: {n}
+  attempted: {n}           # Total sources attempted
+  succeeded: {n}           # Total sources succeeded
 
 jobs:
-  found: {n}               # Total candidates from search
+  found: {n}               # Total candidates
   filtered_out: {n}        # Failed keyword/salary/level filters
   not_fresh: {n}           # Posted more than 12 hours ago
   not_remote: {n}          # Failed remote/location validation
   low_match: {n}           # Match rate < 60%
   duplicate: {n}           # Already in postings/
-  fresh_created: {n}       # New posting folders (verified <12hrs)
+  fresh_created: {n}       # New posting files (verified <12hrs)
   alerts_sent: {n}         # Score >= 70, email sent
 
 validation_failures:       # Jobs that looked good but failed hard criteria
@@ -506,7 +730,7 @@ errors: []
 
 ---
 
-## Step 10: Print Summary
+## Step 11: Print Summary
 
 ```
 Fresh Job Monitor Complete
