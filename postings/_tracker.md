@@ -1,6 +1,6 @@
 # Posting Tracker
 
-*Last updated: 2026-01-26T10:20Z*
+*Last updated: 2026-02-10T10:01Z*
 
 ## Needs Review (.review flag)
 
@@ -12,24 +12,24 @@
 
 | Folder | Created | Recommendation | Score |
 |--------|---------|----------------|-------|
-| gitlab.sre-environment-automation.pending_review.2026-01-26T1000Z | 2026-01-26 | cold_apply | 98 |
-| apollo-io.senior-devops-engineer.pending_review.2026-01-26T1000Z | 2026-01-26 | cold_apply | 95 |
-| fiscalnote.platform-engineer.pending_review.2026-01-26T1000Z | 2026-01-26 | cold_apply | 93 |
-| built-in.senior-site-reliability-engineer.pending_review.2026-01-26T1000Z | 2026-01-26 | cold_apply | 85 |
-| camunda.senior-cloud-infrastructure-engineer.pending_review.2026-01-17T1001Z | 2026-01-17 | cold_apply | 81 |
-| astra.senior-infrastructure-platform-engineer.pending_review.2026-01-16T1830Z | 2026-01-16 | cold_apply | 73 |
-| emc-insurance.platform-engineer-iii-devops.pending_review.2026-01-13T1000Z | 2026-01-13 | cold_apply | 60 |
-| first-american.sr-aws-platform-engineer.pending_review.2026-01-13T1000Z | 2026-01-13 | cold_apply | 53 |
-| padsplit.platform-engineer.pending_review.2026-01-13T1000Z | 2026-01-13 | cold_apply | 45 |
-| weedmaps.senior-site-reliability-engineer.pending_review.2026-01-13T1000Z | 2026-01-13 | cold_apply | 45 |
-| And 35 more... | | | |
+| moov.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 113 |
+| icf.site-reliability-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 113 |
+| crowdstrike.software-engineer-iii-infrastructure.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 113 |
+| draftkings.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 113 |
+| centene.lead-sre-citrix.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 113 |
+| domaintools.senior-platform-engineer.pending_review.2026-02-10T1001Z | 2026-02-10 | cold_apply | 95 |
+| 3pillar.senior-devops-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 93 |
+| dotcms.senior-sre.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 93 |
+| ssc-technologies.senior-sre-central-platforms.pending_review.2026-02-10T1001Z | 2026-02-10 | cold_apply | 90 |
+| oracle.senior-site-reliability-engineer-devops.pending_review.2026-02-05T1507Z | 2026-02-05 | cold_apply | 88 |
+| And 50+ more in queue and backlog... | | | |
 
 ## Applied (.applied)
 
-| Folder | Applied | Expiry |
-|--------|---------|--------|
-| clickhouse.senior-site-reliability-engineer.applied.2026-01-12T0200Z | 2026-01-12 | 2026-02-11 |
-| confluent.senior-software-engineer-ii-platform-engineering.applied.2026-01-16T1824Z | 2026-01-16 | 2026-02-15 |
+| Folder | Applied | Expiry | Status |
+|--------|---------|--------|--------|
+| clickhouse.senior-site-reliability-engineer.applied.2026-01-12T0200Z | 2026-01-12 | 2026-02-11 | EXPIRES TOMORROW - Follow up! |
+| confluent.senior-software-engineer-ii-platform-engineering.applied.2026-01-16T1824Z | 2026-01-16 | 2026-02-15 | Stale warning (25 days) |
 
 **Note**: Previous confirmations (Flex, Toast, Omada Health, Carrot) were applied outside tracking system.
 
@@ -43,6 +43,10 @@
 
 | Folder | Outcome | Date | Reason |
 |--------|---------|------|--------|
+| kkr.platform-engineer.pending_review.2026-01-28T1000Z | expired | 2026-01-28 | Located in South America (Peru), not US remote |
+| apollo-io.senior-devops-engineer.pending_review.2026-01-26T1000Z | expired | 2026-01-28 | Job no longer listed on careers page |
+| promptql.sre-platform-engineer.expired.2026-01-27T0500Z | expired | 2026-01-27 | 410 Gone |
+| exygy.senior-site-reliability-engineer.expired.2026-01-27T0500Z | expired | 2026-01-27 | 404 Not Found |
 | consensys.senior-devops-engineer.pending_review.2026-01-26T1000Z | expired | 2026-01-26 | EMEA only, posting 404 |
 | ramp.software-engineer-infrastructure.pending_review.2026-01-17T1001Z | expired | 2026-01-26 | Hybrid (NY HQ with telecommute) |
 | files-com.infrastructure-engineer.rejected.2026-01-12T2004Z | rejected | 2026-01-16 | Not moving forward - experience alignment |
@@ -56,12 +60,12 @@
 ## Stats
 
 - **Needs review**: 1 (Pantheon - URL redirect)
-- **Pending review**: 47
-- **Applied**: 2 (ClickHouse, Confluent)
+- **Pending review**: 57+ (12 new today, 13 from Feb 2-6, rest older)
+- **Applied**: 2 (ClickHouse - EXPIRING, Confluent - stale warning)
 - **Interviewing**: 0
 - **Offers**: 0
 - **Rejected**: 1 (Files.com)
-- **Expired**: 6 (validation failures)
+- **Expired**: 11 (validation failures)
 - **Withdrawn**: 0
 
 ---
@@ -70,80 +74,79 @@
 
 | Rank | Company | Role | Score | Salary Range | Action |
 |------|---------|------|-------|--------------|--------|
-| 1 | GitLab | SRE, Environment Automation | 98 | Undisclosed | **NEW** - Top-tier SRE employer, AMER remote |
-| 2 | Apollo.io | Senior DevOps Engineer | 95 | Undisclosed | **NEW** - Series D, K8s/GCP stack |
-| 3 | FiscalNote | Platform Engineer | 93 | $125k-$140k | **NEW** - DEADLINE JAN 30! |
-| 4 | Built In | Senior SRE | 85 | Undisclosed | **NEW** - 7+ years match, remote US |
-| 5 | Camunda | Sr Cloud Infra Engineer - K8s | 81 | $150k-$247k | Apply - East Coast remote |
-| 6 | Astra | Senior Infra & Platform Engineer | 73 | $180k-$250k | Apply - first infra hire, fintech |
-| 7 | EMC Insurance | Platform Engineer III | 60 | Undisclosed | Apply - fully remote, enterprise |
-| 8 | First American | Sr AWS Platform Engineer | 53 | Undisclosed | Apply - Fortune 100 company |
-| 9 | PadSplit | Platform Engineer | 45 | $150k-$175k | Apply - PropTech, Django/Python |
-| 10 | Weedmaps | Senior SRE | 45 | Undisclosed | Apply - remote US |
+| 1 | Moov | Senior Infrastructure Engineer | 113 | $165k-$185k | Apply - 100% match, fintech |
+| 2 | ICF | Site Reliability Engineer | 113 | $108k-$184k | Apply - 100% match |
+| 3 | CrowdStrike | SW Engineer III Infrastructure | 113 | $120k-$180k | Apply - 100% match, cybersecurity |
+| 4 | DraftKings | Senior Infrastructure Engineer | 113 | $128k-$160k | Apply - 100% match |
+| 5 | Centene | Lead SRE Citrix | 113 | $102k-$190k | Apply - Healthcare tier |
+| 6 | DomainTools | Senior Platform Engineer | 95 | $145k-$185k | **NEW TODAY** |
+| 7 | 3Pillar | Senior DevOps Engineer | 93 | Undisclosed | Apply - 100% match |
+| 8 | dotCMS | Senior SRE | 93 | Undisclosed | Apply - 90% match |
+| 9 | SSC Technologies | Senior SRE Central Platforms | 90 | Undisclosed | **NEW TODAY** - NY bonus |
+| 10 | Oracle | Senior SRE/DevOps | 88 | Undisclosed | Apply - 87% match |
 
 ---
 
-## Today's Collection Summary (2026-01-26)
+## Today's Collection Summary (2026-02-10)
 
-**Morning Run (Phase 2 + 3):**
-- **Sources checked**: 15 (14 successful)
+**Morning Run (Phase 2):**
+- **Sources checked**: 18 (16 successful)
 - **Jobs found**: 85
-- **Jobs qualified**: 16 (after filters)
-- **Jobs added**: 5
+- **Jobs qualified**: 27 (after filters)
+- **Jobs added**: 12 new postings created
+- **Priority queue**: 13 prior postings (Feb 2-6) incorporated into queue
+- **Demoted to backlog**: 11 old entries (Jan 26 and earlier)
 
-**New postings today:** GitLab, Apollo.io, FiscalNote, Built In, Consensys (expired)
+**New postings today:**
+| Company | Role | Salary | Source |
+|---------|------|--------|--------|
+| Automox | Senior SRE | Undisclosed | Greenhouse |
+| MixMode | Sr. DevOps Engineer | $160k-$225k | Greenhouse |
+| DomainTools | Senior Platform Engineer | $145k-$185k | Remotive |
+| Angi | Infrastructure Engineer Cloud | $130k-$200k | Greenhouse |
+| NVIDIA | Senior SRE Observability | Undisclosed | Workday |
+| SSC Technologies | Senior SRE Central Platforms | Undisclosed | Workday |
+| Marketerx | Senior DevOps Engineer | $130k-$150k | WWR |
+| Menlo Security | Platform Infra Engineer SRE | Undisclosed | Ashby |
+| ResMed | SRE Engineer | Undisclosed | Workday |
+| Switchboard | Senior Infrastructure Engineer | Undisclosed | Greenhouse |
+| Cyware | Senior SRE | Undisclosed | Greenhouse |
+| Digioh | Senior Cloud Infra Engineer | Undisclosed | WWR |
 
 **Email scan results:**
 - Error: Gmail OAuth token expired - requires re-authentication
 
-**Validation results:**
-- Checked: 10 postings (top 10)
-- Expired: 2 (Consensys - EMEA only, Ramp - hybrid)
-- All others: ACTIVE
-
----
-
-## Trends Snapshot
-
-- **Average salary midpoint**: $165k (across recent postings with disclosed salary)
-- **Top opportunity**: Camunda at $150k-$247k, Astra at $180k-$250k
-- **Top skill gaps**: Go (30%), GCP (20%)
-- **Emerging themes**: Blockchain infrastructure (Consensys, though expired), enterprise platforms
-- **Stable demand**: Kubernetes (80%), Terraform (80%), AWS (75%)
-- **Study priority**: Go (growing demand), GCP certification
+**Application expiration alerts:**
+- ClickHouse: EXPIRES TOMORROW (Feb 11) - 29 days since applied
+- Confluent: Stale warning threshold (25 days) - consider follow-up
 
 ---
 
 ## Pipeline Status
 
 **Active applications:**
-1. **ClickHouse** - Applied Jan 12 (14 days) - Approaching 30-day mark, consider follow-up
-2. **Confluent** - Applied Jan 16 (10 days) - Within normal response timeframe
+1. **ClickHouse** - Applied Jan 12 (29 days) - **EXPIRES TOMORROW** Feb 11
+2. **Confluent** - Applied Jan 16 (25 days) - At stale warning threshold, expires Feb 15
 
 **Expected timeline:**
-- ClickHouse: Follow up at 14 days, expires Feb 11
-- Confluent: Expect response by Jan 26-30, expires Feb 15
+- ClickHouse: Expired if no response by Feb 11
+- Confluent: Follow up now, expires Feb 15
 
 ---
 
-## Daily Learning
+## Urgent Actions
 
-**Topic**: Salary Negotiation in Tech
-**Article**: [Complete Guide to Negotiating Your Tech Salary and Compensation](https://www.tryexponent.com/blog/tech-salary-negotiation-guide)
-
-**Key takeaways**:
-1. Use Levels.fyi, Glassdoor, and Salary.com to research market compensation before negotiating
-2. Apply to 25-50 companies simultaneously so offers arrive together for maximum leverage
-3. Always request written offers before responding - never commit verbally
-
-**Action item**: When you receive an offer, ask for written details and take 2-3 days to review before responding
+1. **ClickHouse** - Application expires TOMORROW (Feb 11, 29 days)
+2. **Gmail OAuth** - Re-authenticate to resume email scanning (P0 beads task)
+3. **Confluent follow-up** - At 25-day stale warning, consider reaching out
+4. **Review top 10** - 5 perfect-match jobs from Feb 6 need review
 
 ---
 
 ## Folder Naming Convention
 
 ```
-{company}.{role}.{state}.{YYYY-MM-DDTHHMM}Z/
+{company}.{role}.{state}.{YYYY-MM-DDTHHMM}Z.yaml
 ```
 
 **States**: `pending_review`, `applied`, `interviewing`, `offer`, `rejected`, `expired`, `withdrawn`
