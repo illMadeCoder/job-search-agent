@@ -6,92 +6,93 @@
 # Jobs move through: queue → (applied|backlog|rejected|expired)
 
 schema_version: 1
-updated: "2026-02-10T10:01:00Z"
+updated: "2026-02-10T10:25:00Z"
 
 # ============================================================
 # TOP 10 - Shown in daily digest
 # These are the highest priority jobs to apply to TODAY
+# Updated 2026-02-10: Removed 2 expired (CrowdStrike, DomainTools), added Airbnb + MixMode
 # ============================================================
 top_10:
   - folder: moov.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z.yaml
     score: 113
     rank: 1
     days_in_queue: 4
-    times_shown: 0
-    last_shown: null
+    times_shown: 1
+    last_shown: "2026-02-10"
     reason: "100% match (15/15), $165k-$185k salary, 4 days old"
 
   - folder: icf.site-reliability-engineer.pending_review.2026-02-06T2110Z.yaml
     score: 113
     rank: 2
     days_in_queue: 4
-    times_shown: 0
-    last_shown: null
+    times_shown: 1
+    last_shown: "2026-02-10"
     reason: "100% match (10/10), $108k-$184k salary, SRE role"
-
-  - folder: crowdstrike.software-engineer-iii-infrastructure.pending_review.2026-02-06T2110Z.yaml
-    score: 113
-    rank: 3
-    days_in_queue: 4
-    times_shown: 0
-    last_shown: null
-    reason: "100% match (11/11), $120k-$180k salary, infrastructure focus"
 
   - folder: draftkings.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z.yaml
     score: 113
-    rank: 4
+    rank: 3
     days_in_queue: 4
-    times_shown: 0
-    last_shown: null
+    times_shown: 1
+    last_shown: "2026-02-10"
     reason: "100% match (9/9), $128k-$160k salary, infrastructure"
 
   - folder: centene.lead-sre-citrix.pending_review.2026-02-06T2110Z.yaml
     score: 113
-    rank: 5
+    rank: 4
     days_in_queue: 4
-    times_shown: 0
-    last_shown: null
+    times_shown: 1
+    last_shown: "2026-02-10"
     reason: "100% match (11/11), $102k-$190k salary, healthcare tier"
-
-  - folder: domaintools.senior-platform-engineer.pending_review.2026-02-10T1001Z.yaml
-    score: 95
-    rank: 6
-    days_in_queue: 0
-    times_shown: 0
-    last_shown: null
-    reason: "70% match, $145k-$185k salary, NEW TODAY"
 
   - folder: 3pillar.senior-devops-engineer.pending_review.2026-02-06T2110Z.yaml
     score: 93
-    rank: 7
+    rank: 5
     days_in_queue: 4
-    times_shown: 0
-    last_shown: null
+    times_shown: 1
+    last_shown: "2026-02-10"
     reason: "100% match (9/9), worldwide remote, DevOps"
 
   - folder: dotcms.senior-sre.pending_review.2026-02-06T2110Z.yaml
     score: 93
-    rank: 8
+    rank: 6
     days_in_queue: 4
-    times_shown: 0
-    last_shown: null
+    times_shown: 1
+    last_shown: "2026-02-10"
     reason: "90% match (9/10), Senior SRE, US remote"
 
   - folder: ssc-technologies.senior-sre-central-platforms.pending_review.2026-02-10T1001Z.yaml
     score: 90
-    rank: 9
+    rank: 7
     days_in_queue: 0
-    times_shown: 0
-    last_shown: null
-    reason: "60% match, NY location bonus +15, NEW TODAY"
+    times_shown: 1
+    last_shown: "2026-02-10"
+    reason: "60% match, NY location bonus +15, $175k-$185k salary"
 
   - folder: oracle.senior-site-reliability-engineer-devops.pending_review.2026-02-05T1507Z.yaml
     score: 88
-    rank: 10
+    rank: 8
     days_in_queue: 5
-    times_shown: 0
-    last_shown: null
+    times_shown: 1
+    last_shown: "2026-02-10"
     reason: "87% match (13/15), US citizenship required, SRE/DevOps"
+
+  - folder: airbnb.senior-software-engineer-ai-compute.pending_review.2026-02-05T1306Z.yaml
+    score: 86
+    rank: 9
+    days_in_queue: 5
+    times_shown: 1
+    last_shown: "2026-02-10"
+    reason: "75% match, $191k-$225k salary (above target), K8s GPU platform"
+
+  - folder: mixmode.sr-devops-engineer.pending_review.2026-02-10T1001Z.yaml
+    score: 85
+    rank: 10
+    days_in_queue: 0
+    times_shown: 1
+    last_shown: "2026-02-10"
+    reason: "60% match, $160k-$225k salary, cybersecurity/AI, NEW TODAY"
 
 # ============================================================
 # FULL QUEUE - All pending_review postings, ranked
@@ -99,17 +100,7 @@ top_10:
 queue:
   # === NEW TODAY (2026-02-10) - freshness=15 ===
 
-  - folder: domaintools.senior-platform-engineer.pending_review.2026-02-10T1001Z.yaml
-    score: 95
-    added: "2026-02-10"
-    last_shown: null
-    times_shown: 0
-    factors:
-      match_rate: 70
-      freshness: 15
-      salary: 10
-      referral: 0
-      ny_location: 0
+  # domaintools: EXPIRED 2026-02-10 - 410 Gone on Remotive
 
   - folder: ssc-technologies.senior-sre-central-platforms.pending_review.2026-02-10T1001Z.yaml
     score: 90
@@ -123,34 +114,14 @@ queue:
       referral: 0
       ny_location: 15
 
-  - folder: nvidia.senior-sre-observability-telemetry.pending_review.2026-02-10T1001Z.yaml
-    score: 85
-    added: "2026-02-10"
-    last_shown: null
-    times_shown: 0
-    factors:
-      match_rate: 70
-      freshness: 15
-      salary: 0
-      referral: 0
-      ny_location: 0
+  # nvidia: EXPIRED 2026-02-10 - Santa Clara on-site
+  # menlo-security: EXPIRED 2026-02-10 - Canada only
+  # automox: EXPIRED 2026-02-10 - Greenhouse URL redirects to different role
 
-  - folder: menlo-security.platform-infrastructure-engineer-sre.pending_review.2026-02-10T1001Z.yaml
+  - folder: mixmode.sr-devops-engineer.pending_review.2026-02-10T1001Z.yaml
     score: 85
     added: "2026-02-10"
-    last_shown: null
-    times_shown: 0
-    factors:
-      match_rate: 70
-      freshness: 15
-      salary: 0
-      referral: 0
-      ny_location: 0
-
-  - folder: automox.senior-site-reliability-engineer.pending_review.2026-02-10T1001Z.yaml
-    score: 85
-    added: "2026-02-10"
-    last_shown: null
+    last_shown: "2026-02-10"
     times_shown: 0
     factors:
       match_rate: 70
@@ -271,18 +242,7 @@ queue:
       ny_location: 0
       staleness: -2
 
-  - folder: crowdstrike.software-engineer-iii-infrastructure.pending_review.2026-02-06T2110Z.yaml
-    score: 113
-    added: "2026-02-06"
-    last_shown: null
-    times_shown: 0
-    factors:
-      match_rate: 100
-      freshness: 5
-      salary: 10
-      referral: 0
-      ny_location: 0
-      staleness: -2
+  # crowdstrike.software-engineer-iii: EXPIRED 2026-02-10 - Job removed from BuiltIn
 
   - folder: draftkings.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z.yaml
     score: 113
@@ -336,18 +296,7 @@ queue:
       ny_location: 0
       staleness: -2
 
-  - folder: guidehouse.full-stack-analytics-devops-engineer.pending_review.2026-02-06T1906Z.yaml
-    score: 80
-    added: "2026-02-06"
-    last_shown: null
-    times_shown: 0
-    factors:
-      match_rate: 67
-      freshness: 5
-      salary: 10
-      referral: 0
-      ny_location: 0
-      staleness: -2
+  # guidehouse: EXPIRED 2026-02-10 - Not remote (office McLean, VA)
 
   # === FROM 2026-02-05 (5 days old) - freshness=5 ===
 
@@ -653,6 +602,12 @@ backlog:
 # ramp.software-engineer-infrastructure: Expired 2026-01-26 - Hybrid (NY HQ with telecommute)
 # kkr.platform-engineer: Expired 2026-01-28 - Located in South America (Peru), not US remote
 # apollo-io.senior-devops-engineer: Expired 2026-01-28 - Job no longer listed on careers page
+# crowdstrike.software-engineer-iii-infrastructure: Expired 2026-02-10 - Job removed from BuiltIn
+# domaintools.senior-platform-engineer: Expired 2026-02-10 - 410 Gone on Remotive
+# guidehouse.full-stack-analytics-devops-engineer: Expired 2026-02-10 - Not remote (McLean, VA office)
+# menlo-security.platform-infrastructure-engineer-sre: Expired 2026-02-10 - Canada only
+# nvidia.senior-sre-observability-telemetry: Expired 2026-02-10 - Santa Clara on-site
+# automox.senior-site-reliability-engineer: Expired 2026-02-10 - Greenhouse URL redirects to different role
 
 # ============================================================
 # SCORING FORMULA

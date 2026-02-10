@@ -1,6 +1,6 @@
 # Posting Tracker
 
-*Last updated: 2026-02-10T10:01Z*
+*Last updated: 2026-02-10T10:25Z*
 
 ## Needs Review (.review flag)
 
@@ -14,15 +14,15 @@
 |--------|---------|----------------|-------|
 | moov.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 113 |
 | icf.site-reliability-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 113 |
-| crowdstrike.software-engineer-iii-infrastructure.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 113 |
 | draftkings.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 113 |
 | centene.lead-sre-citrix.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 113 |
-| domaintools.senior-platform-engineer.pending_review.2026-02-10T1001Z | 2026-02-10 | cold_apply | 95 |
 | 3pillar.senior-devops-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 93 |
 | dotcms.senior-sre.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 93 |
 | ssc-technologies.senior-sre-central-platforms.pending_review.2026-02-10T1001Z | 2026-02-10 | cold_apply | 90 |
 | oracle.senior-site-reliability-engineer-devops.pending_review.2026-02-05T1507Z | 2026-02-05 | cold_apply | 88 |
-| And 50+ more in queue and backlog... | | | |
+| airbnb.senior-software-engineer-ai-compute.pending_review.2026-02-05T1306Z | 2026-02-05 | cold_apply | 86 |
+| mixmode.sr-devops-engineer.pending_review.2026-02-10T1001Z | 2026-02-10 | cold_apply | 85 |
+| And 40+ more in queue and backlog... | | | |
 
 ## Applied (.applied)
 
@@ -43,6 +43,12 @@
 
 | Folder | Outcome | Date | Reason |
 |--------|---------|------|--------|
+| crowdstrike.software-engineer-iii-infrastructure.pending_review.2026-02-06T2110Z | expired | 2026-02-10 | Job removed from BuiltIn |
+| domaintools.senior-platform-engineer.pending_review.2026-02-10T1001Z | expired | 2026-02-10 | 410 Gone on Remotive |
+| guidehouse.full-stack-analytics-devops-engineer.pending_review.2026-02-06T1906Z | expired | 2026-02-10 | Not remote (McLean, VA office) |
+| menlo-security.platform-infrastructure-engineer-sre.pending_review.2026-02-10T1001Z | expired | 2026-02-10 | Canada only |
+| nvidia.senior-sre-observability-telemetry.pending_review.2026-02-10T1001Z | expired | 2026-02-10 | Santa Clara on-site |
+| automox.senior-site-reliability-engineer.pending_review.2026-02-10T1001Z | expired | 2026-02-10 | Greenhouse URL redirects to different role |
 | kkr.platform-engineer.pending_review.2026-01-28T1000Z | expired | 2026-01-28 | Located in South America (Peru), not US remote |
 | apollo-io.senior-devops-engineer.pending_review.2026-01-26T1000Z | expired | 2026-01-28 | Job no longer listed on careers page |
 | promptql.sre-platform-engineer.expired.2026-01-27T0500Z | expired | 2026-01-27 | 410 Gone |
@@ -60,12 +66,12 @@
 ## Stats
 
 - **Needs review**: 1 (Pantheon - URL redirect)
-- **Pending review**: 57+ (12 new today, 13 from Feb 2-6, rest older)
+- **Pending review**: 51+ (6 new today surviving validation, 7 from Feb 2-6, rest older)
 - **Applied**: 2 (ClickHouse - EXPIRING, Confluent - stale warning)
 - **Interviewing**: 0
 - **Offers**: 0
 - **Rejected**: 1 (Files.com)
-- **Expired**: 11 (validation failures)
+- **Expired**: 17 (6 new today from validation)
 - **Withdrawn**: 0
 
 ---
@@ -74,16 +80,29 @@
 
 | Rank | Company | Role | Score | Salary Range | Action |
 |------|---------|------|-------|--------------|--------|
-| 1 | Moov | Senior Infrastructure Engineer | 113 | $165k-$185k | Apply - 100% match, fintech |
+| 1 | Moov | Senior Infrastructure Engineer | 113 | $165k-$185k | Apply - 100% match |
 | 2 | ICF | Site Reliability Engineer | 113 | $108k-$184k | Apply - 100% match |
-| 3 | CrowdStrike | SW Engineer III Infrastructure | 113 | $120k-$180k | Apply - 100% match, cybersecurity |
-| 4 | DraftKings | Senior Infrastructure Engineer | 113 | $128k-$160k | Apply - 100% match |
-| 5 | Centene | Lead SRE Citrix | 113 | $102k-$190k | Apply - Healthcare tier |
-| 6 | DomainTools | Senior Platform Engineer | 95 | $145k-$185k | **NEW TODAY** |
-| 7 | 3Pillar | Senior DevOps Engineer | 93 | Undisclosed | Apply - 100% match |
-| 8 | dotCMS | Senior SRE | 93 | Undisclosed | Apply - 90% match |
-| 9 | SSC Technologies | Senior SRE Central Platforms | 90 | Undisclosed | **NEW TODAY** - NY bonus |
-| 10 | Oracle | Senior SRE/DevOps | 88 | Undisclosed | Apply - 87% match |
+| 3 | DraftKings | Senior Infrastructure Engineer | 113 | $128k-$160k | Apply - 100% match |
+| 4 | Centene | Lead SRE Citrix | 113 | $102k-$190k | RESERVED - Healthcare tier |
+| 5 | 3Pillar | Senior DevOps Engineer | 93 | Undisclosed | Apply - 100% match |
+| 6 | dotCMS | Senior SRE | 93 | Undisclosed | Apply - 90% match |
+| 7 | SSC Technologies | Senior SRE Central Platforms | 90 | $175k-$185k | **NEW TODAY** - NY bonus |
+| 8 | Oracle | Senior SRE/DevOps | 88 | Undisclosed | Apply - 87% match |
+| 9 | Airbnb | Sr SW Engineer AI Compute | 86 | $191k-$225k | Apply - stretch role |
+| 10 | MixMode | Sr. DevOps Engineer | 85 | $160k-$225k | **NEW TODAY** |
+
+---
+
+## Validation Summary (2026-02-10)
+
+**Checked**: 16 postings (10 top queue + 6 replacements)
+**Expired**: 6 postings during validation:
+- CrowdStrike: Job removed from BuiltIn Feb 9
+- DomainTools: 410 Gone on Remotive
+- Guidehouse: Not remote (McLean, VA office)
+- Menlo Security: Canada only
+- NVIDIA: Santa Clara on-site
+- Automox: Greenhouse URL redirects to different role
 
 ---
 
@@ -96,22 +115,6 @@
 - **Jobs added**: 12 new postings created
 - **Priority queue**: 13 prior postings (Feb 2-6) incorporated into queue
 - **Demoted to backlog**: 11 old entries (Jan 26 and earlier)
-
-**New postings today:**
-| Company | Role | Salary | Source |
-|---------|------|--------|--------|
-| Automox | Senior SRE | Undisclosed | Greenhouse |
-| MixMode | Sr. DevOps Engineer | $160k-$225k | Greenhouse |
-| DomainTools | Senior Platform Engineer | $145k-$185k | Remotive |
-| Angi | Infrastructure Engineer Cloud | $130k-$200k | Greenhouse |
-| NVIDIA | Senior SRE Observability | Undisclosed | Workday |
-| SSC Technologies | Senior SRE Central Platforms | Undisclosed | Workday |
-| Marketerx | Senior DevOps Engineer | $130k-$150k | WWR |
-| Menlo Security | Platform Infra Engineer SRE | Undisclosed | Ashby |
-| ResMed | SRE Engineer | Undisclosed | Workday |
-| Switchboard | Senior Infrastructure Engineer | Undisclosed | Greenhouse |
-| Cyware | Senior SRE | Undisclosed | Greenhouse |
-| Digioh | Senior Cloud Infra Engineer | Undisclosed | WWR |
 
 **Email scan results:**
 - Error: Gmail OAuth token expired - requires re-authentication
@@ -139,7 +142,7 @@
 1. **ClickHouse** - Application expires TOMORROW (Feb 11, 29 days)
 2. **Gmail OAuth** - Re-authenticate to resume email scanning (P0 beads task)
 3. **Confluent follow-up** - At 25-day stale warning, consider reaching out
-4. **Review top 10** - 5 perfect-match jobs from Feb 6 need review
+4. **Review top 10** - 4 perfect-match jobs need review + 6 more strong candidates
 
 ---
 
