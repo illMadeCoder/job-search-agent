@@ -1,6 +1,6 @@
 # Posting Tracker
 
-*Last updated: 2026-02-10T10:25Z*
+*Last updated: 2026-02-12T10:35Z*
 
 ## Needs Review (.review flag)
 
@@ -12,26 +12,25 @@
 
 | Folder | Created | Recommendation | Score |
 |--------|---------|----------------|-------|
-| moov.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 113 |
-| icf.site-reliability-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 113 |
-| draftkings.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 113 |
-| centene.lead-sre-citrix.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 113 |
-| 3pillar.senior-devops-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 93 |
-| dotcms.senior-sre.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 93 |
-| ssc-technologies.senior-sre-central-platforms.pending_review.2026-02-10T1001Z | 2026-02-10 | cold_apply | 90 |
-| oracle.senior-site-reliability-engineer-devops.pending_review.2026-02-05T1507Z | 2026-02-05 | cold_apply | 88 |
-| airbnb.senior-software-engineer-ai-compute.pending_review.2026-02-05T1306Z | 2026-02-05 | cold_apply | 86 |
-| mixmode.sr-devops-engineer.pending_review.2026-02-10T1001Z | 2026-02-10 | cold_apply | 85 |
+| moov.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 109 |
+| draftkings.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 109 |
+| centene.lead-sre-citrix.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 109 |
+| beautiful-ai.senior-platform-engineer.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 92 |
+| dotcms.senior-sre.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 89 |
+| ssc-technologies.senior-sre-central-platforms.pending_review.2026-02-10T1001Z | 2026-02-10 | cold_apply | 85 |
+| situsamc.sr-platform-engineer.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 85 |
+| geico.senior-se-platform-engineering.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 82 |
+| comagine-health.sr-cloud-platform-engineer.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 82 |
+| nextgen-healthcare.sr-engineer-cloud-platform.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 82 |
 | And 40+ more in queue and backlog... | | | |
 
 ## Applied (.applied)
 
 | Folder | Applied | Expiry | Status |
 |--------|---------|--------|--------|
-| clickhouse.senior-site-reliability-engineer.applied.2026-01-12T0200Z | 2026-01-12 | 2026-02-11 | EXPIRES TOMORROW - Follow up! |
-| confluent.senior-software-engineer-ii-platform-engineering.applied.2026-01-16T1824Z | 2026-01-16 | 2026-02-15 | Stale warning (25 days) |
+| confluent.senior-software-engineer-ii-platform-engineering.applied.2026-01-16T1824Z | 2026-01-16 | 2026-02-15 | EXPIRES IN 3 DAYS - Follow up! |
 
-**Note**: Previous confirmations (Flex, Toast, Omada Health, Carrot) were applied outside tracking system.
+**Note**: ClickHouse application expired on Feb 12 (31 days, no response). Previous confirmations (Flex, Toast, Omada Health, Carrot) were applied outside tracking system.
 
 ## Interviewing (.interviewing)
 
@@ -43,12 +42,16 @@
 
 | Folder | Outcome | Date | Reason |
 |--------|---------|------|--------|
-| crowdstrike.software-engineer-iii-infrastructure.pending_review.2026-02-06T2110Z | expired | 2026-02-10 | Job removed from BuiltIn |
-| domaintools.senior-platform-engineer.pending_review.2026-02-10T1001Z | expired | 2026-02-10 | 410 Gone on Remotive |
-| guidehouse.full-stack-analytics-devops-engineer.pending_review.2026-02-06T1906Z | expired | 2026-02-10 | Not remote (McLean, VA office) |
-| menlo-security.platform-infrastructure-engineer-sre.pending_review.2026-02-10T1001Z | expired | 2026-02-10 | Canada only |
-| nvidia.senior-sre-observability-telemetry.pending_review.2026-02-10T1001Z | expired | 2026-02-10 | Santa Clara on-site |
-| automox.senior-site-reliability-engineer.pending_review.2026-02-10T1001Z | expired | 2026-02-10 | Greenhouse URL redirects to different role |
+| icf.site-reliability-engineer.expired.2026-02-06T2110Z | expired | 2026-02-12 | Job removed from BuiltIn |
+| 3pillar.senior-devops-engineer.expired.2026-02-06T2110Z | expired | 2026-02-12 | Europe-based company, US eligibility unconfirmed |
+| id-me.senior-sre.expired.2026-02-12T1000Z | expired | 2026-02-12 | Posting removed; company is in-office only |
+| clickhouse.senior-site-reliability-engineer.expired | expired | 2026-02-12 | No response after 31 days |
+| crowdstrike.software-engineer-iii-infrastructure.expired.2026-02-06T2110Z | expired | 2026-02-10 | Job removed from BuiltIn |
+| domaintools.senior-platform-engineer.expired.2026-02-10T1001Z | expired | 2026-02-10 | 410 Gone on Remotive |
+| guidehouse.full-stack-analytics-devops-engineer.expired.2026-02-06T1906Z | expired | 2026-02-10 | Not remote (McLean, VA office) |
+| menlo-security.platform-infrastructure-engineer-sre.expired.2026-02-10T1001Z | expired | 2026-02-10 | Canada only |
+| nvidia.senior-sre-observability-telemetry.expired.2026-02-10T1001Z | expired | 2026-02-10 | Santa Clara on-site |
+| automox.senior-site-reliability-engineer.expired.2026-02-10T1001Z | expired | 2026-02-10 | Greenhouse URL redirects to different role |
 | kkr.platform-engineer.pending_review.2026-01-28T1000Z | expired | 2026-01-28 | Located in South America (Peru), not US remote |
 | apollo-io.senior-devops-engineer.pending_review.2026-01-26T1000Z | expired | 2026-01-28 | Job no longer listed on careers page |
 | promptql.sre-platform-engineer.expired.2026-01-27T0500Z | expired | 2026-01-27 | 410 Gone |
@@ -66,12 +69,12 @@
 ## Stats
 
 - **Needs review**: 1 (Pantheon - URL redirect)
-- **Pending review**: 51+ (6 new today surviving validation, 7 from Feb 2-6, rest older)
-- **Applied**: 2 (ClickHouse - EXPIRING, Confluent - stale warning)
+- **Pending review**: 48+ (10 new today, 7 survived validation)
+- **Applied**: 1 (Confluent - EXPIRING IN 3 DAYS)
 - **Interviewing**: 0
 - **Offers**: 0
 - **Rejected**: 1 (Files.com)
-- **Expired**: 17 (6 new today from validation)
+- **Expired**: 20 (3 new today from validation, 1 ClickHouse expired)
 - **Withdrawn**: 0
 
 ---
@@ -80,69 +83,62 @@
 
 | Rank | Company | Role | Score | Salary Range | Action |
 |------|---------|------|-------|--------------|--------|
-| 1 | Moov | Senior Infrastructure Engineer | 113 | $165k-$185k | Apply - 100% match |
-| 2 | ICF | Site Reliability Engineer | 113 | $108k-$184k | Apply - 100% match |
-| 3 | DraftKings | Senior Infrastructure Engineer | 113 | $128k-$160k | Apply - 100% match |
-| 4 | Centene | Lead SRE Citrix | 113 | $102k-$190k | RESERVED - Healthcare tier |
-| 5 | 3Pillar | Senior DevOps Engineer | 93 | Undisclosed | Apply - 100% match |
-| 6 | dotCMS | Senior SRE | 93 | Undisclosed | Apply - 90% match |
-| 7 | SSC Technologies | Senior SRE Central Platforms | 90 | $175k-$185k | **NEW TODAY** - NY bonus |
-| 8 | Oracle | Senior SRE/DevOps | 88 | Undisclosed | Apply - 87% match |
-| 9 | Airbnb | Sr SW Engineer AI Compute | 86 | $191k-$225k | Apply - stretch role |
-| 10 | MixMode | Sr. DevOps Engineer | 85 | $160k-$225k | **NEW TODAY** |
+| 1 | Moov | Senior Infrastructure Engineer | 109 | $165k-$185k | Apply - 100% match |
+| 2 | DraftKings | Senior Infrastructure Engineer | 109 | $128k-$160k | Apply - 100% match |
+| 3 | Centene | Lead SRE Citrix | 109 | $102k-$190k | RESERVED - Healthcare tier |
+| 4 | Beautiful.ai | Senior Platform Engineer | 92 | $160k-$200k | **NEW TODAY** - Series B |
+| 5 | dotCMS | Senior SRE | 89 | Undisclosed | Apply - 90% match |
+| 6 | SSC Technologies | Senior SRE Central Platforms | 85 | $175k-$185k | Apply - NY bonus |
+| 7 | SitusAMC | Sr Platform Engineer | 85 | $140k-$160k | **NEW TODAY** |
+| 8 | GEICO | Sr SE Platform Engineering | 82 | Undisclosed | **NEW TODAY** - Enterprise |
+| 9 | Comagine Health | Sr Cloud Platform Engineer | 82 | Undisclosed | **NEW TODAY** - Healthcare |
+| 10 | NextGen Healthcare | Sr Engineer Cloud Platform | 82 | $120k-$150k | **NEW TODAY** - Healthcare |
 
 ---
 
-## Validation Summary (2026-02-10)
+## Validation Summary (2026-02-12)
 
-**Checked**: 16 postings (10 top queue + 6 replacements)
-**Expired**: 6 postings during validation:
-- CrowdStrike: Job removed from BuiltIn Feb 9
-- DomainTools: 410 Gone on Remotive
-- Guidehouse: Not remote (McLean, VA office)
-- Menlo Security: Canada only
-- NVIDIA: Santa Clara on-site
-- Automox: Greenhouse URL redirects to different role
+**Checked**: 10 postings (top queue)
+**Expired**: 3 postings during validation:
+- ICF: Job removed from BuiltIn on Feb 12
+- 3Pillar: Europe-based company (Romania HQ), US eligibility unconfirmed
+- ID.me: Posting removed; company is in-office only
 
 ---
 
-## Today's Collection Summary (2026-02-10)
+## Today's Collection Summary (2026-02-12)
 
 **Morning Run (Phase 2):**
-- **Sources checked**: 18 (16 successful)
-- **Jobs found**: 85
-- **Jobs qualified**: 27 (after filters)
-- **Jobs added**: 12 new postings created
-- **Priority queue**: 13 prior postings (Feb 2-6) incorporated into queue
-- **Demoted to backlog**: 11 old entries (Jan 26 and earlier)
+- **Sources checked**: 20 (18 successful)
+- **Jobs found**: ~35
+- **Jobs added**: 10 new postings created
+- **Priority queue**: 31 active entries, 24 backlog
+- **Demoted to backlog**: 5 old entries (Jan 27-28)
 
 **Email scan results:**
 - Error: Gmail OAuth token expired - requires re-authentication
 
-**Application expiration alerts:**
-- ClickHouse: EXPIRES TOMORROW (Feb 11) - 29 days since applied
-- Confluent: Stale warning threshold (25 days) - consider follow-up
+**Application alerts:**
+- ClickHouse: Expired (31 days, no response)
+- Confluent: EXPIRES IN 3 DAYS (27 days, no response) - Follow up!
 
 ---
 
 ## Pipeline Status
 
 **Active applications:**
-1. **ClickHouse** - Applied Jan 12 (29 days) - **EXPIRES TOMORROW** Feb 11
-2. **Confluent** - Applied Jan 16 (25 days) - At stale warning threshold, expires Feb 15
+1. **Confluent** - Applied Jan 16 (27 days) - **EXPIRES IN 3 DAYS** Feb 15
 
 **Expected timeline:**
-- ClickHouse: Expired if no response by Feb 11
-- Confluent: Follow up now, expires Feb 15
+- Confluent: Follow up NOW, expires Feb 15
 
 ---
 
 ## Urgent Actions
 
-1. **ClickHouse** - Application expires TOMORROW (Feb 11, 29 days)
-2. **Gmail OAuth** - Re-authenticate to resume email scanning (P0 beads task)
-3. **Confluent follow-up** - At 25-day stale warning, consider reaching out
-4. **Review top 10** - 4 perfect-match jobs need review + 6 more strong candidates
+1. **Confluent** - Application expires in 3 days (Feb 15, 27 days) - FOLLOW UP
+2. **Gmail OAuth** - Re-authenticate to resume email scanning (P0 beads task, 17 days)
+3. **Review top 10** - 3 excellent matches + 5 NEW TODAY need review
 
 ---
 

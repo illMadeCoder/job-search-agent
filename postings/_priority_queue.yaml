@@ -6,93 +6,93 @@
 # Jobs move through: queue → (applied|backlog|rejected|expired)
 
 schema_version: 1
-updated: "2026-02-12T10:00:00Z"
+updated: "2026-02-12T10:35:00Z"
 
 # ============================================================
 # TOP 10 - Shown in daily digest
 # These are the highest priority jobs to apply to TODAY
-# Updated 2026-02-12: Added 10 new postings, recalculated scores, demoted 5 stale entries
+# Updated 2026-02-12 (Phase 3): Removed 3 expired (ICF, 3Pillar, ID.me), pulled replacements from queue
 # ============================================================
 top_10:
   - folder: moov.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z.yaml
     score: 109
     rank: 1
     days_in_queue: 6
-    times_shown: 2
+    times_shown: 3
     last_shown: "2026-02-12"
     reason: "100% match (15/15), $165k-$185k salary, infrastructure"
 
-  - folder: icf.site-reliability-engineer.pending_review.2026-02-06T2110Z.yaml
+  - folder: draftkings.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z.yaml
     score: 109
     rank: 2
     days_in_queue: 6
-    times_shown: 2
-    last_shown: "2026-02-12"
-    reason: "100% match (10/10), $108k-$184k salary, SRE role"
-
-  - folder: draftkings.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z.yaml
-    score: 109
-    rank: 3
-    days_in_queue: 6
-    times_shown: 2
+    times_shown: 3
     last_shown: "2026-02-12"
     reason: "100% match (9/9), $128k-$160k salary, infrastructure"
 
   - folder: centene.lead-sre-citrix.pending_review.2026-02-06T2110Z.yaml
     score: 109
-    rank: 4
+    rank: 3
     days_in_queue: 6
-    times_shown: 2
+    times_shown: 3
     last_shown: "2026-02-12"
     reason: "100% match (11/11), $102k-$190k salary, healthcare tier"
 
-  - folder: 3pillar.senior-devops-engineer.pending_review.2026-02-06T2110Z.yaml
-    score: 99
-    rank: 5
-    days_in_queue: 6
-    times_shown: 2
-    last_shown: "2026-02-12"
-    reason: "100% match (9/9), worldwide remote, DevOps"
-
   - folder: beautiful-ai.senior-platform-engineer.pending_review.2026-02-12T1000Z.yaml
     score: 92
-    rank: 6
+    rank: 4
     days_in_queue: 0
-    times_shown: 1
+    times_shown: 2
     last_shown: "2026-02-12"
     reason: "67% match (8/12), $160k-$200k salary, GCP, Series B, NEW TODAY"
 
   - folder: dotcms.senior-sre.pending_review.2026-02-06T2110Z.yaml
     score: 89
-    rank: 7
+    rank: 5
     days_in_queue: 6
-    times_shown: 2
+    times_shown: 3
     last_shown: "2026-02-12"
     reason: "90% match (9/10), Senior SRE, US remote"
 
   - folder: ssc-technologies.senior-sre-central-platforms.pending_review.2026-02-10T1001Z.yaml
     score: 85
-    rank: 8
+    rank: 6
     days_in_queue: 2
-    times_shown: 2
+    times_shown: 3
     last_shown: "2026-02-12"
     reason: "60% match, NY location bonus +15, $175k-$185k salary"
 
   - folder: situsamc.sr-platform-engineer.pending_review.2026-02-12T1000Z.yaml
     score: 85
+    rank: 7
+    days_in_queue: 0
+    times_shown: 2
+    last_shown: "2026-02-12"
+    reason: "60% match (6/10), $140k-$160k salary, Kubernetes, NEW TODAY"
+
+  - folder: geico.senior-se-platform-engineering.pending_review.2026-02-12T1000Z.yaml
+    score: 82
+    rank: 8
+    days_in_queue: 0
+    times_shown: 1
+    last_shown: "2026-02-12"
+    reason: "67% match (6/9), Hybrid-Cloud, Berkshire Hathaway, NEW TODAY"
+
+  - folder: comagine-health.sr-cloud-platform-engineer.pending_review.2026-02-12T1000Z.yaml
+    score: 82
     rank: 9
     days_in_queue: 0
     times_shown: 1
     last_shown: "2026-02-12"
-    reason: "60% match (6/10), $140k-$160k salary, Kubernetes, NEW TODAY"
+    reason: "67% match (6/9), Healthcare non-profit, NEW TODAY"
 
-  - folder: id-me.senior-sre.pending_review.2026-02-12T1000Z.yaml
+  - folder: nextgen-healthcare.sr-engineer-cloud-platform.pending_review.2026-02-12T1000Z.yaml
     score: 82
     rank: 10
     days_in_queue: 0
     times_shown: 1
     last_shown: "2026-02-12"
-    reason: "67% match (6/9), Identity/GovTech, Series D, NEW TODAY"
+    reason: "67% match (6/9), $120k-$150k, Healthcare IT, NEW TODAY"
 
 # ============================================================
 # FULL QUEUE - All pending_review postings, ranked
@@ -104,7 +104,7 @@ queue:
     score: 92
     added: "2026-02-12"
     last_shown: "2026-02-12"
-    times_shown: 1
+    times_shown: 2
     factors:
       match_rate: 67
       freshness: 15
@@ -116,7 +116,7 @@ queue:
     score: 85
     added: "2026-02-12"
     last_shown: "2026-02-12"
-    times_shown: 1
+    times_shown: 2
     factors:
       match_rate: 60
       freshness: 15
@@ -124,23 +124,11 @@ queue:
       referral: 0
       ny_location: 0
 
-  - folder: id-me.senior-sre.pending_review.2026-02-12T1000Z.yaml
-    score: 82
-    added: "2026-02-12"
-    last_shown: null
-    times_shown: 0
-    factors:
-      match_rate: 67
-      freshness: 15
-      salary: 0
-      referral: 0
-      ny_location: 0
-
   - folder: geico.senior-se-platform-engineering.pending_review.2026-02-12T1000Z.yaml
     score: 82
     added: "2026-02-12"
-    last_shown: null
-    times_shown: 0
+    last_shown: "2026-02-12"
+    times_shown: 1
     factors:
       match_rate: 67
       freshness: 15
@@ -151,8 +139,8 @@ queue:
   - folder: comagine-health.sr-cloud-platform-engineer.pending_review.2026-02-12T1000Z.yaml
     score: 82
     added: "2026-02-12"
-    last_shown: null
-    times_shown: 0
+    last_shown: "2026-02-12"
+    times_shown: 1
     factors:
       match_rate: 67
       freshness: 15
@@ -163,8 +151,8 @@ queue:
   - folder: nextgen-healthcare.sr-engineer-cloud-platform.pending_review.2026-02-12T1000Z.yaml
     score: 82
     added: "2026-02-12"
-    last_shown: null
-    times_shown: 0
+    last_shown: "2026-02-12"
+    times_shown: 1
     factors:
       match_rate: 67
       freshness: 15
@@ -226,7 +214,7 @@ queue:
     score: 85
     added: "2026-02-10"
     last_shown: "2026-02-12"
-    times_shown: 2
+    times_shown: 3
     factors:
       match_rate: 60
       freshness: 10
@@ -324,20 +312,7 @@ queue:
     score: 109
     added: "2026-02-06"
     last_shown: "2026-02-12"
-    times_shown: 2
-    factors:
-      match_rate: 100
-      freshness: 5
-      salary: 10
-      referral: 0
-      ny_location: 0
-      staleness: -6
-
-  - folder: icf.site-reliability-engineer.pending_review.2026-02-06T2110Z.yaml
-    score: 109
-    added: "2026-02-06"
-    last_shown: "2026-02-12"
-    times_shown: 2
+    times_shown: 3
     factors:
       match_rate: 100
       freshness: 5
@@ -350,7 +325,7 @@ queue:
     score: 109
     added: "2026-02-06"
     last_shown: "2026-02-12"
-    times_shown: 2
+    times_shown: 3
     factors:
       match_rate: 100
       freshness: 5
@@ -363,7 +338,7 @@ queue:
     score: 109
     added: "2026-02-06"
     last_shown: "2026-02-12"
-    times_shown: 2
+    times_shown: 3
     factors:
       match_rate: 100
       freshness: 5
@@ -372,24 +347,11 @@ queue:
       ny_location: 0
       staleness: -6
 
-  - folder: 3pillar.senior-devops-engineer.pending_review.2026-02-06T2110Z.yaml
-    score: 99
-    added: "2026-02-06"
-    last_shown: "2026-02-12"
-    times_shown: 2
-    factors:
-      match_rate: 100
-      freshness: 5
-      salary: 0
-      referral: 0
-      ny_location: 0
-      staleness: -6
-
   - folder: dotcms.senior-sre.pending_review.2026-02-06T2110Z.yaml
     score: 89
     added: "2026-02-06"
     last_shown: "2026-02-12"
-    times_shown: 2
+    times_shown: 3
     factors:
       match_rate: 90
       freshness: 5
@@ -673,6 +635,9 @@ backlog:
 # menlo-security.platform-infrastructure-engineer-sre: Expired 2026-02-10 - Canada only
 # nvidia.senior-sre-observability-telemetry: Expired 2026-02-10 - Santa Clara on-site
 # automox.senior-site-reliability-engineer: Expired 2026-02-10 - Greenhouse URL redirects to different role
+# icf.site-reliability-engineer: Expired 2026-02-12 - Job removed from BuiltIn
+# 3pillar.senior-devops-engineer: Expired 2026-02-12 - Europe-based company (Romania HQ)
+# id-me.senior-sre: Expired 2026-02-12 - Posting removed; company is in-office only
 
 # ============================================================
 # SCORING FORMULA
