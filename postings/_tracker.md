@@ -1,6 +1,6 @@
 # Posting Tracker
 
-*Last updated: 2026-02-12T10:35Z*
+*Last updated: 2026-02-14T10:35Z*
 
 ## Needs Review (.review flag)
 
@@ -12,23 +12,23 @@
 
 | Folder | Created | Recommendation | Score |
 |--------|---------|----------------|-------|
-| moov.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 109 |
-| draftkings.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 109 |
-| centene.lead-sre-citrix.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 109 |
-| beautiful-ai.senior-platform-engineer.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 92 |
+| humana.lead-technology-leader-sre.pending_review.2026-02-14T1000Z | 2026-02-14 | referral_apply | 109 |
+| moov.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 95 |
+| draftkings.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 95 |
+| centene.lead-sre-citrix.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 95 |
+| beautiful-ai.senior-platform-engineer.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 87 |
 | dotcms.senior-sre.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 89 |
 | ssc-technologies.senior-sre-central-platforms.pending_review.2026-02-10T1001Z | 2026-02-10 | cold_apply | 85 |
-| situsamc.sr-platform-engineer.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 85 |
-| geico.senior-se-platform-engineering.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 82 |
-| comagine-health.sr-cloud-platform-engineer.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 82 |
-| nextgen-healthcare.sr-engineer-cloud-platform.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 82 |
+| comagine-health.sr-cloud-platform-engineer.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 77 |
+| nextgen-healthcare.sr-engineer-cloud-platform.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 77 |
+| platform-sh.site-reliability-engineer.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 77 |
 | And 40+ more in queue and backlog... | | | |
 
 ## Applied (.applied)
 
 | Folder | Applied | Expiry | Status |
 |--------|---------|--------|--------|
-| confluent.senior-software-engineer-ii-platform-engineering.applied.2026-01-16T1824Z | 2026-01-16 | 2026-02-15 | EXPIRES IN 3 DAYS - Follow up! |
+| confluent.senior-software-engineer-ii-platform-engineering.applied.2026-01-16T1824Z | 2026-01-16 | 2026-02-15 | EXPIRES TOMORROW - Accept expiration |
 
 **Note**: ClickHouse application expired on Feb 12 (31 days, no response). Previous confirmations (Flex, Toast, Omada Health, Carrot) were applied outside tracking system.
 
@@ -42,6 +42,10 @@
 
 | Folder | Outcome | Date | Reason |
 |--------|---------|------|--------|
+| 1mind.cloud-infrastructure-platform-engineer.expired.2026-02-14T1000Z | expired | 2026-02-14 | Job removed from Ashby listings |
+| axios.senior-infrastructure-engineer.expired.2026-02-14T1000Z | expired | 2026-02-14 | Greenhouse ID redirects to unrelated role |
+| situsamc.sr-platform-engineer.expired.2026-02-12T1000Z | expired | 2026-02-14 | Delisted from aggregators, careers page under maintenance |
+| geico.senior-se-platform-engineering.expired.2026-02-12T1000Z | expired | 2026-02-14 | Removed Dec 2024, conflicting remote/in-office info |
 | icf.site-reliability-engineer.expired.2026-02-06T2110Z | expired | 2026-02-12 | Job removed from BuiltIn |
 | 3pillar.senior-devops-engineer.expired.2026-02-06T2110Z | expired | 2026-02-12 | Europe-based company, US eligibility unconfirmed |
 | id-me.senior-sre.expired.2026-02-12T1000Z | expired | 2026-02-12 | Posting removed; company is in-office only |
@@ -69,12 +73,12 @@
 ## Stats
 
 - **Needs review**: 1 (Pantheon - URL redirect)
-- **Pending review**: 48+ (10 new today, 7 survived validation)
-- **Applied**: 1 (Confluent - EXPIRING IN 3 DAYS)
+- **Pending review**: 48+ (11 new today, 7 survived validation)
+- **Applied**: 1 (Confluent - EXPIRES TOMORROW)
 - **Interviewing**: 0
 - **Offers**: 0
 - **Rejected**: 1 (Files.com)
-- **Expired**: 20 (3 new today from validation, 1 ClickHouse expired)
+- **Expired**: 24 (4 new today from validation)
 - **Withdrawn**: 0
 
 ---
@@ -83,62 +87,66 @@
 
 | Rank | Company | Role | Score | Salary Range | Action |
 |------|---------|------|-------|--------------|--------|
-| 1 | Moov | Senior Infrastructure Engineer | 109 | $165k-$185k | Apply - 100% match |
-| 2 | DraftKings | Senior Infrastructure Engineer | 109 | $128k-$160k | Apply - 100% match |
-| 3 | Centene | Lead SRE Citrix | 109 | $102k-$190k | RESERVED - Healthcare tier |
-| 4 | Beautiful.ai | Senior Platform Engineer | 92 | $160k-$200k | **NEW TODAY** - Series B |
-| 5 | dotCMS | Senior SRE | 89 | Undisclosed | Apply - 90% match |
-| 6 | SSC Technologies | Senior SRE Central Platforms | 85 | $175k-$185k | Apply - NY bonus |
-| 7 | SitusAMC | Sr Platform Engineer | 85 | $140k-$160k | **NEW TODAY** |
-| 8 | GEICO | Sr SE Platform Engineering | 82 | Undisclosed | **NEW TODAY** - Enterprise |
-| 9 | Comagine Health | Sr Cloud Platform Engineer | 82 | Undisclosed | **NEW TODAY** - Healthcare |
-| 10 | NextGen Healthcare | Sr Engineer Cloud Platform | 82 | $120k-$150k | **NEW TODAY** - Healthcare |
+| 1 | Humana | Lead Technology Leader SRE | 109 | $118k-$166k | **NEW TODAY** - Referral (Marcela Velez) |
+| 2 | Moov | Senior Infrastructure Engineer | 95 | $165k-$185k | Apply - 100% match |
+| 3 | DraftKings | Senior Infrastructure Engineer | 95 | $128k-$160k | Apply - 100% match |
+| 4 | Centene | Lead SRE Citrix | 95 | $102k-$190k | RESERVED - Healthcare tier |
+| 5 | Beautiful.ai | Senior Platform Engineer | 87 | $160k-$200k | Series B, above target salary |
+| 6 | Comagine Health | Sr Cloud Platform Engineer | 77 | Undisclosed | RESERVED - Healthcare |
+| 7 | NextGen Healthcare | Sr Engineer Cloud Platform | 77 | $120k-$150k | RESERVED - Healthcare |
+| 8 | Platform.sh | Site Reliability Engineer | 77 | Undisclosed | SRE at hosting platform |
+| 9 | Close | Site Reliability Engineer | 73 | Undisclosed | SRE at CRM SaaS |
+| 10 | Customer.io | Senior SRE | 73 | Undisclosed | SRE at marketing SaaS |
 
 ---
 
-## Validation Summary (2026-02-12)
+## Validation Summary (2026-02-14)
 
 **Checked**: 10 postings (top queue)
-**Expired**: 3 postings during validation:
-- ICF: Job removed from BuiltIn on Feb 12
-- 3Pillar: Europe-based company (Romania HQ), US eligibility unconfirmed
-- ID.me: Posting removed; company is in-office only
+**Expired**: 4 postings during validation:
+- 1mind: Job removed from Ashby listings
+- Axios: Greenhouse ID redirects to unrelated role
+- SitusAMC: Delisted from aggregators, careers page under maintenance
+- GEICO: Removed Dec 2024, conflicting remote/in-office info
+
+**Auto-fixed**: 1 posting
+- Beautiful.ai: Updated Greenhouse URL (job ID 4568520008 -> 4802989007)
 
 ---
 
-## Today's Collection Summary (2026-02-12)
+## Today's Collection Summary (2026-02-14)
 
 **Morning Run (Phase 2):**
-- **Sources checked**: 20 (18 successful)
-- **Jobs found**: ~35
-- **Jobs added**: 10 new postings created
+- **Sources checked**: 18 (16 successful)
+- **Jobs found**: 87
+- **Jobs added**: 11 new postings created
 - **Priority queue**: 31 active entries, 24 backlog
-- **Demoted to backlog**: 5 old entries (Jan 27-28)
+- **Validation failures**: 4 expired during top-10 validation
 
 **Email scan results:**
 - Error: Gmail OAuth token expired - requires re-authentication
 
 **Application alerts:**
-- ClickHouse: Expired (31 days, no response)
-- Confluent: EXPIRES IN 3 DAYS (27 days, no response) - Follow up!
+- Confluent: EXPIRES TOMORROW (29 days, no response) - Accept expiration
 
 ---
 
 ## Pipeline Status
 
 **Active applications:**
-1. **Confluent** - Applied Jan 16 (27 days) - **EXPIRES IN 3 DAYS** Feb 15
+1. **Confluent** - Applied Jan 16 (29 days) - **EXPIRES TOMORROW** Feb 15
 
 **Expected timeline:**
-- Confluent: Follow up NOW, expires Feb 15
+- Confluent: Accept expiration tomorrow, no response in 29 days
 
 ---
 
 ## Urgent Actions
 
-1. **Confluent** - Application expires in 3 days (Feb 15, 27 days) - FOLLOW UP
-2. **Gmail OAuth** - Re-authenticate to resume email scanning (P0 beads task, 17 days)
-3. **Review top 10** - 3 excellent matches + 5 NEW TODAY need review
+1. **Confluent** - Application expires tomorrow (Feb 15, 29 days) - Accept expiration
+2. **Humana** - Message Marcela Velez for referral, then apply (NEW TODAY)
+3. **Gmail OAuth** - Re-authenticate to resume email scanning (P0 beads task, 19 days)
+4. **Review top 10** - 1 referral + 3 excellent matches + 4 healthcare tier need review
 
 ---
 

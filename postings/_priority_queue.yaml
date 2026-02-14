@@ -6,93 +6,93 @@
 # Jobs move through: queue → (applied|backlog|rejected|expired)
 
 schema_version: 1
-updated: "2026-02-14T10:00:00Z"
+updated: "2026-02-14T10:35:00Z"
 
 # ============================================================
 # TOP 10 - Shown in daily digest
 # These are the highest priority jobs to apply to TODAY
-# Updated 2026-02-14 (Phase 2): Added 11 new jobs, recalculated all scores
+# Updated 2026-02-14 (Phase 3): Validated - removed 4 expired, pulled from queue
 # ============================================================
 top_10:
   - folder: humana.lead-technology-leader-sre.pending_review.2026-02-14T1000Z.yaml
     score: 109
     rank: 1
     days_in_queue: 0
-    times_shown: 0
-    last_shown: null
+    times_shown: 1
+    last_shown: "2026-02-14"
     reason: "64% match (7/11), has REFERRAL (+20), $118k-$166k salary (+10), Healthcare, NEW TODAY"
 
   - folder: moov.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z.yaml
     score: 95
     rank: 2
     days_in_queue: 8
-    times_shown: 3
-    last_shown: "2026-02-12"
-    reason: "100% match (15/15), $165k-$185k salary (+10), staleness -10, shown -5"
+    times_shown: 4
+    last_shown: "2026-02-14"
+    reason: "100% match (15/15), $165k-$185k salary (+10), staleness -10, shown -10"
 
   - folder: draftkings.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z.yaml
     score: 95
     rank: 3
     days_in_queue: 8
-    times_shown: 3
-    last_shown: "2026-02-12"
-    reason: "100% match (9/9), $128k-$160k salary (+10), staleness -10, shown -5"
+    times_shown: 4
+    last_shown: "2026-02-14"
+    reason: "100% match (9/9), $128k-$160k salary (+10), staleness -10, shown -10"
 
   - folder: centene.lead-sre-citrix.pending_review.2026-02-06T2110Z.yaml
     score: 95
     rank: 4
     days_in_queue: 8
-    times_shown: 3
-    last_shown: "2026-02-12"
-    reason: "100% match (11/11), $102k-$190k salary (+10), healthcare, staleness -10, shown -5"
+    times_shown: 4
+    last_shown: "2026-02-14"
+    reason: "100% match (11/11), $102k-$190k salary (+10), healthcare, staleness -10, shown -10"
 
   - folder: beautiful-ai.senior-platform-engineer.pending_review.2026-02-12T1000Z.yaml
     score: 87
     rank: 5
     days_in_queue: 2
-    times_shown: 2
-    last_shown: "2026-02-12"
+    times_shown: 3
+    last_shown: "2026-02-14"
     reason: "67% match (8/12), $160k-$200k salary (+10), freshness +10"
-
-  - folder: 1mind.cloud-infrastructure-platform-engineer.pending_review.2026-02-14T1000Z.yaml
-    score: 85
-    rank: 6
-    days_in_queue: 0
-    times_shown: 0
-    last_shown: null
-    reason: "70% match (7/10), K8s/Terraform/Go, AI startup, NEW TODAY"
-
-  - folder: axios.senior-infrastructure-engineer.pending_review.2026-02-14T1000Z.yaml
-    score: 83
-    rank: 7
-    days_in_queue: 0
-    times_shown: 0
-    last_shown: null
-    reason: "58% match (7/12), $101k-$191k salary (+10), AWS/EKS, NEW TODAY"
-
-  - folder: situsamc.sr-platform-engineer.pending_review.2026-02-12T1000Z.yaml
-    score: 80
-    rank: 8
-    days_in_queue: 2
-    times_shown: 2
-    last_shown: "2026-02-12"
-    reason: "60% match (6/10), $140k-$160k salary (+10), Kubernetes, freshness +10"
-
-  - folder: geico.senior-se-platform-engineering.pending_review.2026-02-12T1000Z.yaml
-    score: 77
-    rank: 9
-    days_in_queue: 2
-    times_shown: 1
-    last_shown: "2026-02-12"
-    reason: "67% match (6/9), Hybrid-Cloud, Berkshire Hathaway, freshness +10"
 
   - folder: comagine-health.sr-cloud-platform-engineer.pending_review.2026-02-12T1000Z.yaml
     score: 77
+    rank: 6
+    days_in_queue: 2
+    times_shown: 2
+    last_shown: "2026-02-14"
+    reason: "67% match (6/9), Healthcare non-profit, freshness +10"
+
+  - folder: nextgen-healthcare.sr-engineer-cloud-platform.pending_review.2026-02-12T1000Z.yaml
+    score: 77
+    rank: 7
+    days_in_queue: 2
+    times_shown: 2
+    last_shown: "2026-02-14"
+    reason: "67% match (6/9), Healthcare IT, $120k-$150k, freshness +10"
+
+  - folder: platform-sh.site-reliability-engineer.pending_review.2026-02-12T1000Z.yaml
+    score: 77
+    rank: 8
+    days_in_queue: 2
+    times_shown: 1
+    last_shown: "2026-02-14"
+    reason: "67% match (6/9), SRE at platform hosting company, freshness +10"
+
+  - folder: close.site-reliability-engineer.pending_review.2026-02-12T1000Z.yaml
+    score: 73
+    rank: 9
+    days_in_queue: 2
+    times_shown: 1
+    last_shown: "2026-02-14"
+    reason: "63% match, SRE at CRM SaaS, freshness +10"
+
+  - folder: customer-io.senior-sre.pending_review.2026-02-12T1000Z.yaml
+    score: 73
     rank: 10
     days_in_queue: 2
     times_shown: 1
-    last_shown: "2026-02-12"
-    reason: "67% match (6/9), Healthcare non-profit, freshness +10"
+    last_shown: "2026-02-14"
+    reason: "63% match, Senior SRE at marketing SaaS, freshness +10"
 
 # ============================================================
 # FULL QUEUE - All pending_review postings, ranked
@@ -112,29 +112,8 @@ queue:
       referral: 20
       ny_location: 0
 
-  - folder: 1mind.cloud-infrastructure-platform-engineer.pending_review.2026-02-14T1000Z.yaml
-    score: 85
-    added: "2026-02-14"
-    last_shown: null
-    times_shown: 0
-    factors:
-      match_rate: 70
-      freshness: 15
-      salary: 0
-      referral: 0
-      ny_location: 0
-
-  - folder: axios.senior-infrastructure-engineer.pending_review.2026-02-14T1000Z.yaml
-    score: 83
-    added: "2026-02-14"
-    last_shown: null
-    times_shown: 0
-    factors:
-      match_rate: 58
-      freshness: 15
-      salary: 10
-      referral: 0
-      ny_location: 0
+  # 1mind: EXPIRED 2026-02-14 - Job removed from Ashby listings
+  # axios: EXPIRED 2026-02-14 - Greenhouse ID redirects to unrelated role
 
   - folder: sonicwall.software-engineer-devops.pending_review.2026-02-14T1000Z.yaml
     score: 75
@@ -246,29 +225,8 @@ queue:
       referral: 0
       ny_location: 0
 
-  - folder: situsamc.sr-platform-engineer.pending_review.2026-02-12T1000Z.yaml
-    score: 80
-    added: "2026-02-12"
-    last_shown: "2026-02-12"
-    times_shown: 2
-    factors:
-      match_rate: 60
-      freshness: 10
-      salary: 10
-      referral: 0
-      ny_location: 0
-
-  - folder: geico.senior-se-platform-engineering.pending_review.2026-02-12T1000Z.yaml
-    score: 77
-    added: "2026-02-12"
-    last_shown: "2026-02-12"
-    times_shown: 1
-    factors:
-      match_rate: 67
-      freshness: 10
-      salary: 0
-      referral: 0
-      ny_location: 0
+  # situsamc: EXPIRED 2026-02-14 - Delisted from aggregators, careers page under maintenance
+  # geico: EXPIRED 2026-02-14 - Removed Dec 2024, conflicting remote/in-office info
 
   - folder: comagine-health.sr-cloud-platform-engineer.pending_review.2026-02-12T1000Z.yaml
     score: 77
@@ -777,6 +735,10 @@ backlog:
 # icf.site-reliability-engineer: Expired 2026-02-12 - Job removed from BuiltIn
 # 3pillar.senior-devops-engineer: Expired 2026-02-12 - Europe-based company (Romania HQ)
 # id-me.senior-sre: Expired 2026-02-12 - Posting removed; company is in-office only
+# 1mind.cloud-infrastructure-platform-engineer: Expired 2026-02-14 - Job removed from Ashby listings
+# axios.senior-infrastructure-engineer: Expired 2026-02-14 - Greenhouse ID redirects to unrelated role
+# situsamc.sr-platform-engineer: Expired 2026-02-14 - Delisted from aggregators, careers page under maintenance
+# geico.senior-se-platform-engineering: Expired 2026-02-14 - Removed Dec 2024, conflicting remote/in-office info
 
 # ============================================================
 # SCORING FORMULA
