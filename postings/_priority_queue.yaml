@@ -6,457 +6,425 @@
 # Jobs move through: queue → (applied|backlog|rejected|expired)
 
 schema_version: 1
-updated: "2026-02-14T10:35:00Z"
+updated: "2026-02-17T10:00:00Z"
 
 # ============================================================
 # TOP 10 - Shown in daily digest
 # These are the highest priority jobs to apply to TODAY
-# Updated 2026-02-14 (Phase 3): Validated - removed 4 expired, pulled from queue
+# Updated 2026-02-17 (Phase 2): 3 new jobs added, scores recalculated
 # ============================================================
 top_10:
   - folder: humana.lead-technology-leader-sre.pending_review.2026-02-14T1000Z.yaml
-    score: 109
+    score: 99
     rank: 1
+    days_in_queue: 3
+    times_shown: 2
+    last_shown: "2026-02-17"
+    reason: "64% match, has REFERRAL (+20), $118k-$166k salary (+10), Healthcare, freshness +5"
+
+  - folder: fico.senior-platform-engineer-sre.pending_review.2026-02-17T1000Z.yaml
+    score: 96
+    rank: 2
     days_in_queue: 0
     times_shown: 1
-    last_shown: "2026-02-14"
-    reason: "64% match (7/11), has REFERRAL (+20), $118k-$166k salary (+10), Healthcare, NEW TODAY"
+    last_shown: "2026-02-17"
+    reason: "71% match (10/14), $105k-$165k salary (+10), Platform+SRE combo, NEW TODAY"
 
-  - folder: moov.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z.yaml
-    score: 95
-    rank: 2
-    days_in_queue: 8
-    times_shown: 4
-    last_shown: "2026-02-14"
-    reason: "100% match (15/15), $165k-$185k salary (+10), staleness -10, shown -10"
-
-  - folder: draftkings.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z.yaml
-    score: 95
+  - folder: leaflink.devops-engineer.pending_review.2026-02-17T1000Z.yaml
+    score: 94
     rank: 3
-    days_in_queue: 8
-    times_shown: 4
-    last_shown: "2026-02-14"
-    reason: "100% match (9/9), $128k-$160k salary (+10), staleness -10, shown -10"
+    days_in_queue: 0
+    times_shown: 1
+    last_shown: "2026-02-17"
+    reason: "69% match (9/13), $180k-$200k salary (+10), high comp, NEW TODAY"
 
-  - folder: centene.lead-sre-citrix.pending_review.2026-02-06T2110Z.yaml
-    score: 95
+  - folder: brightai.devops-engineer.pending_review.2026-02-17T1000Z.yaml
+    score: 86
     rank: 4
-    days_in_queue: 8
-    times_shown: 4
-    last_shown: "2026-02-14"
-    reason: "100% match (11/11), $102k-$190k salary (+10), healthcare, staleness -10, shown -10"
+    days_in_queue: 0
+    times_shown: 1
+    last_shown: "2026-02-17"
+    reason: "71% match (10/14), AI/Cloud focus, NEW TODAY"
 
-  - folder: beautiful-ai.senior-platform-engineer.pending_review.2026-02-12T1000Z.yaml
-    score: 87
+  - folder: oracle.senior-site-reliability-engineer-devops.pending_review.2026-02-05T1507Z.yaml
+    score: 69
     rank: 5
-    days_in_queue: 2
-    times_shown: 3
-    last_shown: "2026-02-14"
-    reason: "67% match (8/12), $160k-$200k salary (+10), freshness +10"
+    days_in_queue: 12
+    times_shown: 2
+    last_shown: "2026-02-17"
+    reason: "87% match, staleness -18"
 
-  - folder: comagine-health.sr-cloud-platform-engineer.pending_review.2026-02-12T1000Z.yaml
-    score: 77
+  - folder: airbnb.senior-software-engineer-ai-compute.pending_review.2026-02-05T1306Z.yaml
+    score: 67
     rank: 6
-    days_in_queue: 2
+    days_in_queue: 12
     times_shown: 2
-    last_shown: "2026-02-14"
-    reason: "67% match (6/9), Healthcare non-profit, freshness +10"
+    last_shown: "2026-02-17"
+    reason: "75% match, $232k-$290k salary (+10), staleness -18"
 
-  - folder: nextgen-healthcare.sr-engineer-cloud-platform.pending_review.2026-02-12T1000Z.yaml
-    score: 77
+  - folder: sonicwall.software-engineer-devops.pending_review.2026-02-14T1000Z.yaml
+    score: 65
     rank: 7
-    days_in_queue: 2
-    times_shown: 2
-    last_shown: "2026-02-14"
-    reason: "67% match (6/9), Healthcare IT, $120k-$150k, freshness +10"
+    days_in_queue: 3
+    times_shown: 1
+    last_shown: "2026-02-17"
+    reason: "60% match, freshness +5"
 
-  - folder: platform-sh.site-reliability-engineer.pending_review.2026-02-12T1000Z.yaml
-    score: 77
+  - folder: kohls.senior-platform-engineer.pending_review.2026-02-14T1000Z.yaml
+    score: 65
     rank: 8
-    days_in_queue: 2
+    days_in_queue: 3
     times_shown: 1
-    last_shown: "2026-02-14"
-    reason: "67% match (6/9), SRE at platform hosting company, freshness +10"
+    last_shown: "2026-02-17"
+    reason: "50% match, $163k-$205k salary (+10), freshness +5"
 
-  - folder: close.site-reliability-engineer.pending_review.2026-02-12T1000Z.yaml
-    score: 73
+  - folder: velera.platform-engineer-iv-azure.pending_review.2026-02-14T1000Z.yaml
+    score: 65
     rank: 9
-    days_in_queue: 2
+    days_in_queue: 3
     times_shown: 1
-    last_shown: "2026-02-14"
-    reason: "63% match, SRE at CRM SaaS, freshness +10"
+    last_shown: "2026-02-17"
+    reason: "50% match, Azure focus (+10 salary), freshness +5"
 
-  - folder: customer-io.senior-sre.pending_review.2026-02-12T1000Z.yaml
-    score: 73
+  - folder: parry-labs.platform-engineer.pending_review.2026-02-14T1000Z.yaml
+    score: 65
     rank: 10
-    days_in_queue: 2
+    days_in_queue: 3
     times_shown: 1
-    last_shown: "2026-02-14"
-    reason: "63% match, Senior SRE at marketing SaaS, freshness +10"
+    last_shown: "2026-02-17"
+    reason: "50% match, salary +10, freshness +5"
 
 # ============================================================
 # FULL QUEUE - All pending_review postings, ranked
 # ============================================================
 queue:
-  # === NEW TODAY (2026-02-14) - freshness=15 ===
+  # === NEW TODAY (2026-02-17) - freshness=15 ===
 
-  - folder: humana.lead-technology-leader-sre.pending_review.2026-02-14T1000Z.yaml
-    score: 109
-    added: "2026-02-14"
+  - folder: fico.senior-platform-engineer-sre.pending_review.2026-02-17T1000Z.yaml
+    score: 96
+    added: "2026-02-17"
     last_shown: null
     times_shown: 0
     factors:
-      match_rate: 64
+      match_rate: 71
       freshness: 15
+      salary: 10
+      referral: 0
+      ny_location: 0
+
+  - folder: leaflink.devops-engineer.pending_review.2026-02-17T1000Z.yaml
+    score: 94
+    added: "2026-02-17"
+    last_shown: null
+    times_shown: 0
+    factors:
+      match_rate: 69
+      freshness: 15
+      salary: 10
+      referral: 0
+      ny_location: 0
+
+  - folder: brightai.devops-engineer.pending_review.2026-02-17T1000Z.yaml
+    score: 86
+    added: "2026-02-17"
+    last_shown: null
+    times_shown: 0
+    factors:
+      match_rate: 71
+      freshness: 15
+      salary: 0
+      referral: 0
+      ny_location: 0
+
+  # === FROM 2026-02-14 (3 days old) - freshness=5, staleness=0 ===
+
+  - folder: humana.lead-technology-leader-sre.pending_review.2026-02-14T1000Z.yaml
+    score: 99
+    added: "2026-02-14"
+    last_shown: "2026-02-14"
+    times_shown: 1
+    factors:
+      match_rate: 64
+      freshness: 5
       salary: 10
       referral: 20
       ny_location: 0
 
-  # 1mind: EXPIRED 2026-02-14 - Job removed from Ashby listings
-  # axios: EXPIRED 2026-02-14 - Greenhouse ID redirects to unrelated role
-
   - folder: sonicwall.software-engineer-devops.pending_review.2026-02-14T1000Z.yaml
-    score: 75
+    score: 65
     added: "2026-02-14"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 60
-      freshness: 15
+      freshness: 5
       salary: 0
       referral: 0
       ny_location: 0
 
   - folder: kohls.senior-platform-engineer.pending_review.2026-02-14T1000Z.yaml
-    score: 75
+    score: 65
     added: "2026-02-14"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 50
-      freshness: 15
+      freshness: 5
       salary: 10
       referral: 0
       ny_location: 0
 
   - folder: velera.platform-engineer-iv-azure.pending_review.2026-02-14T1000Z.yaml
-    score: 75
+    score: 65
     added: "2026-02-14"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 50
-      freshness: 15
+      freshness: 5
       salary: 10
       referral: 0
       ny_location: 0
 
   - folder: parry-labs.platform-engineer.pending_review.2026-02-14T1000Z.yaml
-    score: 75
+    score: 65
     added: "2026-02-14"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 50
-      freshness: 15
+      freshness: 5
       salary: 10
       referral: 0
       ny_location: 0
 
   - folder: fundraise-up.devops-engineer-sre.pending_review.2026-02-14T1000Z.yaml
-    score: 75
+    score: 65
     added: "2026-02-14"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 60
-      freshness: 15
+      freshness: 5
       salary: 0
       referral: 0
       ny_location: 0
 
   - folder: derivative-path.senior-platform-engineer.pending_review.2026-02-14T1000Z.yaml
-    score: 73
+    score: 63
     added: "2026-02-14"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 58
-      freshness: 15
+      freshness: 5
       salary: 0
       referral: 0
       ny_location: 0
 
   - folder: collectors.senior-cloud-platform-engineer.pending_review.2026-02-14T1000Z.yaml
-    score: 65
+    score: 55
     added: "2026-02-14"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 50
-      freshness: 15
+      freshness: 5
       salary: 0
       referral: 0
       ny_location: 0
 
   - folder: graham-healthcare.devops-engineer.pending_review.2026-02-14T1000Z.yaml
-    score: 65
+    score: 55
     added: "2026-02-14"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 50
-      freshness: 15
+      freshness: 5
       salary: 0
       referral: 0
       ny_location: 0
 
-  # === FROM 2026-02-12 (2 days old) - freshness=10 ===
+  # === FROM 2026-02-12 (5 days old) - freshness=0, staleness=-4 ===
 
-  - folder: beautiful-ai.senior-platform-engineer.pending_review.2026-02-12T1000Z.yaml
-    score: 87
+  - folder: comagine-health.sr-cloud-platform-engineer.pending_review.2026-02-12T1000Z.yaml
+    score: 63
     added: "2026-02-12"
-    last_shown: "2026-02-12"
+    last_shown: "2026-02-14"
     times_shown: 2
     factors:
       match_rate: 67
-      freshness: 10
-      salary: 10
-      referral: 0
-      ny_location: 0
-
-  # situsamc: EXPIRED 2026-02-14 - Delisted from aggregators, careers page under maintenance
-  # geico: EXPIRED 2026-02-14 - Removed Dec 2024, conflicting remote/in-office info
-
-  - folder: comagine-health.sr-cloud-platform-engineer.pending_review.2026-02-12T1000Z.yaml
-    score: 77
-    added: "2026-02-12"
-    last_shown: "2026-02-12"
-    times_shown: 1
-    factors:
-      match_rate: 67
-      freshness: 10
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
+      staleness: -4
 
   - folder: nextgen-healthcare.sr-engineer-cloud-platform.pending_review.2026-02-12T1000Z.yaml
-    score: 77
+    score: 63
     added: "2026-02-12"
-    last_shown: "2026-02-12"
+    last_shown: "2026-02-14"
+    times_shown: 2
+    factors:
+      match_rate: 67
+      freshness: 0
+      salary: 0
+      referral: 0
+      ny_location: 0
+      staleness: -4
+
+  - folder: platform-sh.site-reliability-engineer.pending_review.2026-02-12T1000Z.yaml
+    score: 63
+    added: "2026-02-12"
+    last_shown: "2026-02-14"
     times_shown: 1
     factors:
       match_rate: 67
-      freshness: 10
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
-
-  - folder: platform-sh.site-reliability-engineer.pending_review.2026-02-12T1000Z.yaml
-    score: 77
-    added: "2026-02-12"
-    last_shown: null
-    times_shown: 0
-    factors:
-      match_rate: 67
-      freshness: 10
-      salary: 0
-      referral: 0
-      ny_location: 0
+      staleness: -4
 
   - folder: close.site-reliability-engineer.pending_review.2026-02-12T1000Z.yaml
-    score: 73
+    score: 59
     added: "2026-02-12"
-    last_shown: null
-    times_shown: 0
+    last_shown: "2026-02-14"
+    times_shown: 1
     factors:
       match_rate: 63
-      freshness: 10
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
+      staleness: -4
 
   - folder: customer-io.senior-sre.pending_review.2026-02-12T1000Z.yaml
-    score: 73
+    score: 59
     added: "2026-02-12"
-    last_shown: null
-    times_shown: 0
+    last_shown: "2026-02-14"
+    times_shown: 1
     factors:
       match_rate: 63
-      freshness: 10
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
+      staleness: -4
 
   - folder: aha.platform-engineer-ci.pending_review.2026-02-12T1000Z.yaml
-    score: 70
+    score: 56
     added: "2026-02-12"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 50
-      freshness: 10
+      freshness: 0
       salary: 10
       referral: 0
       ny_location: 0
+      staleness: -4
 
-  # === FROM 2026-02-10 (4 days old) - freshness=5, staleness=-2 ===
-
-  - folder: ssc-technologies.senior-sre-central-platforms.pending_review.2026-02-10T1001Z.yaml
-    score: 73
-    added: "2026-02-10"
-    last_shown: "2026-02-12"
-    times_shown: 3
-    factors:
-      match_rate: 60
-      freshness: 5
-      salary: 0
-      referral: 0
-      ny_location: 15
-      staleness: -2
-      shown_penalty: -5
+  # === FROM 2026-02-10 (7 days old) - freshness=0, staleness=-8 ===
 
   - folder: mixmode.sr-devops-engineer.pending_review.2026-02-10T1001Z.yaml
-    score: 73
+    score: 62
     added: "2026-02-10"
     last_shown: "2026-02-10"
     times_shown: 1
     factors:
       match_rate: 70
-      freshness: 5
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
-      staleness: -2
+      staleness: -8
 
   - folder: angi.infrastructure-engineer-cloud.pending_review.2026-02-10T1001Z.yaml
-    score: 73
+    score: 62
     added: "2026-02-10"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 60
-      freshness: 5
+      freshness: 0
       salary: 10
       referral: 0
       ny_location: 0
-      staleness: -2
+      staleness: -8
 
   - folder: marketerx.senior-devops-engineer.pending_review.2026-02-10T1001Z.yaml
-    score: 63
+    score: 52
     added: "2026-02-10"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 60
-      freshness: 5
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
-      staleness: -2
+      staleness: -8
 
   - folder: resmed.sre-engineer.pending_review.2026-02-10T1001Z.yaml
-    score: 63
+    score: 52
     added: "2026-02-10"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 60
-      freshness: 5
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
-      staleness: -2
+      staleness: -8
 
   - folder: switchboard.senior-infrastructure-engineer.pending_review.2026-02-10T1001Z.yaml
-    score: 63
+    score: 52
     added: "2026-02-10"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 60
-      freshness: 5
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
-      staleness: -2
+      staleness: -8
 
   - folder: cyware.senior-site-reliability-engineer.pending_review.2026-02-10T1001Z.yaml
-    score: 63
+    score: 52
     added: "2026-02-10"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 60
-      freshness: 5
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
-      staleness: -2
+      staleness: -8
 
   - folder: digioh.senior-cloud-infrastructure-engineer.pending_review.2026-02-10T1001Z.yaml
-    score: 63
+    score: 52
     added: "2026-02-10"
     last_shown: null
     times_shown: 0
     factors:
       match_rate: 60
-      freshness: 5
+      freshness: 0
       salary: 0
       referral: 0
       ny_location: 0
-      staleness: -2
+      staleness: -8
 
-  # === FROM 2026-02-06 (8 days old) - freshness=0, staleness=-10 ===
-
-  - folder: moov.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z.yaml
-    score: 95
-    added: "2026-02-06"
-    last_shown: "2026-02-12"
-    times_shown: 3
-    factors:
-      match_rate: 100
-      freshness: 0
-      salary: 10
-      referral: 0
-      ny_location: 0
-      staleness: -10
-      shown_penalty: -5
-
-  - folder: draftkings.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z.yaml
-    score: 95
-    added: "2026-02-06"
-    last_shown: "2026-02-12"
-    times_shown: 3
-    factors:
-      match_rate: 100
-      freshness: 0
-      salary: 10
-      referral: 0
-      ny_location: 0
-      staleness: -10
-      shown_penalty: -5
-
-  - folder: centene.lead-sre-citrix.pending_review.2026-02-06T2110Z.yaml
-    score: 95
-    added: "2026-02-06"
-    last_shown: "2026-02-12"
-    times_shown: 3
-    factors:
-      match_rate: 100
-      freshness: 0
-      salary: 10
-      referral: 0
-      ny_location: 0
-      staleness: -10
-      shown_penalty: -5
-
-  # === FROM 2026-02-05 (9 days old) - freshness=0, staleness=-12 ===
+  # === FROM 2026-02-05 (12 days old) - freshness=0, staleness=-18 ===
 
   - folder: oracle.senior-site-reliability-engineer-devops.pending_review.2026-02-05T1507Z.yaml
-    score: 75
+    score: 69
     added: "2026-02-05"
-    last_shown: "2026-02-10"
+    last_shown: "2026-02-14"
     times_shown: 1
     factors:
       match_rate: 87
@@ -464,56 +432,15 @@ queue:
       salary: 0
       referral: 0
       ny_location: 0
-      staleness: -12
+      staleness: -18
 
   - folder: airbnb.senior-software-engineer-ai-compute.pending_review.2026-02-05T1306Z.yaml
-    score: 73
+    score: 67
     added: "2026-02-05"
-    last_shown: "2026-02-10"
+    last_shown: "2026-02-14"
     times_shown: 1
     factors:
       match_rate: 75
-      freshness: 0
-      salary: 10
-      referral: 0
-      ny_location: 0
-      staleness: -12
-
-  # === FROM 2026-02-02 (12 days old) - freshness=0, staleness=-18 ===
-
-  - folder: updater.lead-platform-engineer.pending_review.2026-02-02T1709Z.yaml
-    score: 70
-    added: "2026-02-02"
-    last_shown: null
-    times_shown: 0
-    factors:
-      match_rate: 78
-      freshness: 0
-      salary: 10
-      referral: 0
-      ny_location: 0
-      staleness: -18
-
-  - folder: fetlife.senior-devops-engineer.pending_review.2026-02-02T1709Z.yaml
-    score: 55
-    added: "2026-02-02"
-    last_shown: null
-    times_shown: 0
-    factors:
-      match_rate: 63
-      freshness: 0
-      salary: 10
-      referral: 0
-      ny_location: 0
-      staleness: -18
-
-  - folder: futo.senior-infrastructure-platform-engineer.pending_review.2026-02-02T1709Z.yaml
-    score: 52
-    added: "2026-02-02"
-    last_shown: null
-    times_shown: 0
-    factors:
-      match_rate: 60
       freshness: 0
       salary: 10
       referral: 0
@@ -524,7 +451,66 @@ queue:
 # MOVED TO BACKLOG - Jobs >5 days in queue AND shown >=3 times, or >13 days old
 # ============================================================
 backlog:
-  # Demoted 2026-02-14: 8 days in queue, shown 3+ times
+  # Demoted 2026-02-17: 11 days in queue, shown 4+ times
+  - folder: moov.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z.yaml
+    score: 89
+    added: "2026-02-06"
+    last_shown: "2026-02-14"
+    times_shown: 4
+    demoted_reason: "11 days in queue, shown 4 times"
+
+  - folder: draftkings.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z.yaml
+    score: 89
+    added: "2026-02-06"
+    last_shown: "2026-02-14"
+    times_shown: 4
+    demoted_reason: "11 days in queue, shown 4 times"
+
+  - folder: centene.lead-sre-citrix.pending_review.2026-02-06T2110Z.yaml
+    score: 89
+    added: "2026-02-06"
+    last_shown: "2026-02-14"
+    times_shown: 4
+    demoted_reason: "11 days in queue, shown 4 times"
+
+  # Demoted 2026-02-17: 5 days in queue, shown 3 times
+  - folder: beautiful-ai.senior-platform-engineer.pending_review.2026-02-12T1000Z.yaml
+    score: 68
+    added: "2026-02-12"
+    last_shown: "2026-02-14"
+    times_shown: 3
+    demoted_reason: "5 days in queue, shown 3 times"
+
+  - folder: ssc-technologies.senior-sre-central-platforms.pending_review.2026-02-10T1001Z.yaml
+    score: 62
+    added: "2026-02-10"
+    last_shown: "2026-02-14"
+    times_shown: 3
+    demoted_reason: "7 days in queue, shown 3 times"
+
+  # Demoted 2026-02-17: >13 days in queue
+  - folder: updater.lead-platform-engineer.pending_review.2026-02-02T1709Z.yaml
+    score: 64
+    added: "2026-02-02"
+    last_shown: null
+    times_shown: 0
+    demoted_reason: "15 days in queue"
+
+  - folder: fetlife.senior-devops-engineer.pending_review.2026-02-02T1709Z.yaml
+    score: 49
+    added: "2026-02-02"
+    last_shown: null
+    times_shown: 0
+    demoted_reason: "15 days in queue"
+
+  - folder: futo.senior-infrastructure-platform-engineer.pending_review.2026-02-02T1709Z.yaml
+    score: 46
+    added: "2026-02-02"
+    last_shown: null
+    times_shown: 0
+    demoted_reason: "15 days in queue"
+
+  # Previously demoted
   - folder: dotcms.senior-sre.pending_review.2026-02-06T2110Z.yaml
     score: 75
     added: "2026-02-06"
@@ -532,7 +518,6 @@ backlog:
     times_shown: 3
     demoted_reason: "8 days in queue, shown 3 times"
 
-  # Previously demoted
   - folder: availity.platform-engineer-iv-eks.pending_review.2026-01-28T1000Z
     score: 54
     added: "2026-01-28"
@@ -720,7 +705,7 @@ backlog:
 # together-ai.site-reliability-engineer: Expired 2026-01-13 - hybrid SF, not remote
 # better-stack.devops-engineer: Expired 2026-01-13 - role not listed
 # files-com.infrastructure-engineer: Rejected on 2026-01-16 - not moving forward
-# confluent.senior-software-engineer: Applied on 2026-01-16
+# confluent.senior-software-engineer: Applied 2026-01-16, expired 2026-02-17 (32 days no response)
 # maze.infra-devops-engineer: Expired 2026-01-17 - Europe only, not US remote
 # consensys.senior-devops-engineer: Expired 2026-01-26 - EMEA only, posting 404
 # ramp.software-engineer-infrastructure: Expired 2026-01-26 - Hybrid (NY HQ with telecommute)
