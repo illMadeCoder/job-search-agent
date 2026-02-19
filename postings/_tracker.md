@@ -1,6 +1,6 @@
 # Posting Tracker
 
-*Last updated: 2026-02-14T10:35Z*
+*Last updated: 2026-02-19T10:10Z*
 
 ## Needs Review (.review flag)
 
@@ -12,73 +12,61 @@
 
 | Folder | Created | Recommendation | Score |
 |--------|---------|----------------|-------|
-| humana.lead-technology-leader-sre.pending_review.2026-02-14T1000Z | 2026-02-14 | referral_apply | 109 |
-| moov.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 95 |
-| draftkings.senior-infrastructure-engineer.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 95 |
-| centene.lead-sre-citrix.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 95 |
-| beautiful-ai.senior-platform-engineer.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 87 |
-| dotcms.senior-sre.pending_review.2026-02-06T2110Z | 2026-02-06 | cold_apply | 89 |
-| ssc-technologies.senior-sre-central-platforms.pending_review.2026-02-10T1001Z | 2026-02-10 | cold_apply | 85 |
-| comagine-health.sr-cloud-platform-engineer.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 77 |
-| nextgen-healthcare.sr-engineer-cloud-platform.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 77 |
-| platform-sh.site-reliability-engineer.pending_review.2026-02-12T1000Z | 2026-02-12 | cold_apply | 77 |
-| And 40+ more in queue and backlog... | | | |
+| enigmofi.devops-engineer.pending_review.2026-02-19T1002Z | 2026-02-19 | cold_apply | 117 |
+| owner.senior-devops-engineer.pending_review.2026-02-19T1002Z | 2026-02-19 | cold_apply | 107 |
+| tdb-communications.senior-saas-platform-engineer.pending_review.2026-02-19T1002Z | 2026-02-19 | cold_apply | 97 |
+| humana.lead-technology-leader-sre.pending_review.2026-02-14T1000Z | 2026-02-14 | referral_apply | 95 |
+| league.site-reliability-engineer.pending_review.2026-02-19T1002Z | 2026-02-19 | cold_apply | 92 |
+| fico.senior-platform-engineer-sre.pending_review.2026-02-17T1000Z | 2026-02-17 | cold_apply | 91 |
+| leaflink.devops-engineer.pending_review.2026-02-17T1000Z | 2026-02-17 | cold_apply | 89 |
+| brightai.devops-engineer.pending_review.2026-02-17T1000Z | 2026-02-17 | cold_apply | 81 |
+| sonicwall.software-engineer-devops.pending_review.2026-02-14T1000Z | 2026-02-14 | cold_apply | 61 |
+| kohls.senior-platform-engineer.pending_review.2026-02-14T1000Z | 2026-02-14 | cold_apply | 61 |
+| And 50+ more in queue and backlog... | | | |
 
 ## Applied (.applied)
 
 | Folder | Applied | Expiry | Status |
 |--------|---------|--------|--------|
-| confluent.senior-software-engineer-ii-platform-engineering.applied.2026-01-16T1824Z | 2026-01-16 | 2026-02-15 | EXPIRES TOMORROW - Accept expiration |
+| *(empty)* | | | |
 
-**Note**: ClickHouse application expired on Feb 12 (31 days, no response). Previous confirmations (Flex, Toast, Omada Health, Carrot) were applied outside tracking system.
+**Note**: All previous applications have expired or been rejected. Pipeline is empty.
 
 ## Interviewing (.interviewing)
 
 | Folder | Stage | Next Interview |
 |--------|-------|----------------|
-| - | - | - |
+| *(empty)* | | |
 
 ## Closed (.offer / .rejected / .expired / .withdrawn)
 
 | Folder | Outcome | Date | Reason |
 |--------|---------|------|--------|
+| banner-health.cloud-platform-engineer.expired.2026-02-19T1002Z | expired | 2026-02-19 | 404 on Workday job URL |
+| aflac.platform-engineer-iii.expired.2026-02-19T1002Z | expired | 2026-02-19 | Hybrid (within 50mi of Columbus GA/Columbia SC) |
+| peec-ai.sre-platform-engineer.expired.2026-02-19T1002Z | expired | 2026-02-19 | Europe only (Berlin CET ±3h timezone) |
+| yipitdata.site-reliability-engineer.expired.2026-02-19T1002Z | expired | 2026-02-19 | 404 on Greenhouse |
+| squint.site-reliability-engineer.expired.2026-02-19T1002Z | expired | 2026-02-19 | Onsite SF, no SRE role listed |
+| skilljar.infrastructure-engineer.expired.2026-02-19T1002Z | expired | 2026-02-19 | 404 on Greenhouse |
+| streamnative.platform-engineer.expired.2026-02-19T1002Z | expired | 2026-02-19 | 404 on Lever |
+| leo-technologies.site-reliability-engineer.expired.2026-02-19T1002Z | expired | 2026-02-19 | 404 on Lever |
 | 1mind.cloud-infrastructure-platform-engineer.expired.2026-02-14T1000Z | expired | 2026-02-14 | Job removed from Ashby listings |
 | axios.senior-infrastructure-engineer.expired.2026-02-14T1000Z | expired | 2026-02-14 | Greenhouse ID redirects to unrelated role |
-| situsamc.sr-platform-engineer.expired.2026-02-12T1000Z | expired | 2026-02-14 | Delisted from aggregators, careers page under maintenance |
-| geico.senior-se-platform-engineering.expired.2026-02-12T1000Z | expired | 2026-02-14 | Removed Dec 2024, conflicting remote/in-office info |
-| icf.site-reliability-engineer.expired.2026-02-06T2110Z | expired | 2026-02-12 | Job removed from BuiltIn |
-| 3pillar.senior-devops-engineer.expired.2026-02-06T2110Z | expired | 2026-02-12 | Europe-based company, US eligibility unconfirmed |
-| id-me.senior-sre.expired.2026-02-12T1000Z | expired | 2026-02-12 | Posting removed; company is in-office only |
-| clickhouse.senior-site-reliability-engineer.expired | expired | 2026-02-12 | No response after 31 days |
-| crowdstrike.software-engineer-iii-infrastructure.expired.2026-02-06T2110Z | expired | 2026-02-10 | Job removed from BuiltIn |
-| domaintools.senior-platform-engineer.expired.2026-02-10T1001Z | expired | 2026-02-10 | 410 Gone on Remotive |
-| guidehouse.full-stack-analytics-devops-engineer.expired.2026-02-06T1906Z | expired | 2026-02-10 | Not remote (McLean, VA office) |
-| menlo-security.platform-infrastructure-engineer-sre.expired.2026-02-10T1001Z | expired | 2026-02-10 | Canada only |
-| nvidia.senior-sre-observability-telemetry.expired.2026-02-10T1001Z | expired | 2026-02-10 | Santa Clara on-site |
-| automox.senior-site-reliability-engineer.expired.2026-02-10T1001Z | expired | 2026-02-10 | Greenhouse URL redirects to different role |
-| kkr.platform-engineer.pending_review.2026-01-28T1000Z | expired | 2026-01-28 | Located in South America (Peru), not US remote |
-| apollo-io.senior-devops-engineer.pending_review.2026-01-26T1000Z | expired | 2026-01-28 | Job no longer listed on careers page |
-| promptql.sre-platform-engineer.expired.2026-01-27T0500Z | expired | 2026-01-27 | 410 Gone |
-| exygy.senior-site-reliability-engineer.expired.2026-01-27T0500Z | expired | 2026-01-27 | 404 Not Found |
-| consensys.senior-devops-engineer.pending_review.2026-01-26T1000Z | expired | 2026-01-26 | EMEA only, posting 404 |
-| ramp.software-engineer-infrastructure.pending_review.2026-01-17T1001Z | expired | 2026-01-26 | Hybrid (NY HQ with telecommute) |
-| files-com.infrastructure-engineer.rejected.2026-01-12T2004Z | rejected | 2026-01-16 | Not moving forward - experience alignment |
-| maze.infra-devops-engineer.pending_review.2026-01-13T1000Z | expired | 2026-01-17 | Europe only - not US remote |
-| redpanda.sre-platform.pending_review.2026-01-12T2350Z | expired | 2026-01-13 | Posting not found on careers page |
-| together-ai.site-reliability-engineer.pending_review.2026-01-12T1130Z | expired | 2026-01-13 | Hybrid SF, not truly remote |
-| better-stack.devops-engineer.pending_review.2026-01-12T2350Z | expired | 2026-01-13 | Role not listed on careers page |
+| confluent.senior-software-engineer-ii-platform-engineering.expired.2026-01-16T1824Z | expired | 2026-02-17 | 32 days no response |
+| files-com.infrastructure-engineer.rejected.2026-01-12T2004Z | rejected | 2026-01-16 | Not moving forward |
+| And 20+ more expired... | | | |
 
 ---
 
 ## Stats
 
 - **Needs review**: 1 (Pantheon - URL redirect)
-- **Pending review**: 48+ (11 new today, 7 survived validation)
-- **Applied**: 1 (Confluent - EXPIRES TOMORROW)
+- **Pending review**: 55+ (4 new valid today, 8 expired in validation)
+- **Applied**: 0
 - **Interviewing**: 0
 - **Offers**: 0
 - **Rejected**: 1 (Files.com)
-- **Expired**: 24 (4 new today from validation)
+- **Expired**: 32 (8 new today from validation)
 - **Withdrawn**: 0
 
 ---
@@ -87,66 +75,66 @@
 
 | Rank | Company | Role | Score | Salary Range | Action |
 |------|---------|------|-------|--------------|--------|
-| 1 | Humana | Lead Technology Leader SRE | 109 | $118k-$166k | **NEW TODAY** - Referral (Marcela Velez) |
-| 2 | Moov | Senior Infrastructure Engineer | 95 | $165k-$185k | Apply - 100% match |
-| 3 | DraftKings | Senior Infrastructure Engineer | 95 | $128k-$160k | Apply - 100% match |
-| 4 | Centene | Lead SRE Citrix | 95 | $102k-$190k | RESERVED - Healthcare tier |
-| 5 | Beautiful.ai | Senior Platform Engineer | 87 | $160k-$200k | Series B, above target salary |
-| 6 | Comagine Health | Sr Cloud Platform Engineer | 77 | Undisclosed | RESERVED - Healthcare |
-| 7 | NextGen Healthcare | Sr Engineer Cloud Platform | 77 | $120k-$150k | RESERVED - Healthcare |
-| 8 | Platform.sh | Site Reliability Engineer | 77 | Undisclosed | SRE at hosting platform |
-| 9 | Close | Site Reliability Engineer | 73 | Undisclosed | SRE at CRM SaaS |
-| 10 | Customer.io | Senior SRE | 73 | Undisclosed | SRE at marketing SaaS |
+| 1 | EnigmoFi | DevOps Engineer | 117 | $192k | Apply - 92% match, VALIDATED |
+| 2 | Owner | Senior DevOps Engineer | 107 | ~$190-220k | Apply - 92% match, VALIDATED |
+| 3 | TDB Communications | Senior SaaS Platform Engineer | 97 | Undisclosed | Apply - 82% match |
+| 4 | Humana | Lead Technology Leader SRE | 95 | $118k-$166k | **REFERRAL** (Marcela Velez) - Healthcare tier |
+| 5 | League | Site Reliability Engineer | 92 | Undisclosed | Apply - Healthcare Tech tier |
+| 6 | FICO | Senior Platform Engineer/SRE | 91 | $105k-$165k | Apply - cover letter ready |
+| 7 | LeafLink | DevOps Engineer | 89 | $180k-$200k | Apply - cover letter ready, high salary |
+| 8 | BrightAI | DevOps Engineer | 81 | Undisclosed | Apply - AI/Cloud, cover letter ready |
+| 9 | SonicWall | Software Engineer DevOps | 61 | Undisclosed | Apply - cybersecurity |
+| 10 | Kohl's | Senior Platform Engineer | 61 | $142k-$196k | Review - storage/backup focus |
 
 ---
 
-## Validation Summary (2026-02-14)
+## Validation Summary (2026-02-19)
 
 **Checked**: 10 postings (top queue)
-**Expired**: 4 postings during validation:
-- 1mind: Job removed from Ashby listings
-- Axios: Greenhouse ID redirects to unrelated role
-- SitusAMC: Delisted from aggregators, careers page under maintenance
-- GEICO: Removed Dec 2024, conflicting remote/in-office info
+**Expired**: 8 postings during validation (80% failure rate - highest yet):
+- Banner Health: 404 on Workday URL
+- AFLAC: Hybrid (60% in-office within 50mi of offices)
+- Peec AI: Europe only (Berlin CET ±3h timezone)
+- YipitData: 404 on Greenhouse
+- Squint: Onsite SF, no SRE role listed in HN thread
+- Skilljar: 404 on Greenhouse
+- StreamNative: 404 on Lever
+- LEO Technologies: 404 on Lever
 
-**Auto-fixed**: 1 posting
-- Beautiful.ai: Updated Greenhouse URL (job ID 4568520008 -> 4802989007)
+**Key insight**: 5 of 8 failures were 404s. Jobs may already be filled by the time they appear in Google search indexes.
 
 ---
 
-## Today's Collection Summary (2026-02-14)
+## Today's Collection Summary (2026-02-19)
 
 **Morning Run (Phase 2):**
-- **Sources checked**: 18 (16 successful)
-- **Jobs found**: 87
-- **Jobs added**: 11 new postings created
-- **Priority queue**: 31 active entries, 24 backlog
-- **Validation failures**: 4 expired during top-10 validation
+- **Sources checked**: 18 (17 successful)
+- **Jobs found**: 85
+- **Jobs added**: 12 new postings created
+- **Validated**: 2 of 10 top postings survived validation
+- **Priority queue**: 28 active entries, 35 backlog
 
 **Email scan results:**
-- Error: Gmail OAuth token expired - requires re-authentication
-
-**Application alerts:**
-- Confluent: EXPIRES TOMORROW (29 days, no response) - Accept expiration
+- Error: Gmail OAuth token expired (39 days) - requires re-authentication
 
 ---
 
 ## Pipeline Status
 
-**Active applications:**
-1. **Confluent** - Applied Jan 16 (29 days) - **EXPIRES TOMORROW** Feb 15
+**Active applications:** 0
+**Interviewing:** 0
 
-**Expected timeline:**
-- Confluent: Accept expiration tomorrow, no response in 29 days
+**CRITICAL**: Pipeline completely empty. Must start applying to pending_review postings.
 
 ---
 
 ## Urgent Actions
 
-1. **Confluent** - Application expires tomorrow (Feb 15, 29 days) - Accept expiration
-2. **Humana** - Message Marcela Velez for referral, then apply (NEW TODAY)
-3. **Gmail OAuth** - Re-authenticate to resume email scanning (P0 beads task, 19 days)
-4. **Review top 10** - 1 referral + 3 excellent matches + 4 healthcare tier need review
+1. **START APPLYING** - Pipeline is empty, 55+ pending_review postings waiting
+2. **Humana** - Message Marcela Velez for referral, then apply (Healthcare tier)
+3. **EnigmoFi** - Apply now, $192k, 92% match, validated today
+4. **Owner** - Apply now, ~$190-220k, 92% match, validated today
+5. **Gmail OAuth** - Re-authenticate to resume email scanning (P0 beads task, 39 days)
 
 ---
 
@@ -157,5 +145,3 @@
 ```
 
 **States**: `pending_review`, `applied`, `interviewing`, `offer`, `rejected`, `expired`, `withdrawn`
-
-**`.review` suffix**: Needs attention (posting missing or new roles found)
