@@ -1,147 +1,98 @@
-# Posting Tracker
+# Job Search Tracker Dashboard
 
-*Last updated: 2026-02-19T10:10Z*
-
-## Needs Review (.review flag)
-
-| Folder | Issue | Action Needed |
-|--------|-------|---------------|
-| pantheon.platform-engineer.pending_review.2026-01-12T1200Z | URL redirects | Verify directly at pantheon.io/careers |
-
-## Pending Review (.pending_review)
-
-| Folder | Created | Recommendation | Score |
-|--------|---------|----------------|-------|
-| enigmofi.devops-engineer.pending_review.2026-02-19T1002Z | 2026-02-19 | cold_apply | 117 |
-| owner.senior-devops-engineer.pending_review.2026-02-19T1002Z | 2026-02-19 | cold_apply | 107 |
-| tdb-communications.senior-saas-platform-engineer.pending_review.2026-02-19T1002Z | 2026-02-19 | cold_apply | 97 |
-| humana.lead-technology-leader-sre.pending_review.2026-02-14T1000Z | 2026-02-14 | referral_apply | 95 |
-| league.site-reliability-engineer.pending_review.2026-02-19T1002Z | 2026-02-19 | cold_apply | 92 |
-| fico.senior-platform-engineer-sre.pending_review.2026-02-17T1000Z | 2026-02-17 | cold_apply | 91 |
-| leaflink.devops-engineer.pending_review.2026-02-17T1000Z | 2026-02-17 | cold_apply | 89 |
-| brightai.devops-engineer.pending_review.2026-02-17T1000Z | 2026-02-17 | cold_apply | 81 |
-| sonicwall.software-engineer-devops.pending_review.2026-02-14T1000Z | 2026-02-14 | cold_apply | 61 |
-| kohls.senior-platform-engineer.pending_review.2026-02-14T1000Z | 2026-02-14 | cold_apply | 61 |
-| And 50+ more in queue and backlog... | | | |
-
-## Applied (.applied)
-
-| Folder | Applied | Expiry | Status |
-|--------|---------|--------|--------|
-| *(empty)* | | | |
-
-**Note**: All previous applications have expired or been rejected. Pipeline is empty.
-
-## Interviewing (.interviewing)
-
-| Folder | Stage | Next Interview |
-|--------|-------|----------------|
-| *(empty)* | | |
-
-## Closed (.offer / .rejected / .expired / .withdrawn)
-
-| Folder | Outcome | Date | Reason |
-|--------|---------|------|--------|
-| banner-health.cloud-platform-engineer.expired.2026-02-19T1002Z | expired | 2026-02-19 | 404 on Workday job URL |
-| aflac.platform-engineer-iii.expired.2026-02-19T1002Z | expired | 2026-02-19 | Hybrid (within 50mi of Columbus GA/Columbia SC) |
-| peec-ai.sre-platform-engineer.expired.2026-02-19T1002Z | expired | 2026-02-19 | Europe only (Berlin CET ±3h timezone) |
-| yipitdata.site-reliability-engineer.expired.2026-02-19T1002Z | expired | 2026-02-19 | 404 on Greenhouse |
-| squint.site-reliability-engineer.expired.2026-02-19T1002Z | expired | 2026-02-19 | Onsite SF, no SRE role listed |
-| skilljar.infrastructure-engineer.expired.2026-02-19T1002Z | expired | 2026-02-19 | 404 on Greenhouse |
-| streamnative.platform-engineer.expired.2026-02-19T1002Z | expired | 2026-02-19 | 404 on Lever |
-| leo-technologies.site-reliability-engineer.expired.2026-02-19T1002Z | expired | 2026-02-19 | 404 on Lever |
-| 1mind.cloud-infrastructure-platform-engineer.expired.2026-02-14T1000Z | expired | 2026-02-14 | Job removed from Ashby listings |
-| axios.senior-infrastructure-engineer.expired.2026-02-14T1000Z | expired | 2026-02-14 | Greenhouse ID redirects to unrelated role |
-| confluent.senior-software-engineer-ii-platform-engineering.expired.2026-01-16T1824Z | expired | 2026-02-17 | 32 days no response |
-| files-com.infrastructure-engineer.rejected.2026-01-12T2004Z | rejected | 2026-01-16 | Not moving forward |
-| And 20+ more expired... | | | |
+**Last updated:** 2026-02-24
 
 ---
 
-## Stats
+## Pipeline Summary
 
-- **Needs review**: 1 (Pantheon - URL redirect)
-- **Pending review**: 55+ (4 new valid today, 8 expired in validation)
-- **Applied**: 0
-- **Interviewing**: 0
-- **Offers**: 0
-- **Rejected**: 1 (Files.com)
-- **Expired**: 32 (8 new today from validation)
-- **Withdrawn**: 0
+| State            | Count   |
+|------------------|--------:|
+| Pending Review   |     145 |
+| Applied          |       0 |
+| Interviewing     |       0 |
+| Offers           |       0 |
+| Expired          |      48 |
+| **Total**        | **193** |
 
----
-
-## Hot Opportunities (Priority Queue Top 10)
-
-| Rank | Company | Role | Score | Salary Range | Action |
-|------|---------|------|-------|--------------|--------|
-| 1 | EnigmoFi | DevOps Engineer | 117 | $192k | Apply - 92% match, VALIDATED |
-| 2 | Owner | Senior DevOps Engineer | 107 | ~$190-220k | Apply - 92% match, VALIDATED |
-| 3 | TDB Communications | Senior SaaS Platform Engineer | 97 | Undisclosed | Apply - 82% match |
-| 4 | Humana | Lead Technology Leader SRE | 95 | $118k-$166k | **REFERRAL** (Marcela Velez) - Healthcare tier |
-| 5 | League | Site Reliability Engineer | 92 | Undisclosed | Apply - Healthcare Tech tier |
-| 6 | FICO | Senior Platform Engineer/SRE | 91 | $105k-$165k | Apply - cover letter ready |
-| 7 | LeafLink | DevOps Engineer | 89 | $180k-$200k | Apply - cover letter ready, high salary |
-| 8 | BrightAI | DevOps Engineer | 81 | Undisclosed | Apply - AI/Cloud, cover letter ready |
-| 9 | SonicWall | Software Engineer DevOps | 61 | Undisclosed | Apply - cybersecurity |
-| 10 | Kohl's | Senior Platform Engineer | 61 | $142k-$196k | Review - storage/backup focus |
+> Pipeline has been empty (0 applied / 0 interviewing) for 6+ consecutive runs.
 
 ---
 
-## Validation Summary (2026-02-19)
+## Today's Top 10 (Validated)
 
-**Checked**: 10 postings (top queue)
-**Expired**: 8 postings during validation (80% failure rate - highest yet):
-- Banner Health: 404 on Workday URL
-- AFLAC: Hybrid (60% in-office within 50mi of offices)
-- Peec AI: Europe only (Berlin CET ±3h timezone)
-- YipitData: 404 on Greenhouse
-- Squint: Onsite SF, no SRE role listed in HN thread
-- Skilljar: 404 on Greenhouse
-- StreamNative: 404 on Lever
-- LEO Technologies: 404 on Lever
-
-**Key insight**: 5 of 8 failures were 404s. Jobs may already be filled by the time they appear in Google search indexes.
-
----
-
-## Today's Collection Summary (2026-02-19)
-
-**Morning Run (Phase 2):**
-- **Sources checked**: 18 (17 successful)
-- **Jobs found**: 85
-- **Jobs added**: 12 new postings created
-- **Validated**: 2 of 10 top postings survived validation
-- **Priority queue**: 28 active entries, 35 backlog
-
-**Email scan results:**
-- Error: Gmail OAuth token expired (39 days) - requires re-authentication
+| Rank | Company             | Role                            | Score | Salary Range  | Notes    |
+|-----:|---------------------|---------------------------------|------:|---------------|----------|
+|    1 | Onebrief            | Cloud Infrastructure Engineer   |   109 | $150k - $220k | REFERRAL |
+|    2 | Sardine             | DevOps Engineer                 |   104 | $160k - $200k |          |
+|    3 | Worldly             | Senior DevOps Lead              |   104 | $130k - $170k |          |
+|    4 | Zeta Global         | Senior SRE                      |    96 | $140k - $170k |          |
+|    5 | Globality           | Sr. SRE                         |    96 | $120k - $180k |          |
+|    6 | eClinical Solutions | Senior DevOps Software Engineer |    96 | $132k - $165k |          |
+|    7 | Owner               | Senior DevOps Engineer          |    93 | $190k - $220k |          |
+|    8 | Builder.io          | Lead Infrastructure Engineer    |    89 | $150k - $250k |          |
+|    9 | Talus Network       | DevOps/SRE                      |    86 | $100k - $140k |          |
+|   10 | Agentic Dream       | Sr. DevOps / Cloud Architect    |    86 |               |          |
 
 ---
 
-## Pipeline Status
+## Referral Opportunities
 
-**Active applications:** 0
-**Interviewing:** 0
+| Company  | Contact        | Title                    |
+|----------|----------------|--------------------------|
+| Onebrief | Amanda Jackson | Senior Platform Engineer |
+| Humana   | Marcela Velez  | Senior Scrum Master      |
 
-**CRITICAL**: Pipeline completely empty. Must start applying to pending_review postings.
+---
+
+## Today's Validation Results (2026-02-24)
+
+| Metric           | Value |
+|------------------|------:|
+| Postings checked |    21 |
+| Newly expired    |    11 |
+
+**Expiration breakdown:**
+
+| Reason              | Count |
+|---------------------|------:|
+| Closed              |     4 |
+| Hybrid              |     3 |
+| On-site             |     1 |
+| Wrong level         |     1 |
+| Unverifiable        |     1 |
+| Language requirement |     1 |
+
+---
+
+## Key Metrics
+
+| Metric                | Value                                |
+|-----------------------|--------------------------------------|
+| Avg salary midpoint   | $166k (stable)                       |
+| Top keyword gap       | AWS (90% of postings, not on resume) |
+| Sources attempted     | 30                                   |
+| Sources succeeded     | 26                                   |
+| Postings found        | 95                                   |
+| Postings added        | 29                                   |
+| Gmail status          | BLOCKED (OAuth expired 44 days)      |
+
+---
+
+## Active Issues
+
+| Priority | Issue                               | Status  |
+|----------|-------------------------------------|---------|
+| P0       | Gmail OAuth needs re-authentication | Blocked |
+| P1       | Pipeline empty for 6+ runs          | Open    |
+| P2       | Beads database repo ID mismatch     | Open    |
 
 ---
 
 ## Urgent Actions
 
-1. **START APPLYING** - Pipeline is empty, 55+ pending_review postings waiting
-2. **Humana** - Message Marcela Velez for referral, then apply (Healthcare tier)
-3. **EnigmoFi** - Apply now, $192k, 92% match, validated today
-4. **Owner** - Apply now, ~$190-220k, 92% match, validated today
-5. **Gmail OAuth** - Re-authenticate to resume email scanning (P0 beads task, 39 days)
-
----
-
-## Folder Naming Convention
-
-```
-{company}.{role}.{state}.{YYYY-MM-DDTHHMM}Z.yaml
-```
-
-**States**: `pending_review`, `applied`, `interviewing`, `offer`, `rejected`, `expired`, `withdrawn`
+1. **Re-authenticate Gmail OAuth** -- blocked for 44 days, no email scanning possible (P0)
+2. **Start applying** -- pipeline is completely empty with 145 pending_review postings waiting
+3. **Onebrief** -- top-scored posting (109pts), reach out to Amanda Jackson for referral
+4. **Humana** -- message Marcela Velez for referral, then apply
+5. **Address AWS keyword gap** -- 90% of postings list AWS but it is missing from resume
