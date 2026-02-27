@@ -1,318 +1,384 @@
 # Priority Queue for Job Postings
 #
 # Updated by Phase 2 (job collection), read by Phase 3 (digest).
-# Updated: 2026-02-24T11:15:00Z
+# Updated: 2026-02-27T10:07:00Z
 
 schema_version: 1
-updated: '2026-02-24T11:15:00Z'
+updated: '2026-02-27T10:20:00Z'
 top_10:
 - folder: onebrief.cloud-infrastructure-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 109
+  score: 99
   rank: 1
-  days_in_queue: 0
-  times_shown: 1
-  last_shown: '2026-02-24'
-  reason: 64% match, salary +10, REFERRAL +20, freshness +15
-- folder: sardine.devops-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 104
+  days_in_queue: 3
+  times_shown: 2
+  last_shown: '2026-02-27'
+  reason: 64% match, salary +10, REFERRAL +20, freshness +5
+- folder: nvidia.senior-platform-engineer.pending_review.2026-02-27T1007Z.yaml
+  score: 94
   rank: 2
   days_in_queue: 0
   times_shown: 1
-  last_shown: '2026-02-24'
-  reason: 79% match, salary +10, freshness +15
-- folder: worldly.senior-devops-lead.pending_review.2026-02-24T1001Z.yaml
-  score: 104
+  last_shown: '2026-02-27'
+  reason: 64% match, NY +15, freshness +15 (NEW)
+- folder: sardine.devops-engineer.pending_review.2026-02-24T1001Z.yaml
+  score: 94
   rank: 3
-  days_in_queue: 0
-  times_shown: 1
-  last_shown: '2026-02-24'
-  reason: 79% match, salary +10, freshness +15
-- folder: zeta-global.senior-site-reliability-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 96
+  days_in_queue: 3
+  times_shown: 2
+  last_shown: '2026-02-27'
+  reason: 79% match, salary +10, freshness +5
+- folder: worldly.senior-devops-lead.pending_review.2026-02-24T1001Z.yaml
+  score: 94
   rank: 4
-  days_in_queue: 0
-  times_shown: 1
-  last_shown: '2026-02-24'
-  reason: 71% match, salary +10, freshness +15
-- folder: globality.sr-site-reliability-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 96
+  days_in_queue: 3
+  times_shown: 2
+  last_shown: '2026-02-27'
+  reason: 79% match, salary +10, freshness +5
+- folder: red-hat.senior-site-reliability-engineer.pending_review.2026-02-27T1007Z.yaml
+  score: 86
   rank: 5
   days_in_queue: 0
   times_shown: 1
-  last_shown: '2026-02-24'
-  reason: 71% match, salary +10, freshness +15
-- folder: eclinical-solutions.senior-devops-software-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 96
-  rank: 6
-  days_in_queue: 0
-  times_shown: 1
-  last_shown: '2026-02-24'
-  reason: 71% match, salary +10, freshness +15
-- folder: owner.senior-devops-engineer.pending_review.2026-02-19T1002Z.yaml
-  score: 93
-  rank: 7
-  days_in_queue: 5
-  times_shown: 2
-  last_shown: '2026-02-24'
-  reason: 92% match, freshness +5, staleness -4
-- folder: builder-io.lead-infrastructure-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 89
-  rank: 8
-  days_in_queue: 0
-  times_shown: 1
-  last_shown: '2026-02-24'
-  reason: 64% match, salary +10, freshness +15
-- folder: talus-network.devops-site-reliability-engineer.pending_review.2026-02-24T1001Z.yaml
+  last_shown: '2026-02-27'
+  reason: 71% match, freshness +15 (NEW)
+- folder: zeta-global.senior-site-reliability-engineer.pending_review.2026-02-24T1001Z.yaml
   score: 86
+  rank: 6
+  days_in_queue: 3
+  times_shown: 2
+  last_shown: '2026-02-27'
+  reason: 71% match, salary +10, freshness +5
+- folder: globality.sr-site-reliability-engineer.pending_review.2026-02-24T1001Z.yaml
+  score: 86
+  rank: 7
+  days_in_queue: 3
+  times_shown: 2
+  last_shown: '2026-02-27'
+  reason: 71% match, salary +10, freshness +5
+- folder: eclinical-solutions.senior-devops-software-engineer.pending_review.2026-02-24T1001Z.yaml
+  score: 86
+  rank: 8
+  days_in_queue: 3
+  times_shown: 2
+  last_shown: '2026-02-27'
+  reason: 71% match, salary +10, freshness +5
+- folder: jack-henry.senior-software-engineer-sre.pending_review.2026-02-27T1007Z.yaml
+  score: 84
   rank: 9
   days_in_queue: 0
   times_shown: 1
-  last_shown: '2026-02-24'
-  reason: 71% match, freshness +15
-- folder: agentic-dream.sr-devops-engineer-cloud-architect.pending_review.2026-02-24T1001Z.yaml
-  score: 86
+  last_shown: '2026-02-27'
+  reason: 69% match, freshness +15 (NEW)
+- folder: owner.senior-devops-engineer.pending_review.2026-02-19T1002Z.yaml
+  score: 82
   rank: 10
-  days_in_queue: 0
-  times_shown: 1
-  last_shown: '2026-02-24'
-  reason: 71% match, freshness +15
+  days_in_queue: 8
+  times_shown: 3
+  last_shown: '2026-02-27'
+  reason: 92% match, staleness -10
 queue:
 - folder: onebrief.cloud-infrastructure-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 109
+  score: 99
+  added: '2026-02-24'
+  last_shown: '2026-02-27'
+  times_shown: 2
+  factors:
+    match_rate: 64
+    freshness: 5
+    salary: 10
+    referral: 20
+    ny_location: 0
+- folder: nvidia.senior-platform-engineer.pending_review.2026-02-27T1007Z.yaml
+  score: 94
+  added: '2026-02-27'
+  last_shown: '2026-02-27'
+  times_shown: 1
+  factors:
+    match_rate: 64
+    freshness: 15
+    salary: 0
+    referral: 0
+    ny_location: 15
+- folder: sardine.devops-engineer.pending_review.2026-02-24T1001Z.yaml
+  score: 94
+  added: '2026-02-24'
+  last_shown: '2026-02-27'
+  times_shown: 2
+  factors:
+    match_rate: 79
+    freshness: 5
+    salary: 10
+    referral: 0
+    ny_location: 0
+- folder: worldly.senior-devops-lead.pending_review.2026-02-24T1001Z.yaml
+  score: 94
+  added: '2026-02-24'
+  last_shown: '2026-02-27'
+  times_shown: 2
+  factors:
+    match_rate: 79
+    freshness: 5
+    salary: 10
+    referral: 0
+    ny_location: 0
+- folder: red-hat.senior-site-reliability-engineer.pending_review.2026-02-27T1007Z.yaml
+  score: 86
+  added: '2026-02-27'
+  last_shown: '2026-02-27'
+  times_shown: 1
+  factors:
+    match_rate: 71
+    freshness: 15
+    salary: 0
+    referral: 0
+    ny_location: 0
+- folder: zeta-global.senior-site-reliability-engineer.pending_review.2026-02-24T1001Z.yaml
+  score: 86
+  added: '2026-02-24'
+  last_shown: '2026-02-27'
+  times_shown: 2
+  factors:
+    match_rate: 71
+    freshness: 5
+    salary: 10
+    referral: 0
+    ny_location: 0
+- folder: globality.sr-site-reliability-engineer.pending_review.2026-02-24T1001Z.yaml
+  score: 86
+  added: '2026-02-24'
+  last_shown: '2026-02-27'
+  times_shown: 2
+  factors:
+    match_rate: 71
+    freshness: 5
+    salary: 10
+    referral: 0
+    ny_location: 0
+- folder: eclinical-solutions.senior-devops-software-engineer.pending_review.2026-02-24T1001Z.yaml
+  score: 86
+  added: '2026-02-24'
+  last_shown: '2026-02-27'
+  times_shown: 2
+  factors:
+    match_rate: 71
+    freshness: 5
+    salary: 10
+    referral: 0
+    ny_location: 0
+- folder: jack-henry.senior-software-engineer-sre.pending_review.2026-02-27T1007Z.yaml
+  score: 84
+  added: '2026-02-27'
+  last_shown: '2026-02-27'
+  times_shown: 1
+  factors:
+    match_rate: 69
+    freshness: 15
+    salary: 0
+    referral: 0
+    ny_location: 0
+- folder: owner.senior-devops-engineer.pending_review.2026-02-19T1002Z.yaml
+  score: 82
+  added: '2026-02-19'
+  last_shown: '2026-02-27'
+  times_shown: 3
+  factors:
+    match_rate: 92
+    freshness: 0
+    salary: 0
+    referral: 0
+    ny_location: 0
+    staleness: -10
+- folder: rackspace.cloud-infrastructure-engineer.pending_review.2026-02-27T1007Z.yaml
+  score: 79
+  added: '2026-02-27'
+  last_shown: null
+  times_shown: 0
+  factors:
+    match_rate: 64
+    freshness: 15
+    salary: 0
+    referral: 0
+    ny_location: 0
+- folder: builder-io.lead-infrastructure-engineer.pending_review.2026-02-24T1001Z.yaml
+  score: 79
   added: '2026-02-24'
   last_shown: '2026-02-24'
   times_shown: 1
   factors:
     match_rate: 64
-    freshness: 15
-    salary: 10
-    referral: 20
-    ny_location: 0
-- folder: sardine.devops-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 104
-  added: '2026-02-24'
-  last_shown: '2026-02-24'
-  times_shown: 1
-  factors:
-    match_rate: 79
-    freshness: 15
+    freshness: 5
     salary: 10
     referral: 0
     ny_location: 0
-- folder: worldly.senior-devops-lead.pending_review.2026-02-24T1001Z.yaml
-  score: 104
-  added: '2026-02-24'
-  last_shown: '2026-02-24'
-  times_shown: 1
-  factors:
-    match_rate: 79
-    freshness: 15
-    salary: 10
-    referral: 0
-    ny_location: 0
-- folder: zeta-global.senior-site-reliability-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 96
+- folder: talus-network.devops-site-reliability-engineer.pending_review.2026-02-24T1001Z.yaml
+  score: 76
   added: '2026-02-24'
   last_shown: '2026-02-24'
   times_shown: 1
   factors:
     match_rate: 71
-    freshness: 15
-    salary: 10
-    referral: 0
-    ny_location: 0
-- folder: globality.sr-site-reliability-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 96
-  added: '2026-02-24'
-  last_shown: '2026-02-24'
-  times_shown: 1
-  factors:
-    match_rate: 71
-    freshness: 15
-    salary: 10
-    referral: 0
-    ny_location: 0
-- folder: eclinical-solutions.senior-devops-software-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 96
-  added: '2026-02-24'
-  last_shown: '2026-02-24'
-  times_shown: 1
-  factors:
-    match_rate: 71
-    freshness: 15
-    salary: 10
-    referral: 0
-    ny_location: 0
-- folder: owner.senior-devops-engineer.pending_review.2026-02-19T1002Z.yaml
-  score: 93
-  added: '2026-02-19'
-  last_shown: '2026-02-24'
-  times_shown: 2
-  factors:
-    match_rate: 92
     freshness: 5
     salary: 0
     referral: 0
     ny_location: 0
-    staleness: -4
-- folder: builder-io.lead-infrastructure-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 89
-  added: '2026-02-24'
-  last_shown: '2026-02-24'
-  times_shown: 1
-  factors:
-    match_rate: 64
-    freshness: 15
-    salary: 10
-    referral: 0
-    ny_location: 0
-- folder: talus-network.devops-site-reliability-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 86
-  added: '2026-02-24'
-  last_shown: '2026-02-24'
-  times_shown: 1
-  factors:
-    match_rate: 71
-    freshness: 15
-    salary: 0
-    referral: 0
-    ny_location: 0
 - folder: agentic-dream.sr-devops-engineer-cloud-architect.pending_review.2026-02-24T1001Z.yaml
-  score: 86
+  score: 76
   added: '2026-02-24'
   last_shown: '2026-02-24'
   times_shown: 1
   factors:
     match_rate: 71
-    freshness: 15
+    freshness: 5
     salary: 0
     referral: 0
     ny_location: 0
 - folder: creyos.devops-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 86
+  score: 76
   added: '2026-02-24'
   last_shown: null
   times_shown: 0
   factors:
     match_rate: 71
-    freshness: 15
+    freshness: 5
     salary: 0
     referral: 0
     ny_location: 0
 - folder: renewed-vision.software-reliability-platform-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 86
+  score: 76
   added: '2026-02-24'
   last_shown: null
   times_shown: 0
   factors:
     match_rate: 71
-    freshness: 15
+    freshness: 5
     salary: 0
     referral: 0
     ny_location: 0
 - folder: scout-solutions.devops-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 86
+  score: 76
   added: '2026-02-24'
   last_shown: null
   times_shown: 0
   factors:
     match_rate: 71
-    freshness: 15
+    freshness: 5
     salary: 0
     referral: 0
     ny_location: 0
 - folder: tdb-communications.senior-saas-platform-engineer.pending_review.2026-02-19T1002Z.yaml
-  score: 83
+  score: 72
   added: '2026-02-19'
   last_shown: '2026-02-19'
   times_shown: 1
   factors:
     match_rate: 82
-    freshness: 5
+    freshness: 0
     salary: 0
     referral: 0
     ny_location: 0
-    staleness: -4
+    staleness: -10
 - folder: blackline.cloud-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 82
+  score: 72
   added: '2026-02-24'
   last_shown: null
   times_shown: 0
   factors:
     match_rate: 57
-    freshness: 15
+    freshness: 5
     salary: 10
     referral: 0
     ny_location: 0
+- folder: genesys.platform-engineer.pending_review.2026-02-27T1007Z.yaml
+  score: 72
+  added: '2026-02-27'
+  last_shown: null
+  times_shown: 0
+  factors:
+    match_rate: 57
+    freshness: 15
+    salary: 0
+    referral: 0
+    ny_location: 0
+- folder: knowbe4.infosec-platform-engineer.pending_review.2026-02-27T1007Z.yaml
+  score: 72
+  added: '2026-02-27'
+  last_shown: null
+  times_shown: 0
+  factors:
+    match_rate: 57
+    freshness: 15
+    salary: 0
+    referral: 0
+    ny_location: 0
 - folder: cority.site-reliability-engineer-ii.pending_review.2026-02-24T1001Z.yaml
-  score: 79
+  score: 69
   added: '2026-02-24'
   last_shown: null
   times_shown: 0
   factors:
     match_rate: 64
-    freshness: 15
+    freshness: 5
     salary: 0
     referral: 0
     ny_location: 0
 - folder: outsystems.sre-special-ops.pending_review.2026-02-24T1001Z.yaml
-  score: 79
+  score: 69
   added: '2026-02-24'
   last_shown: null
   times_shown: 0
   factors:
     match_rate: 64
-    freshness: 15
+    freshness: 5
     salary: 0
     referral: 0
     ny_location: 0
 - folder: istreamplanet.site-reliability-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 79
+  score: 69
   added: '2026-02-24'
   last_shown: null
   times_shown: 0
   factors:
     match_rate: 64
-    freshness: 15
+    freshness: 5
     salary: 0
     referral: 0
     ny_location: 0
 - folder: nametag.site-reliability-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 79
+  score: 69
   added: '2026-02-24'
   last_shown: null
   times_shown: 0
   factors:
     match_rate: 64
-    freshness: 15
+    freshness: 5
     salary: 0
     referral: 0
     ny_location: 0
 - folder: fleetio.senior-cloud-infrastructure-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 79
+  score: 69
   added: '2026-02-24'
   last_shown: null
   times_shown: 0
   factors:
     match_rate: 64
-    freshness: 15
+    freshness: 5
     salary: 0
     referral: 0
     ny_location: 0
 - folder: league.site-reliability-engineer.pending_review.2026-02-19T1002Z.yaml
-  score: 78
+  score: 67
   added: '2026-02-19'
   last_shown: '2026-02-19'
   times_shown: 1
   factors:
     match_rate: 77
-    freshness: 5
+    freshness: 0
     salary: 0
     referral: 0
     ny_location: 0
-    staleness: -4
+    staleness: -10
 - folder: fico.senior-platform-engineer-sre.pending_review.2026-02-17T1000Z.yaml
-  score: 73
+  score: 67
   added: '2026-02-17'
   last_shown: '2026-02-19'
   times_shown: 2
@@ -322,20 +388,9 @@ queue:
     salary: 10
     referral: 0
     ny_location: 0
-    staleness: -8
-- folder: neighborly.cloud-engineer.pending_review.2026-02-24T1001Z.yaml
-  score: 72
-  added: '2026-02-24'
-  last_shown: null
-  times_shown: 0
-  factors:
-    match_rate: 57
-    freshness: 15
-    salary: 0
-    referral: 0
-    ny_location: 0
+    staleness: -14
 - folder: leaflink.devops-engineer.pending_review.2026-02-17T1000Z.yaml
-  score: 71
+  score: 65
   added: '2026-02-17'
   last_shown: '2026-02-19'
   times_shown: 2
@@ -345,9 +400,20 @@ queue:
     salary: 10
     referral: 0
     ny_location: 0
-    staleness: -8
+    staleness: -14
+- folder: neighborly.cloud-engineer.pending_review.2026-02-24T1001Z.yaml
+  score: 62
+  added: '2026-02-24'
+  last_shown: null
+  times_shown: 0
+  factors:
+    match_rate: 57
+    freshness: 5
+    salary: 0
+    referral: 0
+    ny_location: 0
 - folder: brightai.devops-engineer.pending_review.2026-02-17T1000Z.yaml
-  score: 63
+  score: 57
   added: '2026-02-17'
   last_shown: '2026-02-19'
   times_shown: 2
@@ -357,9 +423,9 @@ queue:
     salary: 0
     referral: 0
     ny_location: 0
-    staleness: -8
+    staleness: -14
 - folder: sonicwall.software-engineer-devops.pending_review.2026-02-14T1000Z.yaml
-  score: 46
+  score: 40
   added: '2026-02-14'
   last_shown: '2026-02-19'
   times_shown: 2
@@ -369,9 +435,9 @@ queue:
     salary: 0
     referral: 0
     ny_location: 0
-    staleness: -14
+    staleness: -20
 - folder: kohls.senior-platform-engineer.pending_review.2026-02-14T1000Z.yaml
-  score: 46
+  score: 40
   added: '2026-02-14'
   last_shown: '2026-02-19'
   times_shown: 2
@@ -381,9 +447,9 @@ queue:
     salary: 10
     referral: 0
     ny_location: 0
-    staleness: -14
+    staleness: -20
 - folder: fundraise-up.devops-engineer-sre.pending_review.2026-02-14T1000Z.yaml
-  score: 46
+  score: 40
   added: '2026-02-14'
   last_shown: null
   times_shown: 0
@@ -393,9 +459,9 @@ queue:
     salary: 0
     referral: 0
     ny_location: 0
-    staleness: -14
+    staleness: -20
 - folder: derivative-path.senior-platform-engineer.pending_review.2026-02-14T1000Z.yaml
-  score: 44
+  score: 38
   added: '2026-02-14'
   last_shown: null
   times_shown: 0
@@ -405,9 +471,9 @@ queue:
     salary: 0
     referral: 0
     ny_location: 0
-    staleness: -14
+    staleness: -20
 - folder: velera.platform-engineer-iv-azure.pending_review.2026-02-14T1000Z.yaml
-  score: 36
+  score: 30
   added: '2026-02-14'
   last_shown: '2026-02-17'
   times_shown: 1
@@ -417,9 +483,9 @@ queue:
     salary: 0
     referral: 0
     ny_location: 0
-    staleness: -14
+    staleness: -20
 - folder: parry-labs.platform-engineer.pending_review.2026-02-14T1000Z.yaml
-  score: 36
+  score: 30
   added: '2026-02-14'
   last_shown: '2026-02-17'
   times_shown: 1
@@ -429,9 +495,9 @@ queue:
     salary: 0
     referral: 0
     ny_location: 0
-    staleness: -14
+    staleness: -20
 - folder: collectors.senior-cloud-platform-engineer.pending_review.2026-02-14T1000Z.yaml
-  score: 36
+  score: 30
   added: '2026-02-14'
   last_shown: null
   times_shown: 0
@@ -441,9 +507,9 @@ queue:
     salary: 0
     referral: 0
     ny_location: 0
-    staleness: -14
+    staleness: -20
 - folder: graham-healthcare.devops-engineer.pending_review.2026-02-14T1000Z.yaml
-  score: 36
+  score: 30
   added: '2026-02-14'
   last_shown: null
   times_shown: 0
@@ -453,4 +519,4 @@ queue:
     salary: 0
     referral: 0
     ny_location: 0
-    staleness: -14
+    staleness: -20

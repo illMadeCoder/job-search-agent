@@ -1,6 +1,6 @@
 # Job Search Tracker Dashboard
 
-**Last updated:** 2026-02-24
+**Last updated:** 2026-02-27
 
 ---
 
@@ -8,14 +8,14 @@
 
 | State            | Count   |
 |------------------|--------:|
-| Pending Review   |     145 |
+| Pending Review   |      93 |
 | Applied          |       0 |
 | Interviewing     |       0 |
 | Offers           |       0 |
-| Expired          |      48 |
-| **Total**        | **193** |
+| Expired          |      34 |
+| **Total**        | **127** |
 
-> Pipeline has been empty (0 applied / 0 interviewing) for 6+ consecutive runs.
+> Pipeline has been empty (0 applied / 0 interviewing) for 7+ consecutive runs.
 
 ---
 
@@ -23,16 +23,16 @@
 
 | Rank | Company             | Role                            | Score | Salary Range  | Notes    |
 |-----:|---------------------|---------------------------------|------:|---------------|----------|
-|    1 | Onebrief            | Cloud Infrastructure Engineer   |   109 | $150k - $220k | REFERRAL |
-|    2 | Sardine             | DevOps Engineer                 |   104 | $160k - $200k |          |
-|    3 | Worldly             | Senior DevOps Lead              |   104 | $130k - $170k |          |
-|    4 | Zeta Global         | Senior SRE                      |    96 | $140k - $170k |          |
-|    5 | Globality           | Sr. SRE                         |    96 | $120k - $180k |          |
-|    6 | eClinical Solutions | Senior DevOps Software Engineer |    96 | $132k - $165k |          |
-|    7 | Owner               | Senior DevOps Engineer          |    93 | $190k - $220k |          |
-|    8 | Builder.io          | Lead Infrastructure Engineer    |    89 | $150k - $250k |          |
-|    9 | Talus Network       | DevOps/SRE                      |    86 | $100k - $140k |          |
-|   10 | Agentic Dream       | Sr. DevOps / Cloud Architect    |    86 |               |          |
+|    1 | Onebrief            | Cloud Infrastructure Engineer   |    99 | $150k - $220k | REFERRAL |
+|    2 | NVIDIA              | Senior Platform Engineer        |    94 |               | NY remote |
+|    3 | Sardine             | DevOps Engineer                 |    94 | $160k - $200k | FinTech RESERVED |
+|    4 | Worldly             | Senior DevOps Lead              |    94 | $130k - $170k | Lead role |
+|    5 | Red Hat             | Senior SRE                      |    86 |               | NEW |
+|    6 | Zeta Global         | Senior SRE                      |    86 | $140k - $170k |          |
+|    7 | Globality           | Sr. SRE                         |    86 | $120k - $180k | FedRAMP/IL5 |
+|    8 | eClinical Solutions | Senior DevOps Software Engineer |    86 | $132k - $165k | Healthcare RESERVED |
+|    9 | Jack Henry          | Senior SE - SRE                 |    84 |               | Fintech RESERVED, NEW |
+|   10 | Owner               | Senior DevOps Engineer          |    82 |               | 92% match! |
 
 ---
 
@@ -41,27 +41,23 @@
 | Company  | Contact        | Title                    |
 |----------|----------------|--------------------------|
 | Onebrief | Amanda Jackson | Senior Platform Engineer |
-| Humana   | Marcela Velez  | Senior Scrum Master      |
 
 ---
 
-## Today's Validation Results (2026-02-24)
+## Today's Validation Results (2026-02-27)
 
 | Metric           | Value |
 |------------------|------:|
-| Postings checked |    21 |
-| Newly expired    |    11 |
+| Postings checked |    10 |
+| Newly expired    |     1 |
 
 **Expiration breakdown:**
 
 | Reason              | Count |
 |---------------------|------:|
-| Closed              |     4 |
-| Hybrid              |     3 |
-| On-site             |     1 |
-| Wrong level         |     1 |
-| Unverifiable        |     1 |
-| Language requirement |     1 |
+| Location restricted  |     1 |
+
+Summit Racing: Must live in FL, GA, NV, OH, TN, or TX
 
 ---
 
@@ -69,13 +65,13 @@
 
 | Metric                | Value                                |
 |-----------------------|--------------------------------------|
-| Avg salary midpoint   | $166k (stable)                       |
-| Top keyword gap       | AWS (90% of postings, not on resume) |
-| Sources attempted     | 30                                   |
-| Sources succeeded     | 26                                   |
-| Postings found        | 95                                   |
-| Postings added        | 29                                   |
-| Gmail status          | BLOCKED (OAuth expired 44 days)      |
+| Avg salary midpoint   | $161k (stable)                       |
+| Top keyword gap       | AWS (common in missing keywords)     |
+| Sources attempted     | 16                                   |
+| Sources succeeded     | 14                                   |
+| Postings found        | 87                                   |
+| Postings added        | 7                                    |
+| Gmail status          | BLOCKED (OAuth expired 47 days)      |
 
 ---
 
@@ -84,15 +80,14 @@
 | Priority | Issue                               | Status  |
 |----------|-------------------------------------|---------|
 | P0       | Gmail OAuth needs re-authentication | Blocked |
-| P1       | Pipeline empty for 6+ runs          | Open    |
-| P2       | Beads database repo ID mismatch     | Open    |
+| P1       | Pipeline empty for 7+ runs          | Open    |
 
 ---
 
 ## Urgent Actions
 
-1. **Re-authenticate Gmail OAuth** -- blocked for 44 days, no email scanning possible (P0)
-2. **Start applying** -- pipeline is completely empty with 145 pending_review postings waiting
-3. **Onebrief** -- top-scored posting (109pts), reach out to Amanda Jackson for referral
-4. **Humana** -- message Marcela Velez for referral, then apply
-5. **Address AWS keyword gap** -- 90% of postings list AWS but it is missing from resume
+1. **Re-authenticate Gmail OAuth** -- blocked for 47 days, no email scanning possible (P0)
+2. **Start applying** -- pipeline is completely empty with 93 pending_review postings waiting
+3. **Onebrief** -- top-scored posting (99pts), reach out to Amanda Jackson for referral
+4. **Owner** -- 92% keyword match, best alignment with your skills
+5. **Address AWS keyword gap** -- most common missing skill across all postings
