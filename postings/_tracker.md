@@ -1,6 +1,6 @@
 # Job Search Tracker Dashboard
 
-**Last updated:** 2026-02-27
+**Last updated:** 2026-03-09
 
 ---
 
@@ -8,14 +8,14 @@
 
 | State            | Count   |
 |------------------|--------:|
-| Pending Review   |      93 |
+| Pending Review   |     101 |
 | Applied          |       0 |
 | Interviewing     |       0 |
 | Offers           |       0 |
-| Expired          |      34 |
-| **Total**        | **127** |
+| Expired          |      36 |
+| **Total**        | **137** |
 
-> Pipeline has been empty (0 applied / 0 interviewing) for 7+ consecutive runs.
+> Pipeline has been empty (0 applied / 0 interviewing) for 10+ consecutive runs.
 
 ---
 
@@ -23,16 +23,16 @@
 
 | Rank | Company             | Role                            | Score | Salary Range  | Notes    |
 |-----:|---------------------|---------------------------------|------:|---------------|----------|
-|    1 | Onebrief            | Cloud Infrastructure Engineer   |    99 | $150k - $220k | REFERRAL |
-|    2 | NVIDIA              | Senior Platform Engineer        |    94 |               | NY remote |
-|    3 | Sardine             | DevOps Engineer                 |    94 | $160k - $200k | FinTech RESERVED |
-|    4 | Worldly             | Senior DevOps Lead              |    94 | $130k - $170k | Lead role |
-|    5 | Red Hat             | Senior SRE                      |    86 |               | NEW |
-|    6 | Zeta Global         | Senior SRE                      |    86 | $140k - $170k |          |
-|    7 | Globality           | Sr. SRE                         |    86 | $120k - $180k | FedRAMP/IL5 |
-|    8 | eClinical Solutions | Senior DevOps Software Engineer |    86 | $132k - $165k | Healthcare RESERVED |
-|    9 | Jack Henry          | Senior SE - SRE                 |    84 |               | Fintech RESERVED, NEW |
-|   10 | Owner               | Senior DevOps Engineer          |    82 |               | 92% match! |
+|    1 | Kinsta              | DevOps Engineer                 |    90 |               | HWW, NEW |
+|    2 | Dropbox             | Infrastructure Software Engineer|    88 |               | Remote-first, NEW |
+|    3 | Ford Motor          | Cloud SRE                       |    87 | $113k - $190k | Enterprise, NEW |
+|    4 | Mapbox              | SDE III, Cloud Platform         |    85 |               | HWW, NEW |
+|    5 | WIN Home Inspection | Senior DevOps Engineer          |    82 |               | NEW |
+|    6 | Rubin Observatory   | SRE / Software Engineer         |    77 |               | SLAC, NEW |
+|    7 | Onebrief            | Cloud Infrastructure Engineer   |    74 | $150k - $220k | REFERRAL |
+|    8 | Sardine             | DevOps Engineer                 |    69 | $160k - $200k | FinTech |
+|    9 | Worldly             | Senior DevOps Lead              |    69 | $130k - $170k | Lead role |
+|   10 | NVIDIA              | Senior Platform Engineer        |    65 |               | NY remote |
 
 ---
 
@@ -44,20 +44,19 @@
 
 ---
 
-## Today's Validation Results (2026-02-27)
+## Today's Validation Results (2026-03-09)
 
 | Metric           | Value |
 |------------------|------:|
 | Postings checked |    10 |
-| Newly expired    |     1 |
+| Newly expired    |     2 |
 
 **Expiration breakdown:**
 
-| Reason              | Count |
-|---------------------|------:|
-| Location restricted  |     1 |
-
-Summit Racing: Must live in FL, GA, NV, OH, TN, or TX
+| Company  | Reason                          |
+|----------|---------------------------------|
+| DoseSpot | India-only, not US-eligible     |
+| Peec AI  | CET timezone required (Europe)  |
 
 ---
 
@@ -65,13 +64,13 @@ Summit Racing: Must live in FL, GA, NV, OH, TN, or TX
 
 | Metric                | Value                                |
 |-----------------------|--------------------------------------|
-| Avg salary midpoint   | $161k (stable)                       |
+| Avg salary midpoint   | $168k (stable)                       |
 | Top keyword gap       | AWS (common in missing keywords)     |
-| Sources attempted     | 16                                   |
-| Sources succeeded     | 14                                   |
-| Postings found        | 87                                   |
-| Postings added        | 7                                    |
-| Gmail status          | BLOCKED (OAuth expired 47 days)      |
+| Sources attempted     | 14                                   |
+| Sources succeeded     | 12                                   |
+| Postings found        | 65                                   |
+| Postings added        | 8                                    |
+| Gmail status          | BLOCKED (OAuth expired 57 days)      |
 
 ---
 
@@ -80,14 +79,15 @@ Summit Racing: Must live in FL, GA, NV, OH, TN, or TX
 | Priority | Issue                               | Status  |
 |----------|-------------------------------------|---------|
 | P0       | Gmail OAuth needs re-authentication | Blocked |
-| P1       | Pipeline empty for 7+ runs          | Open    |
+| P1       | Pipeline empty for 10+ runs         | Open    |
+| P1       | Location verification gaps          | Open    |
 
 ---
 
 ## Urgent Actions
 
-1. **Re-authenticate Gmail OAuth** -- blocked for 47 days, no email scanning possible (P0)
-2. **Start applying** -- pipeline is completely empty with 93 pending_review postings waiting
-3. **Onebrief** -- top-scored posting (99pts), reach out to Amanda Jackson for referral
-4. **Owner** -- 92% keyword match, best alignment with your skills
+1. **Re-authenticate Gmail OAuth** -- blocked for 57 days, no email scanning or sending possible (P0)
+2. **Start applying** -- pipeline is completely empty with 101 pending_review postings waiting
+3. **Onebrief** -- reach out to Amanda Jackson for referral, $150-220k salary
+4. **Kinsta / Mapbox** -- HWW companies with practical interviews, apply first
 5. **Address AWS keyword gap** -- most common missing skill across all postings
