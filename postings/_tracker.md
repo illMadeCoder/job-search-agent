@@ -1,6 +1,6 @@
 # Job Search Tracker Dashboard
 
-**Last updated:** 2026-03-10
+**Last updated:** 2026-03-15
 
 ---
 
@@ -8,14 +8,14 @@
 
 | State            | Count   |
 |------------------|--------:|
-| Pending Review   |     103 |
+| Pending Review   |    ~175 |
 | Applied          |       0 |
 | Interviewing     |       0 |
 | Offers           |       0 |
-| Expired          |      38 |
-| **Total**        | **141** |
+| Expired          |     ~54 |
+| **Total**        | **~229** |
 
-> Pipeline has been empty (0 applied / 0 interviewing) for 11+ consecutive runs.
+> Pipeline has been empty (0 applied / 0 interviewing) for 14+ consecutive runs.
 
 ---
 
@@ -23,41 +23,46 @@
 
 | Rank | Company             | Role                            | Score | Salary Range  | Notes    |
 |-----:|---------------------|---------------------------------|------:|---------------|----------|
-|    1 | Hims & Hers         | Sr. Platform Engineer           |    95 | $150k - $200k | Healthcare, NEW |
-|    2 | Dropbox             | Infrastructure Software Engineer|    83 |               | Remote-first |
-|    3 | Ford Motor          | Cloud SRE                       |    82 | $113k - $190k | Enterprise |
-|    4 | Mapbox              | SDE III, Cloud Platform         |    80 |               | HWW |
-|    5 | WIN Home Inspection | Senior DevOps Engineer          |    77 |               | WWR |
-|    6 | Shorebird           | Sr. Software Engineer (Cloud)   |    75 | $150k - $220k | Startup, NEW |
-|    7 | Rubin Observatory   | SRE / Software Engineer         |    72 |               | SLAC |
-|    8 | Onebrief            | Cloud Infrastructure Engineer   |    67 | $150k - $220k | REFERRAL |
-|    9 | NVIDIA              | Senior Platform Engineer        |    63 |               | NY remote |
-|   10 | Sardine             | DevOps Engineer                 |    62 | $160k - $200k | FinTech |
+|    1 | Veritone            | Sr. Platform Engineer           |    84 | $140k - $150k | Confirmed |
+|    2 | Hims & Hers         | Sr. Platform Engineer           |    81 | $150k - $200k | Reserved Tier |
+|    3 | Loadsmart           | Senior SRE                      |    81 |               | Likely Active |
+|    4 | Flex                | Senior Infrastructure Eng       |    81 | $146k - $212k | Confirmed |
+|    5 | Fathom              | Senior SRE                      |    81 | $180k - $230k | Confirmed, No WB |
+|    6 | Recharge Payments   | Infrastructure Engineer         |    79 |               | Likely Active |
+|    7 | SeatGeek            | SE, DevEx (Platform)            |    76 | $121k - $175k | Confirmed |
+|    8 | Dick's Sporting Goods | Sr. SE - Platform             |    76 |               | Likely Active |
+|    9 | Blockdaemon         | Infrastructure Engineer         |    76 |               | Likely Active |
+|   10 | Welocalize          | Cloud Infrastructure Eng        |    76 |               | Likely Active |
 
 ---
 
-## Referral Opportunities
-
-| Company  | Contact        | Title                    |
-|----------|----------------|--------------------------|
-| Onebrief | Amanda Jackson | Senior Platform Engineer |
-
----
-
-## Today's Validation Results (2026-03-10)
+## Today's Validation Results (2026-03-15)
 
 | Metric           | Value |
 |------------------|------:|
-| Postings checked |    10 |
-| Newly expired    |     1 |
-| Valid confirmed  |     1 |
-| Inconclusive     |     8 |
+| Postings checked |    24 |
+| Newly expired    |    14 |
+| Valid confirmed  |     4 |
+| Inconclusive     |     6 |
 
 **Expiration breakdown:**
 
-| Company | Reason                                    |
-|---------|-------------------------------------------|
-| Kinsta  | DevOps Engineer no longer on careers page |
+| Company | Reason |
+|---------|--------|
+| Included Health | 404 - job closed |
+| True Platform | 404 - job closed |
+| Gametime United | 410 - job closed |
+| Veeam | 404 - job closed |
+| Fetch | 410 - job closed |
+| Coalfire | 404 - job closed |
+| 0x | 410 - job closed |
+| SynMax | 404 - job closed |
+| BlueAlly | Philippines only |
+| Business Wire | 404 - job closed |
+| NTD Software | 404 - job closed |
+| Persona | 404 - job closed |
+| PDT Partners | Not remote (NYC) |
+| Databento | Job removed |
 
 ---
 
@@ -65,13 +70,13 @@
 
 | Metric                | Value                                |
 |-----------------------|--------------------------------------|
-| Avg salary midpoint   | $170k (stable)                       |
-| Top keyword gap       | AWS (common in missing keywords)     |
-| Sources attempted     | 15                                   |
-| Sources succeeded     | 13                                   |
-| Postings found        | 87                                   |
-| Postings added        | 3                                    |
-| Gmail status          | BLOCKED (OAuth expired 58 days)      |
+| Avg salary midpoint   | $169k (5 postings with data)         |
+| Top keyword gap       | Go, Grafana, Prometheus              |
+| Sources attempted     | 18                                   |
+| Sources succeeded     | 16                                   |
+| Postings found        | 85                                   |
+| Postings added        | 25                                   |
+| Gmail status          | BLOCKED (OAuth expired 64 days)      |
 
 ---
 
@@ -80,16 +85,16 @@
 | Priority | Issue                               | Status  |
 |----------|-------------------------------------|---------|
 | P0       | Gmail OAuth needs re-authentication | Blocked |
-| P1       | Pipeline empty for 11+ runs         | Open    |
-| P1       | Location verification gaps          | Open    |
+| P1       | Pipeline empty for 14+ runs         | Open    |
+| P1       | 56% validation failure rate         | Open    |
 
 ---
 
 ## Urgent Actions
 
-1. **Re-authenticate Gmail OAuth** -- blocked for 58 days, no email scanning or sending possible (P0)
-2. **Start applying** -- pipeline is completely empty with 103 pending_review postings waiting
-3. **Hims & Hers** -- top match (95pts), healthcare platform with PCI/PHI relevance, $150-200k
-4. **Onebrief** -- reach out to Amanda Jackson for referral, $150-220k salary
-5. **Mapbox** -- HWW company with practical interview, apply soon
-6. **Address AWS keyword gap** -- most common missing skill across all postings
+1. **Re-authenticate Gmail OAuth** -- blocked for 64 days, no email scanning or sending possible (P0)
+2. **Start applying** -- pipeline completely empty with ~175 pending_review postings
+3. **Fathom SRE** -- $180-230k, no whiteboard interviews, confirmed active
+4. **Flex Infra Eng** -- $146-212k confirmed, note NYC onboarding week
+5. **Hims & Hers** -- $150-200k, reserved tier healthcare but strong fit
+6. **Address Go/Grafana/Prometheus gaps** -- frequently missing from matched postings
