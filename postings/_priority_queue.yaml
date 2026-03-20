@@ -1,127 +1,83 @@
 schema_version: 1
-updated: '2026-03-20T09:01:00Z'
+updated: '2026-03-20T09:30:00Z'
 top_10:
-- folder: onemain-financial.senior-platform-engineer-observability-telemetry.pending_review.2026-03-20T0901Z.yaml
-  score: 79
-  rank: 1
-  days_in_queue: 0
-  times_shown: 0
-  last_shown: null
-  reason: 64% match, freshness +15, observability focus matches resume strengths
-- folder: dimensional-fund-advisors.senior-site-reliability-engineer-observability.pending_review.2026-03-20T0901Z.yaml
-  score: 79
-  rank: 2
-  days_in_queue: 0
-  times_shown: 0
-  last_shown: null
-  reason: 64% match, freshness +15, observability focus
-- folder: acronis.senior-cloud-platform-engineer.pending_review.2026-03-20T0901Z.yaml
-  score: 75
-  rank: 3
-  days_in_queue: 0
-  times_shown: 0
-  last_shown: null
-  reason: 60% match, freshness +15
 - folder: veritone.sr-platform-engineer.pending_review.2026-03-15T1000Z.yaml
   score: 70
-  rank: 4
+  rank: 1
   days_in_queue: 5
-  times_shown: 1
-  last_shown: '2026-03-15'
-  reason: 69% match, freshness +5, staleness -4
+  times_shown: 2
+  last_shown: '2026-03-20'
+  reason: 69% match, freshness +5, staleness -4, validated remote US $140-150k
 - folder: loadsmart.senior-site-reliability-engineer.pending_review.2026-03-15T1000Z.yaml
   score: 67
-  rank: 5
+  rank: 2
   days_in_queue: 5
-  times_shown: 1
-  last_shown: '2026-03-15'
+  times_shown: 2
+  last_shown: '2026-03-20'
   reason: 66% match, freshness +5, staleness -4
 - folder: flex.senior-infrastructure-engineer.pending_review.2026-03-15T1000Z.yaml
   score: 67
-  rank: 6
+  rank: 3
   days_in_queue: 5
-  times_shown: 1
-  last_shown: '2026-03-15'
-  reason: 66% match, freshness +5, staleness -4
+  times_shown: 2
+  last_shown: '2026-03-20'
+  reason: 66% match, freshness +5, staleness -4, validated remote US $146-212k
 - folder: fathom.senior-site-reliability-engineer.pending_review.2026-03-15T1000Z.yaml
   score: 67
-  rank: 7
+  rank: 4
   days_in_queue: 5
-  times_shown: 1
-  last_shown: '2026-03-15'
-  reason: 66% match, freshness +5, staleness -4
+  times_shown: 2
+  last_shown: '2026-03-20'
+  reason: 66% match, freshness +5, staleness -4, validated remote US $180-230k
 - folder: hims-and-hers.sr-platform-engineer.pending_review.2026-03-10T0901Z.yaml
   score: 66
-  rank: 8
+  rank: 5
   days_in_queue: 10
+  times_shown: 3
+  last_shown: '2026-03-20'
+  reason: 70% match, salary +10, staleness -14, reserved tier (healthcare tech)
+- folder: element-solutions.sr-site-reliability-engineer.pending_review.2026-03-20T0901Z.yaml
+  score: 65
+  rank: 6
+  days_in_queue: 0
+  times_shown: 1
+  last_shown: '2026-03-20'
+  reason: 50% match, freshness +15
+- folder: joist-ai.senior-platform-engineer.pending_review.2026-03-20T0901Z.yaml
+  score: 65
+  rank: 7
+  days_in_queue: 0
+  times_shown: 1
+  last_shown: '2026-03-20'
+  reason: 50% match, freshness +15, construction tech startup
+- folder: recharge-payments.infrastructure-engineer.pending_review.2026-03-15T1000Z.yaml
+  score: 65
+  rank: 8
+  days_in_queue: 5
   times_shown: 2
-  last_shown: '2026-03-15'
-  reason: 70% match, salary +10, staleness -14
-- folder: brg.senior-cloud-infrastructure-engineer.pending_review.2026-03-20T0901Z.yaml
-  score: 65
+  last_shown: '2026-03-20'
+  reason: 64% match, freshness +5, staleness -4
+- folder: seatgeek.se-developer-experience-platform.pending_review.2026-03-15T1000Z.yaml
+  score: 62
   rank: 9
-  days_in_queue: 0
-  times_shown: 0
-  last_shown: null
-  reason: 50% match, freshness +15
-- folder: element-solutions.sr-site-reliability-engineer.pending_review.2026-03-20T0901Z.yaml
-  score: 65
+  days_in_queue: 5
+  times_shown: 2
+  last_shown: '2026-03-20'
+  reason: 61% match, freshness +5, staleness -4, DevEx platform role
+- folder: dicks-sporting-goods.senior-se-platform.pending_review.2026-03-15T1000Z.yaml
+  score: 62
   rank: 10
-  days_in_queue: 0
-  times_shown: 0
-  last_shown: null
-  reason: 50% match, freshness +15
+  days_in_queue: 5
+  times_shown: 2
+  last_shown: '2026-03-20'
+  reason: 61% match, freshness +5, staleness -4
 queue:
-# === NEW TODAY (2026-03-20) ===
-- folder: onemain-financial.senior-platform-engineer-observability-telemetry.pending_review.2026-03-20T0901Z.yaml
-  score: 79
-  added: '2026-03-20'
-  last_shown: null
-  times_shown: 0
-  factors:
-    match_rate: 64
-    freshness: 15
-    salary: 0
-    referral: 0
-    ny_location: 0
-- folder: dimensional-fund-advisors.senior-site-reliability-engineer-observability.pending_review.2026-03-20T0901Z.yaml
-  score: 79
-  added: '2026-03-20'
-  last_shown: null
-  times_shown: 0
-  factors:
-    match_rate: 64
-    freshness: 15
-    salary: 0
-    referral: 0
-    ny_location: 0
-- folder: acronis.senior-cloud-platform-engineer.pending_review.2026-03-20T0901Z.yaml
-  score: 75
-  added: '2026-03-20'
-  last_shown: null
-  times_shown: 0
-  factors:
-    match_rate: 60
-    freshness: 15
-    salary: 0
-    referral: 0
-    ny_location: 0
-- folder: brg.senior-cloud-infrastructure-engineer.pending_review.2026-03-20T0901Z.yaml
-  score: 65
-  added: '2026-03-20'
-  last_shown: null
-  times_shown: 0
-  factors:
-    match_rate: 50
-    freshness: 15
-    salary: 0
-    referral: 0
-    ny_location: 0
+# === VALIDATED TODAY (2026-03-20) - 4 expired removed ===
 - folder: element-solutions.sr-site-reliability-engineer.pending_review.2026-03-20T0901Z.yaml
   score: 65
   added: '2026-03-20'
-  last_shown: null
-  times_shown: 0
+  last_shown: '2026-03-20'
+  times_shown: 1
   factors:
     match_rate: 50
     freshness: 15
@@ -131,8 +87,8 @@ queue:
 - folder: joist-ai.senior-platform-engineer.pending_review.2026-03-20T0901Z.yaml
   score: 65
   added: '2026-03-20'
-  last_shown: null
-  times_shown: 0
+  last_shown: '2026-03-20'
+  times_shown: 1
   factors:
     match_rate: 50
     freshness: 15
@@ -143,8 +99,8 @@ queue:
 - folder: veritone.sr-platform-engineer.pending_review.2026-03-15T1000Z.yaml
   score: 70
   added: '2026-03-15'
-  last_shown: '2026-03-15'
-  times_shown: 1
+  last_shown: '2026-03-20'
+  times_shown: 2
   factors:
     match_rate: 69
     freshness: 5
@@ -155,8 +111,8 @@ queue:
 - folder: loadsmart.senior-site-reliability-engineer.pending_review.2026-03-15T1000Z.yaml
   score: 67
   added: '2026-03-15'
-  last_shown: '2026-03-15'
-  times_shown: 1
+  last_shown: '2026-03-20'
+  times_shown: 2
   factors:
     match_rate: 66
     freshness: 5
@@ -167,8 +123,8 @@ queue:
 - folder: flex.senior-infrastructure-engineer.pending_review.2026-03-15T1000Z.yaml
   score: 67
   added: '2026-03-15'
-  last_shown: '2026-03-15'
-  times_shown: 1
+  last_shown: '2026-03-20'
+  times_shown: 2
   factors:
     match_rate: 66
     freshness: 5
@@ -179,8 +135,8 @@ queue:
 - folder: fathom.senior-site-reliability-engineer.pending_review.2026-03-15T1000Z.yaml
   score: 67
   added: '2026-03-15'
-  last_shown: '2026-03-15'
-  times_shown: 1
+  last_shown: '2026-03-20'
+  times_shown: 2
   factors:
     match_rate: 66
     freshness: 5
@@ -191,8 +147,8 @@ queue:
 - folder: hims-and-hers.sr-platform-engineer.pending_review.2026-03-10T0901Z.yaml
   score: 66
   added: '2026-03-10'
-  last_shown: '2026-03-15'
-  times_shown: 2
+  last_shown: '2026-03-20'
+  times_shown: 3
   factors:
     match_rate: 70
     freshness: 0
@@ -203,8 +159,8 @@ queue:
 - folder: recharge-payments.infrastructure-engineer.pending_review.2026-03-15T1000Z.yaml
   score: 65
   added: '2026-03-15'
-  last_shown: '2026-03-15'
-  times_shown: 1
+  last_shown: '2026-03-20'
+  times_shown: 2
   factors:
     match_rate: 64
     freshness: 5
@@ -215,8 +171,8 @@ queue:
 - folder: seatgeek.se-developer-experience-platform.pending_review.2026-03-15T1000Z.yaml
   score: 62
   added: '2026-03-15'
-  last_shown: '2026-03-15'
-  times_shown: 1
+  last_shown: '2026-03-20'
+  times_shown: 2
   factors:
     match_rate: 61
     freshness: 5
@@ -227,8 +183,8 @@ queue:
 - folder: dicks-sporting-goods.senior-se-platform.pending_review.2026-03-15T1000Z.yaml
   score: 62
   added: '2026-03-15'
-  last_shown: '2026-03-15'
-  times_shown: 1
+  last_shown: '2026-03-20'
+  times_shown: 2
   factors:
     match_rate: 61
     freshness: 5
@@ -408,3 +364,8 @@ queue:
     ny_location: 0
     staleness: -42
     shown_penalty: 0
+# === EXPIRED (removed from top_10 during validation) ===
+# onemain-financial - job_closed (Workday postingAvailable: false)
+# dimensional-fund-advisors - hybrid (3 days Austin office)
+# acronis - location_restricted (Brazil only)
+# brg - location_restricted (Phoenix AZ, not remote)

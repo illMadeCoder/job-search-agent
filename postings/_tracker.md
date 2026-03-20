@@ -1,6 +1,6 @@
 # Job Search Tracker Dashboard
 
-**Last updated:** 2026-03-15
+**Last updated:** 2026-03-20
 
 ---
 
@@ -8,14 +8,14 @@
 
 | State            | Count   |
 |------------------|--------:|
-| Pending Review   |    ~175 |
+| Pending Review   |     130 |
 | Applied          |       0 |
 | Interviewing     |       0 |
 | Offers           |       0 |
-| Expired          |     ~54 |
-| **Total**        | **~229** |
+| Expired          |      41 |
+| **Total**        | **171** |
 
-> Pipeline has been empty (0 applied / 0 interviewing) for 14+ consecutive runs.
+> Pipeline has been empty (0 applied / 0 interviewing) for 19+ consecutive runs.
 
 ---
 
@@ -23,46 +23,36 @@
 
 | Rank | Company             | Role                            | Score | Salary Range  | Notes    |
 |-----:|---------------------|---------------------------------|------:|---------------|----------|
-|    1 | Veritone            | Sr. Platform Engineer           |    84 | $140k - $150k | Confirmed |
-|    2 | Hims & Hers         | Sr. Platform Engineer           |    81 | $150k - $200k | Reserved Tier |
-|    3 | Loadsmart           | Senior SRE                      |    81 |               | Likely Active |
-|    4 | Flex                | Senior Infrastructure Eng       |    81 | $146k - $212k | Confirmed |
-|    5 | Fathom              | Senior SRE                      |    81 | $180k - $230k | Confirmed, No WB |
-|    6 | Recharge Payments   | Infrastructure Engineer         |    79 |               | Likely Active |
-|    7 | SeatGeek            | SE, DevEx (Platform)            |    76 | $121k - $175k | Confirmed |
-|    8 | Dick's Sporting Goods | Sr. SE - Platform             |    76 |               | Likely Active |
-|    9 | Blockdaemon         | Infrastructure Engineer         |    76 |               | Likely Active |
-|   10 | Welocalize          | Cloud Infrastructure Eng        |    76 |               | Likely Active |
+|    1 | Veritone            | Sr. Platform Engineer           |    70 | $140k - $150k | Confirmed remote US |
+|    2 | Loadsmart           | Senior SRE                      |    67 |               | Likely active |
+|    3 | Flex                | Senior Infrastructure Eng       |    67 | $146k - $212k | Confirmed, NYC onboarding |
+|    4 | Fathom              | Senior SRE                      |    67 | $180k - $230k | Confirmed, no live coding |
+|    5 | Hims & Hers         | Sr. Platform Engineer           |    66 | $150k - $200k | Reserved tier (healthcare) |
+|    6 | Element Solutions   | Sr. SRE                         |    65 |               | New today |
+|    7 | Joist AI            | Senior Platform Engineer        |    65 |               | New today, startup |
+|    8 | Recharge Payments   | Infrastructure Engineer         |    65 |               | Likely active |
+|    9 | SeatGeek            | SE, DevEx (Platform)            |    62 |               | DevEx focus |
+|   10 | Dick's Sporting Goods | Sr. SE - Platform             |    62 |               | Enterprise platform |
 
 ---
 
-## Today's Validation Results (2026-03-15)
+## Today's Validation Results (2026-03-20)
 
 | Metric           | Value |
 |------------------|------:|
-| Postings checked |    24 |
-| Newly expired    |    14 |
-| Valid confirmed  |     4 |
-| Inconclusive     |     6 |
+| Postings checked |    10 |
+| Newly expired    |     4 |
+| Valid confirmed  |     3 |
+| Inconclusive     |     3 |
 
 **Expiration breakdown:**
 
 | Company | Reason |
 |---------|--------|
-| Included Health | 404 - job closed |
-| True Platform | 404 - job closed |
-| Gametime United | 410 - job closed |
-| Veeam | 404 - job closed |
-| Fetch | 410 - job closed |
-| Coalfire | 404 - job closed |
-| 0x | 410 - job closed |
-| SynMax | 404 - job closed |
-| BlueAlly | Philippines only |
-| Business Wire | 404 - job closed |
-| NTD Software | 404 - job closed |
-| Persona | 404 - job closed |
-| PDT Partners | Not remote (NYC) |
-| Databento | Job removed |
+| OneMain Financial | Posting closed (Workday postingAvailable: false) |
+| Dimensional Fund Advisors | Hybrid - 3 days in Austin office |
+| Acronis | Brazil only, not US |
+| Berkeley Research Group | Phoenix AZ location, not truly remote |
 
 ---
 
@@ -70,13 +60,14 @@
 
 | Metric                | Value                                |
 |-----------------------|--------------------------------------|
-| Avg salary midpoint   | $169k (5 postings with data)         |
-| Top keyword gap       | Go, Grafana, Prometheus              |
-| Sources attempted     | 18                                   |
-| Sources succeeded     | 16                                   |
-| Postings found        | 85                                   |
-| Postings added        | 25                                   |
-| Gmail status          | BLOCKED (OAuth expired 64 days)      |
+| Avg salary midpoint   | $175k (4 validated postings)         |
+| Top keyword gap       | Helm (+31pp), ArgoCD (+21pp)         |
+| Rising keywords       | Grafana (+58pp), Prometheus (+66pp)  |
+| Sources attempted     | 15                                   |
+| Sources succeeded     | 13                                   |
+| Postings found        | 68                                   |
+| Postings added        | 6 (4 expired during validation)      |
+| Gmail status          | BLOCKED (OAuth expired)              |
 
 ---
 
@@ -85,16 +76,16 @@
 | Priority | Issue                               | Status  |
 |----------|-------------------------------------|---------|
 | P0       | Gmail OAuth needs re-authentication | Blocked |
-| P1       | Pipeline empty for 14+ runs         | Open    |
-| P1       | 56% validation failure rate         | Open    |
+| P1       | Pipeline empty for 19+ runs         | Open    |
+| P1       | 40% validation failure rate today   | Open    |
 
 ---
 
 ## Urgent Actions
 
-1. **Re-authenticate Gmail OAuth** -- blocked for 64 days, no email scanning or sending possible (P0)
-2. **Start applying** -- pipeline completely empty with ~175 pending_review postings
-3. **Fathom SRE** -- $180-230k, no whiteboard interviews, confirmed active
+1. **Re-authenticate Gmail OAuth** -- blocked, no email scanning or sending possible (P0)
+2. **Start applying** -- pipeline completely empty with 130 pending_review postings
+3. **Fathom SRE** -- $180-230k, no live coding, confirmed active
 4. **Flex Infra Eng** -- $146-212k confirmed, note NYC onboarding week
 5. **Hims & Hers** -- $150-200k, reserved tier healthcare but strong fit
-6. **Address Go/Grafana/Prometheus gaps** -- frequently missing from matched postings
+6. **Learn Helm & ArgoCD** -- surging demand, currently missing from resume
